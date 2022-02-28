@@ -26,8 +26,8 @@ targets = [
   Target.new(__dir__ + '/../json/scim-api/v1/Groups.json', 'GroupsResponse', __dir__ + "/../scim-api/v1/GroupsResponse.d.ts"),
   Target.new(__dir__ + '/../json/scim-api/v1/Users.json', 'UsersResponse', __dir__ + "/../scim-api/v1/UsersResponse.d.ts"),
   Target.new(__dir__ + '/../json/scim-api/v1/ServiceProviderConfigs.json', 'ServiceProviderConfigsResponse', __dir__ + "/../scim-api/v1/ServiceProviderConfigsResponse.d.ts"),
-  Target.new(__dir__ + '/../json/scim-api/v1/Users/000000000.json', 'UserResponse', __dir__ + "/../scim-api/v1/UserResponse.d.ts"),
-  Target.new(__dir__ + '/../json/scim-api/v1/Groups/000000000.json', 'GroupResponse', __dir__ + "/../scim-api/v1/GroupResponse.d.ts"),
+  Target.new(__dir__ + '/../json/scim-api/v1/Users/00000000000.json', 'UserResponse', __dir__ + "/../scim-api/v1/UserResponse.d.ts"),
+  Target.new(__dir__ + '/../json/scim-api/v1/Groups/00000000000.json', 'GroupResponse', __dir__ + "/../scim-api/v1/GroupResponse.d.ts"),
 ]
 targets.each do |target|
   File.open(target.json_path) do |json_file|
