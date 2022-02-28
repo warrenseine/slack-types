@@ -1,4 +1,5 @@
 json/
+typescript/
 node_modules/
 scripts/
 tsconfig.json

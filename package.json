@@ -13,7 +13,8 @@
     "build": "run-s build:copy-samples build:generate-all",
     "build:copy-samples": "bash scripts/copy-from-java-slack-sdk.sh",
     "build:generate-all": "bash scripts/generate-all.sh",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "release": "bash scripts/release-npm-package.sh"
   },
   "repository": {
     "type": "git",
