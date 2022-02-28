@@ -62,6 +62,13 @@ These types are generated from jSlack library's type definitions in Java + actua
 
 The coverage may not be 100% yet. A portion of the properties may be incorrect. If you find missing properties or something wrong, let us know here: https://github.com/seratch/seratch-slack-types/issues
 
+To re-generate:
+
+```bash
+$ npm install
+$ npm run build
+```
+
 ## License
 
 The MIT License

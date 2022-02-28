@@ -1,7 +1,4 @@
 #!/usr/bin/env ruby
-#
-# prerequisites
-#   npm install -g quicktype
 
 require 'open3'
 require __dir__ + '/lib/ts_writer.rb'

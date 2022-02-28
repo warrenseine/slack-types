@@ -4,10 +4,15 @@
   "description": "Slack API Types in TypeScript",
   "dependencies": {},
   "devDependencies": {
-    "ts-loader": "^5.4.5",
-    "typescript": "^3.4.5"
+    "npm-run-all": "^4.1.5",
+    "quicktype": "^15.0.260",
+    "ts-loader": "^9.2.6",
+    "typescript": "^4.5.5"
   },
   "scripts": {
+    "build": "run-s build:copy-samples build:generate-all",
+    "build:copy-samples": "bash scripts/copy-from-java-slack-sdk.sh",
+    "build:generate-all": "bash scripts/generate-all.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
