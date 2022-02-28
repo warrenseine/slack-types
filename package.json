@@ -1,5 +1,5 @@
 {
-  "name": "seratch-slack-types",
+  "name": "slack-types",
   "version": "0.7.1",
   "description": "Slack API Types in TypeScript",
   "dependencies": {},
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/seratch/seratch-slack-types.git"
+    "url": "git+https://github.com/warrenseine/slack-types.git"
   },
   "keywords": [
     "slack",
@@ -22,7 +22,7 @@
   "author": "Kazuhiro Sera @seratch",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/seratch/seratch-slack-types/issues"
+    "url": "https://github.com/warrenseine/slack-types/issues"
   },
-  "homepage": "https://github.com/seratch/seratch-slack-types#readme"
+  "homepage": "https://github.com/warrenseine/slack-types#readme"
 }
