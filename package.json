@@ -10,11 +10,15 @@
     "typescript": "^4.5.5"
   },
   "scripts": {
-    "build": "run-s build:copy-samples build:generate-all",
+    "build": "run-s build:copy-samples build:all",
     "build:copy-samples": "bash scripts/copy-from-java-slack-sdk.sh",
-    "build:generate-all": "bash scripts/generate-all.sh",
+    "build:all": "run-s build:typescript build:python",
+    "build:python": "bash scripts/build-python.sh",
+    "build:typescript": "bash scripts/build-typescript.sh",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "release": "bash scripts/release-npm-package.sh"
+    "release": "run-s release:python release:typescript",
+    "release:python": "bash scripts/release-pypi-package.sh",
+    "release:typescript": "bash scripts/release-npm-package.sh"
   },
   "repository": {
     "type": "git",
