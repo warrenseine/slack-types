@@ -1,2 +1,4 @@
 java-slack-sdk/
 node_modules/
+dist/
+*.egg-info
