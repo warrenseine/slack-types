@@ -1,24 +1,25 @@
 export interface UserResponse {
-    Errors?:                                      Errors;
-    schemas?:                                     string[];
-    id?:                                          string;
-    externalId?:                                  string;
-    meta?:                                        Meta;
-    userName?:                                    string;
-    nickName?:                                    string;
-    name?:                                        Name;
-    displayName?:                                 string;
-    profileUrl?:                                  string;
-    title?:                                       string;
-    timezone?:                                    string;
-    active?:                                      boolean;
-    emails?:                                      Email[];
-    photos?:                                      Photo[];
-    groups?:                                      string[];
-    addresses?:                                   Address[];
-    phoneNumbers?:                                Email[];
-    roles?:                                       Email[];
-    "urn:scim:schemas:extension:enterprise:1.0"?: UrnScimSchemasExtensionEnterprise10;
+    Errors?:                                       Errors;
+    schemas?:                                      string[];
+    id?:                                           string;
+    externalId?:                                   string;
+    meta?:                                         Meta;
+    userName?:                                     string;
+    nickName?:                                     string;
+    name?:                                         Name;
+    displayName?:                                  string;
+    profileUrl?:                                   string;
+    title?:                                        string;
+    timezone?:                                     string;
+    active?:                                       boolean;
+    emails?:                                       Email[];
+    photos?:                                       Photo[];
+    groups?:                                       Group[];
+    addresses?:                                    Address[];
+    phoneNumbers?:                                 Email[];
+    roles?:                                        Email[];
+    "urn:scim:schemas:extension:enterprise:1.0"?:  UrnScimSchemasExtensionEnterprise10;
+    "urn:scim:schemas:extension:slack:guest:1.0"?: UrnScimSchemasExtensionSlackGuest10;
 }
 
 export interface Errors {
@@ -41,6 +42,11 @@ export interface Email {
     primary?: boolean;
 }
 
+export interface Group {
+    value?:   string;
+    display?: string;
+}
+
 export interface Meta {
     created?:  string;
     location?: string;
@@ -61,4 +67,9 @@ export interface UrnScimSchemasExtensionEnterprise10 {
 }
 
 export interface Manager {
+}
+
+export interface UrnScimSchemasExtensionSlackGuest10 {
+    type?:       string;
+    expiration?: string;
 }

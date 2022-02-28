@@ -7,7 +7,8 @@ export interface TeamProfileGetResponse {
 }
 
 export interface Profile {
-    fields?: Field[];
+    fields?:   Field[];
+    sections?: Section[];
 }
 
 export interface Field {
@@ -18,4 +19,13 @@ export interface Field {
     hint?:       string;
     type?:       string;
     is_hidden?:  boolean;
+}
+
+export interface Section {
+    id?:           string;
+    team_id?:      string;
+    section_type?: string;
+    label?:        string;
+    order?:        number;
+    is_hidden?:    boolean;
 }

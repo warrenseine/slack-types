@@ -6,11 +6,20 @@ export interface MessageDeletedPayload {
     type?:                  string;
     authed_users?:          string[];
     authed_teams?:          string[];
+    authorizations?:        Authorization[];
     is_ext_shared_channel?: boolean;
     event_id?:              string;
     event_time?:            number;
     event_context?:         string;
     event?:                 Event;
+}
+
+export interface Authorization {
+    enterprise_id?:         string;
+    team_id?:               string;
+    user_id?:               string;
+    is_bot?:                boolean;
+    is_enterprise_install?: boolean;
 }
 
 export interface Event {
@@ -26,17 +35,32 @@ export interface Event {
 }
 
 export interface PreviousMessage {
-    client_msg_id?: string;
-    type?:          string;
-    subtype?:       string;
-    user?:          string;
-    team?:          string;
-    edited?:        Edited;
-    text?:          string;
-    blocks?:        Block[];
-    attachments?:   Attachment[];
-    is_starred?:    boolean;
-    ts?:            string;
+    client_msg_id?:     string;
+    type?:              string;
+    subtype?:           string;
+    user?:              string;
+    team?:              string;
+    edited?:            Edited;
+    text?:              string;
+    blocks?:            Block[];
+    attachments?:       Attachment[];
+    upload?:            boolean;
+    display_as_bot?:    boolean;
+    thread_ts?:         string;
+    parent_user_id?:    string;
+    bot_id?:            string;
+    bot_profile?:       BotProfile;
+    hidden?:            boolean;
+    is_locked?:         boolean;
+    subscribed?:        boolean;
+    ts?:                string;
+    user_team?:         string;
+    source_team?:       string;
+    is_starred?:        boolean;
+    reply_count?:       number;
+    reply_users_count?: number;
+    latest_reply?:      string;
+    last_read?:         string;
 }
 
 export interface Attachment {
@@ -76,6 +100,7 @@ export interface Attachment {
     thumb_url?:             string;
     thumb_width?:           number;
     thumb_height?:          number;
+    video_url?:             string;
     video_html?:            string;
     video_html_width?:      number;
     video_html_height?:     number;
@@ -167,9 +192,11 @@ export interface Element {
     value?:                           string;
     style?:                           string;
     confirm?:                         ElementConfirm;
+    accessibility_label?:             string;
     placeholder?:                     Text;
     initial_channel?:                 string;
     response_url_enabled?:            boolean;
+    focus_on_load?:                   boolean;
     max_selected_items?:              number;
     initial_conversation?:            string;
     default_to_current_conversation?: boolean;
@@ -217,6 +244,22 @@ export interface InitialOption {
     value?:       string;
     description?: Text;
     url?:         string;
+}
+
+export interface BotProfile {
+    id?:      string;
+    deleted?: boolean;
+    name?:    string;
+    updated?: number;
+    app_id?:  string;
+    icons?:   Icons;
+    team_id?: string;
+}
+
+export interface Icons {
+    image_36?: string;
+    image_48?: string;
+    image_72?: string;
 }
 
 export interface Edited {

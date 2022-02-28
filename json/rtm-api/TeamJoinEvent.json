@@ -18,6 +18,7 @@
       "status_text": "",
       "status_text_canonical": "",
       "status_emoji": "",
+      "status_emoji_url": "",
       "status_expiration": 123,
       "display_name": "",
       "display_name_normalized": "",
@@ -40,6 +41,8 @@
       "image_512": "",
       "image_1024": "",
       "is_custom_image": false,
+      "pronouns": "",
+      "status_emoji_display_info": [],
       "first_name": "",
       "last_name": ""
     },
@@ -61,11 +64,13 @@
       "enterprise_id": "",
       "enterprise_name": "",
       "is_admin": false,
-      "is_owner": false
+      "is_owner": false,
+      "teams": []
     },
     "two_factor_type": "",
     "has_files": false,
     "locale": "",
-    "is_workflow_bot": false
+    "is_workflow_bot": false,
+    "who_can_share_contact_card": false
   }
 }

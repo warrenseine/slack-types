@@ -75,31 +75,11 @@
                 "reply_count": 12345,
                 "ts": "0000000000.000000",
                 "channel_name": "",
-                "team_id": "T00000000"
-              },
-              {
-                "reply_users": [
-                  ""
-                ],
-                "reply_users_count": 12345,
-                "reply_count": 12345,
-                "ts": "0000000000.000000",
-                "channel_name": "",
                 "team_id": "T00000000",
                 "share_user_id": "U00000000"
               }
             ],
             "C00000001": [
-              {
-                "reply_users": [
-                  ""
-                ],
-                "reply_users_count": 12345,
-                "reply_count": 12345,
-                "ts": "0000000000.000000",
-                "channel_name": "",
-                "team_id": "T00000000"
-              },
               {
                 "reply_users": [
                   ""
@@ -137,7 +117,10 @@
         "image_exif_rotation": 12345,
         "last_editor": "U00000000",
         "non_owner_editable": false,
-        "updated": 12345
+        "updated": 12345,
+        "thumb_video": "https://www.example.com/",
+        "media_display_type": "",
+        "comments_count": 12345
       }
     ]
   },

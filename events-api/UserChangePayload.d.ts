@@ -6,6 +6,7 @@ export interface UserChangePayload {
     type?:                  string;
     authed_users?:          string[];
     authed_teams?:          string[];
+    authorizations?:        Authorization[];
     is_ext_shared_channel?: boolean;
     event_id?:              string;
     event_time?:            number;
@@ -13,40 +14,50 @@ export interface UserChangePayload {
     event?:                 Event;
 }
 
+export interface Authorization {
+    enterprise_id?:         string;
+    team_id?:               string;
+    user_id?:               string;
+    is_bot?:                boolean;
+    is_enterprise_install?: boolean;
+}
+
 export interface Event {
-    type?: string;
-    user?: User;
+    type?:     string;
+    user?:     User;
+    cache_ts?: number;
 }
 
 export interface User {
-    id?:                  string;
-    team_id?:             string;
-    name?:                string;
-    deleted?:             boolean;
-    color?:               string;
-    real_name?:           string;
-    tz?:                  string;
-    tz_label?:            string;
-    tz_offset?:           number;
-    profile?:             Profile;
-    is_admin?:            boolean;
-    is_owner?:            boolean;
-    is_primary_owner?:    boolean;
-    is_invited_user?:     boolean;
-    is_restricted?:       boolean;
-    is_ultra_restricted?: boolean;
-    is_bot?:              boolean;
-    is_stranger?:         boolean;
-    is_app_user?:         boolean;
-    updated?:             number;
-    has_2fa?:             boolean;
-    is_email_confirmed?:  boolean;
-    presence?:            string;
-    enterprise_user?:     EnterpriseUser;
-    two_factor_type?:     string;
-    has_files?:           boolean;
-    locale?:              string;
-    is_workflow_bot?:     boolean;
+    id?:                         string;
+    team_id?:                    string;
+    name?:                       string;
+    deleted?:                    boolean;
+    color?:                      string;
+    real_name?:                  string;
+    tz?:                         string;
+    tz_label?:                   string;
+    tz_offset?:                  number;
+    profile?:                    Profile;
+    is_admin?:                   boolean;
+    is_owner?:                   boolean;
+    is_primary_owner?:           boolean;
+    is_invited_user?:            boolean;
+    is_restricted?:              boolean;
+    is_ultra_restricted?:        boolean;
+    is_bot?:                     boolean;
+    is_stranger?:                boolean;
+    is_app_user?:                boolean;
+    updated?:                    number;
+    has_2fa?:                    boolean;
+    is_email_confirmed?:         boolean;
+    presence?:                   string;
+    enterprise_user?:            EnterpriseUser;
+    two_factor_type?:            string;
+    has_files?:                  boolean;
+    locale?:                     string;
+    is_workflow_bot?:            boolean;
+    who_can_share_contact_card?: boolean;
 }
 
 export interface EnterpriseUser {
@@ -65,6 +76,7 @@ export interface Profile {
     status_text?:             string;
     status_text_canonical?:   string;
     status_emoji?:            string;
+    status_emoji_url?:        string;
     status_expiration?:       number;
     display_name?:            string;
     display_name_normalized?: string;
@@ -87,6 +99,7 @@ export interface Profile {
     image_512?:               string;
     image_1024?:              string;
     is_custom_image?:         boolean;
+    pronouns?:                string;
     first_name?:              string;
     last_name?:               string;
 }

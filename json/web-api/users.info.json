@@ -38,7 +38,16 @@
       "email": "",
       "first_name": "",
       "last_name": "",
-      "image_1024": "https://www.example.com/"
+      "image_1024": "https://www.example.com/",
+      "status_emoji_url": "",
+      "pronouns": "",
+      "status_emoji_display_info": [
+        {
+          "emoji_name": "",
+          "display_alias": "",
+          "display_url": ""
+        }
+      ]
     },
     "is_admin": false,
     "is_owner": false,
@@ -50,7 +59,19 @@
     "updated": 12345,
     "locale": "",
     "has_2fa": false,
-    "is_email_confirmed": false
+    "is_email_confirmed": false,
+    "enterprise_user": {
+      "id": "U00000000",
+      "enterprise_id": "E00000000",
+      "enterprise_name": "",
+      "is_admin": false,
+      "is_owner": false,
+      "teams": [
+        ""
+      ]
+    },
+    "is_stranger": false,
+    "who_can_share_contact_card": ""
   },
   "error": "",
   "needed": "",

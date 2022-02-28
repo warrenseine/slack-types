@@ -6,11 +6,20 @@ export interface MessagePayload {
     type?:                  string;
     authed_users?:          string[];
     authed_teams?:          string[];
+    authorizations?:        Authorization[];
     is_ext_shared_channel?: boolean;
     event_id?:              string;
     event_time?:            number;
     event_context?:         string;
     event?:                 Event;
+}
+
+export interface Authorization {
+    enterprise_id?:         string;
+    team_id?:               string;
+    user_id?:               string;
+    is_bot?:                boolean;
+    is_enterprise_install?: boolean;
 }
 
 export interface Event {
@@ -69,6 +78,7 @@ export interface Attachment {
     thumb_url?:             string;
     thumb_width?:           number;
     thumb_height?:          number;
+    video_url?:             string;
     video_html?:            string;
     video_html_width?:      number;
     video_html_height?:     number;
@@ -160,9 +170,11 @@ export interface Element {
     value?:                           string;
     style?:                           string;
     confirm?:                         ElementConfirm;
+    accessibility_label?:             string;
     placeholder?:                     Text;
     initial_channel?:                 string;
     response_url_enabled?:            boolean;
+    focus_on_load?:                   boolean;
     max_selected_items?:              number;
     initial_conversation?:            string;
     default_to_current_conversation?: boolean;
