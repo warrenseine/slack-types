@@ -6,10 +6,7 @@
 require 'open3'
 require __dir__ + '/lib/ts_writer.rb'
 
-index_file = __dir__ + '/../audit-api/v1/index.ts'
-File.truncate(index_file, 0)
-
-ts_writer = TsWriter.new
+ts_writer = TsWriter.new('audit-api/v1/index.ts')
 
 Dir.glob(__dir__ + '/../json/audit-api/v1/*').sort.each do |json_path|
   File.open(json_path) do |json_file|
@@ -28,9 +25,9 @@ Dir.glob(__dir__ + '/../json/audit-api/v1/*').sort.each do |json_path|
     end
     root_class_name << 'Response'
 
-    typedef_filepath = __dir__ + "/../audit-api/v1/#{root_class_name}.d.ts"
+    typedef_filepath = "audit-api/v1/#{root_class_name}.d.ts"
     input_json = json_file.read
     ts_writer.write(root_class_name, json_path, typedef_filepath, input_json)
-    ts_writer.append_to_index_ts(root_class_name, index_file)
+    ts_writer.append_to_index_ts(root_class_name)
   end
 end
