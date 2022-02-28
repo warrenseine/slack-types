@@ -2,7 +2,7 @@ require 'fileutils'
 
 class TsWriter
   def initialize(index_file)
-    @output_prefix_path = __dir__ + '/../../'
+    @output_prefix_path = __dir__ + '/../../typescript/'
     @index_file = @output_prefix_path + index_file
 
     create_file()
