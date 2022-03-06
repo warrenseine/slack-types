@@ -39,6 +39,7 @@ export interface BlockActionPayloadAction {
     initial_date?:          string;
     selected_time?:         string;
     initial_time?:          string;
+    selected_options?:      SelectedOption[];
 }
 
 export interface ElementConfirm {

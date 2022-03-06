@@ -191,6 +191,7 @@ class BlockActionPayloadAction:
     initial_date: Optional[str] = None
     selected_time: Optional[str] = None
     initial_time: Optional[str] = None
+    selected_options: Optional[List[SelectedOption]] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'BlockActionPayloadAction':
@@ -217,7 +218,8 @@ class BlockActionPayloadAction:
         initial_date = from_union([from_str, from_none], obj.get("initial_date"))
         selected_time = from_union([from_str, from_none], obj.get("selected_time"))
         initial_time = from_union([from_str, from_none], obj.get("initial_time"))
-        return BlockActionPayloadAction(action_id, block_id, text, value, type, action_ts, placeholder, confirm, url, initial_option, selected_option, selected_user, initial_user, selected_conversation, initial_conversation, selected_channel, initial_channel, min_query_length, selected_date, initial_date, selected_time, initial_time)
+        selected_options = from_union([lambda x: from_list(SelectedOption.from_dict, x), from_none], obj.get("selected_options"))
+        return BlockActionPayloadAction(action_id, block_id, text, value, type, action_ts, placeholder, confirm, url, initial_option, selected_option, selected_user, initial_user, selected_conversation, initial_conversation, selected_channel, initial_channel, min_query_length, selected_date, initial_date, selected_time, initial_time, selected_options)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -243,6 +245,7 @@ class BlockActionPayloadAction:
         result["initial_date"] = from_union([from_str, from_none], self.initial_date)
         result["selected_time"] = from_union([from_str, from_none], self.selected_time)
         result["initial_time"] = from_union([from_str, from_none], self.initial_time)
+        result["selected_options"] = from_union([lambda x: from_list(lambda x: to_class(SelectedOption, x), x), from_none], self.selected_options)
         return result
 
 

@@ -1350,7 +1350,17 @@
       "selected_date": "",
       "initial_date": "",
       "selected_time": "",
-      "initial_time": ""
+      "initial_time": "",
+      "selected_options": [
+        {
+          "text": {
+            "type": "plain_text",
+            "text": "",
+            "emoji": false
+          },
+          "value": ""
+        }
+      ]
     }
   ],
   "is_enterprise_install": false

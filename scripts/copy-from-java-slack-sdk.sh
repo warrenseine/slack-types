@@ -20,3 +20,8 @@ cp -a java-slack-sdk/json-logs/samples/app-backend/dialogs/.  ./json/app-backend
 cp -a java-slack-sdk/json-logs/samples/app-backend/interactive-components/. ./json/app-backend/interactive-components/
 cp -a java-slack-sdk/json-logs/samples/app-backend/slash-commands/. ./json/app-backend/slash-commands/
 cp -a java-slack-sdk/json-logs/samples/app-backend/views/. ./json/app-backend/views/
+
+# Fix missing fields
+
+json_file=json/app-backend/interactive-components/BlockActionPayload.json
+jq '. + (.actions[0].selected_options = [.actions[0].selected_option])' $json_file > $json_file.tmp && mv $json_file.tmp $json_file
