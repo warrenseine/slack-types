@@ -25,19 +25,138 @@
       ],
       "is_pending_ext_shared": false,
       "connected_team_ids": [
-        ""
+        "",
+        "T00000000"
       ],
       "conversation_host_id": "E00000000",
       "channel_email_addresses": [
-        ""
+        {
+          "team_id": "T00000000",
+          "user_id": "W00000000",
+          "conversation_id": "C00000000",
+          "date_created": 12345,
+          "address": "",
+          "name": "",
+          "icons": {
+            "image_36": "https://www.example.com/",
+            "image_48": "https://www.example.com/",
+            "image_72": "https://www.example.com/"
+          }
+        },
+        {
+          "team_id": "T00000000",
+          "user_id": "U00000000",
+          "conversation_id": "C00000000",
+          "date_created": 12345,
+          "address": "",
+          "name": "",
+          "icons": {
+            "image_36": "https://www.example.com/",
+            "image_48": "https://www.example.com/",
+            "image_72": "https://www.example.com/"
+          }
+        }
       ],
       "connected_limited_team_ids": [
         ""
-      ]
+      ],
+      "external_user_count": 12345,
+      "internal_team_ids": [
+        "T00000000"
+      ],
+      "channel_manager_count": 12345,
+      "is_disconnect_in_progress": false,
+      "canvas": {
+        "total_count": 12345,
+        "ownership_details": [
+          {
+            "count": 123,
+            "team_id": ""
+          }
+        ]
+      },
+      "context_team_id": "T00000000",
+      "lists": {
+        "total_count": 12345,
+        "ownership_details": [
+          {
+            "count": 123,
+            "team_id": ""
+          }
+        ]
+      },
+      "properties": {
+        "canvas": {
+          "file_id": "F00000000",
+          "is_empty": false,
+          "quip_thread_id": "",
+          "is_migrated": false
+        },
+        "posting_restricted_to": {
+          "type": [
+            ""
+          ],
+          "user": [
+            "U00000000"
+          ]
+        },
+        "threads_restricted_to": {
+          "type": [
+            ""
+          ]
+        },
+        "huddles_restricted": false,
+        "at_here_restricted": false,
+        "at_channel_restricted": false,
+        "tabs": [
+          {
+            "id": "",
+            "label": "",
+            "type": "",
+            "data": {
+              "file_id": "F00000000",
+              "shared_ts": "0000000000.000000"
+            },
+            "is_disabled": false
+          },
+          {
+            "type": "",
+            "label": "",
+            "id": ""
+          }
+        ],
+        "tabz": [
+          {
+            "id": "",
+            "label": "",
+            "type": "",
+            "data": {
+              "file_id": "F00000000",
+              "shared_ts": "0000000000.000000"
+            },
+            "is_disabled": false
+          },
+          {
+            "type": ""
+          }
+        ],
+        "meeting_notes": {
+          "file_id": "F00000000"
+        },
+        "is_dormant": false,
+        "has_slack_connect_invite_created": false
+      }
     }
   ],
   "next_cursor": "",
   "error": "",
   "needed": "",
-  "provided": ""
+  "provided": "",
+  "total_count": 12345,
+  "response_metadata": {
+    "messages": [
+      ""
+    ]
+  },
+  "warning": ""
 }

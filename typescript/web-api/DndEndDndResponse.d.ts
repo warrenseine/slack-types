@@ -3,4 +3,5 @@ export interface DndEndDndResponse {
     error?:    string;
     needed?:   string;
     provided?: string;
+    warning?:  string;
 }

@@ -6,10 +6,11 @@ export interface DndUpdatedEvent {
 }
 
 export interface DndStatus {
-    dnd_enabled?:       boolean;
-    snooze_remaining?:  number;
-    next_dnd_start_ts?: number;
-    next_dnd_end_ts?:   number;
-    snooze_enabled?:    boolean;
-    snooze_endtime?:    number;
+    dnd_enabled?:          boolean;
+    snooze_remaining?:     number;
+    next_dnd_start_ts?:    number;
+    next_dnd_end_ts?:      number;
+    snooze_enabled?:       boolean;
+    snooze_is_indefinite?: boolean;
+    snooze_endtime?:       number;
 }

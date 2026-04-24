@@ -4,6 +4,8 @@ export interface ConversationsInviteResponse {
     error?:    string;
     needed?:   string;
     provided?: string;
+    errors?:   Error[];
+    warning?:  string;
 }
 
 export interface Channel {
@@ -35,10 +37,18 @@ export interface Channel {
     is_moved?:                   number;
     internal_team_ids?:          string[];
     is_open?:                    boolean;
+    context_team_id?:            string;
+    updated?:                    number;
 }
 
 export interface Purpose {
     value?:    string;
     creator?:  string;
     last_set?: number;
+}
+
+export interface Error {
+    ok?:    boolean;
+    error?: string;
+    user?:  string;
 }

@@ -113,6 +113,8 @@ class GroupDeletedPayload:
     token: Optional[str] = None
     enterprise_id: Optional[str] = None
     team_id: Optional[str] = None
+    context_team_id: Optional[str] = None
+    context_enterprise_id: Optional[str] = None
     api_app_id: Optional[str] = None
     type: Optional[str] = None
     authed_users: Optional[List[str]] = None
@@ -130,6 +132,8 @@ class GroupDeletedPayload:
         token = from_union([from_str, from_none], obj.get("token"))
         enterprise_id = from_union([from_str, from_none], obj.get("enterprise_id"))
         team_id = from_union([from_str, from_none], obj.get("team_id"))
+        context_team_id = from_union([from_str, from_none], obj.get("context_team_id"))
+        context_enterprise_id = from_union([from_str, from_none], obj.get("context_enterprise_id"))
         api_app_id = from_union([from_str, from_none], obj.get("api_app_id"))
         type = from_union([from_str, from_none], obj.get("type"))
         authed_users = from_union([lambda x: from_list(from_str, x), from_none], obj.get("authed_users"))
@@ -140,13 +144,15 @@ class GroupDeletedPayload:
         event_time = from_union([from_int, from_none], obj.get("event_time"))
         event_context = from_union([from_str, from_none], obj.get("event_context"))
         event = from_union([Event.from_dict, from_none], obj.get("event"))
-        return GroupDeletedPayload(token, enterprise_id, team_id, api_app_id, type, authed_users, authed_teams, authorizations, is_ext_shared_channel, event_id, event_time, event_context, event)
+        return GroupDeletedPayload(token, enterprise_id, team_id, context_team_id, context_enterprise_id, api_app_id, type, authed_users, authed_teams, authorizations, is_ext_shared_channel, event_id, event_time, event_context, event)
 
     def to_dict(self) -> dict:
         result: dict = {}
         result["token"] = from_union([from_str, from_none], self.token)
         result["enterprise_id"] = from_union([from_str, from_none], self.enterprise_id)
         result["team_id"] = from_union([from_str, from_none], self.team_id)
+        result["context_team_id"] = from_union([from_str, from_none], self.context_team_id)
+        result["context_enterprise_id"] = from_union([from_str, from_none], self.context_enterprise_id)
         result["api_app_id"] = from_union([from_str, from_none], self.api_app_id)
         result["type"] = from_union([from_str, from_none], self.type)
         result["authed_users"] = from_union([lambda x: from_list(from_str, x), from_none], self.authed_users)

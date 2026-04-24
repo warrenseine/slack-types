@@ -10,7 +10,20 @@
       "is_restricted": false,
       "is_ultra_restricted": false,
       "is_bot": false,
-      "expiration_ts": 12345
+      "expiration_ts": 12345,
+      "username": "",
+      "full_name": "",
+      "is_active": false,
+      "date_created": 12345,
+      "roles": [
+        ""
+      ],
+      "workspaces": [
+        "T00000000"
+      ],
+      "has_2fa": false,
+      "has_sso": false,
+      "last_active_ts": 12345
     }
   ],
   "response_metadata": {
@@ -21,5 +34,6 @@
   },
   "error": "",
   "needed": "",
-  "provided": ""
+  "provided": "",
+  "warning": ""
 }

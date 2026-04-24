@@ -234,18 +234,37 @@ class UrnScimSchemasExtensionEnterprise10:
 class UrnScimSchemasExtensionSlackGuest10:
     type: Optional[str] = None
     expiration: Optional[str] = None
+    channels: Optional[List[Group]] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'UrnScimSchemasExtensionSlackGuest10':
         assert isinstance(obj, dict)
         type = from_union([from_str, from_none], obj.get("type"))
         expiration = from_union([from_str, from_none], obj.get("expiration"))
-        return UrnScimSchemasExtensionSlackGuest10(type, expiration)
+        channels = from_union([lambda x: from_list(Group.from_dict, x), from_none], obj.get("channels"))
+        return UrnScimSchemasExtensionSlackGuest10(type, expiration, channels)
 
     def to_dict(self) -> dict:
         result: dict = {}
         result["type"] = from_union([from_str, from_none], self.type)
         result["expiration"] = from_union([from_str, from_none], self.expiration)
+        result["channels"] = from_union([lambda x: from_list(lambda x: to_class(Group, x), x), from_none], self.channels)
+        return result
+
+
+@dataclass
+class UrnScimSchemasExtensionSlackProfile10:
+    start_date: Optional[str] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'UrnScimSchemasExtensionSlackProfile10':
+        assert isinstance(obj, dict)
+        start_date = from_union([from_str, from_none], obj.get("startDate"))
+        return UrnScimSchemasExtensionSlackProfile10(start_date)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["startDate"] = from_union([from_str, from_none], self.start_date)
         return result
 
 
@@ -271,6 +290,7 @@ class Resource:
     roles: Optional[List[Email]] = None
     urn_scim_schemas_extension_enterprise_10: Optional[UrnScimSchemasExtensionEnterprise10] = None
     urn_scim_schemas_extension_slack_guest_10: Optional[UrnScimSchemasExtensionSlackGuest10] = None
+    urn_scim_schemas_extension_slack_profile_10: Optional[UrnScimSchemasExtensionSlackProfile10] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Resource':
@@ -295,7 +315,8 @@ class Resource:
         roles = from_union([lambda x: from_list(Email.from_dict, x), from_none], obj.get("roles"))
         urn_scim_schemas_extension_enterprise_10 = from_union([UrnScimSchemasExtensionEnterprise10.from_dict, from_none], obj.get("urn:scim:schemas:extension:enterprise:1.0"))
         urn_scim_schemas_extension_slack_guest_10 = from_union([UrnScimSchemasExtensionSlackGuest10.from_dict, from_none], obj.get("urn:scim:schemas:extension:slack:guest:1.0"))
-        return Resource(schemas, id, external_id, meta, user_name, nick_name, name, display_name, profile_url, title, timezone, active, emails, photos, groups, addresses, phone_numbers, roles, urn_scim_schemas_extension_enterprise_10, urn_scim_schemas_extension_slack_guest_10)
+        urn_scim_schemas_extension_slack_profile_10 = from_union([UrnScimSchemasExtensionSlackProfile10.from_dict, from_none], obj.get("urn:scim:schemas:extension:slack:profile:1.0"))
+        return Resource(schemas, id, external_id, meta, user_name, nick_name, name, display_name, profile_url, title, timezone, active, emails, photos, groups, addresses, phone_numbers, roles, urn_scim_schemas_extension_enterprise_10, urn_scim_schemas_extension_slack_guest_10, urn_scim_schemas_extension_slack_profile_10)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -319,6 +340,7 @@ class Resource:
         result["roles"] = from_union([lambda x: from_list(lambda x: to_class(Email, x), x), from_none], self.roles)
         result["urn:scim:schemas:extension:enterprise:1.0"] = from_union([lambda x: to_class(UrnScimSchemasExtensionEnterprise10, x), from_none], self.urn_scim_schemas_extension_enterprise_10)
         result["urn:scim:schemas:extension:slack:guest:1.0"] = from_union([lambda x: to_class(UrnScimSchemasExtensionSlackGuest10, x), from_none], self.urn_scim_schemas_extension_slack_guest_10)
+        result["urn:scim:schemas:extension:slack:profile:1.0"] = from_union([lambda x: to_class(UrnScimSchemasExtensionSlackProfile10, x), from_none], self.urn_scim_schemas_extension_slack_profile_10)
         return result
 
 

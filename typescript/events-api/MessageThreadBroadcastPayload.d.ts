@@ -43,6 +43,7 @@ export interface Attachment {
     fallback?:              string;
     callback_id?:           string;
     color?:                 string;
+    hide_color?:            boolean;
     pretext?:               string;
     service_url?:           string;
     service_name?:          string;
@@ -56,7 +57,9 @@ export interface Attachment {
     author_subname?:        string;
     channel_id?:            string;
     channel_name?:          string;
+    channel_team?:          string;
     id?:                    number;
+    app_id?:                string;
     bot_id?:                string;
     indent?:                boolean;
     is_msg_unfurl?:         boolean;
@@ -84,11 +87,20 @@ export interface Attachment {
     ts?:                    string;
     mrkdwn_in?:             string[];
     actions?:               Action[];
+    preview?:               Preview;
+    file_id?:               string;
+    list_record_id?:        string;
+    list_record?:           ListRecord;
+    hide_border?:           boolean;
+    list_view_id?:          string;
+    list?:                  List;
+    list_view?:             ListView;
     filename?:              string;
     size?:                  number;
     mimetype?:              string;
     url?:                   string;
     metadata?:              Metadata;
+    is_file_attachment?:    boolean;
 }
 
 export interface Action {
@@ -119,6 +131,102 @@ export interface Field {
     short?: boolean;
 }
 
+export interface List {
+    id?:                                      string;
+    created?:                                 number;
+    timestamp?:                               number;
+    name?:                                    string;
+    title?:                                   string;
+    mimetype?:                                string;
+    filetype?:                                string;
+    external_type?:                           string;
+    pretty_type?:                             string;
+    user?:                                    string;
+    user_team?:                               string;
+    editable?:                                boolean;
+    size?:                                    number;
+    mode?:                                    string;
+    is_external?:                             boolean;
+    is_public?:                               boolean;
+    public_url_shared?:                       boolean;
+    display_as_bot?:                          boolean;
+    username?:                                string;
+    list_metadata?:                           ListMetadata;
+    list_limits?:                             ListLimits;
+    url_private?:                             string;
+    url_private_download?:                    string;
+    permalink?:                               string;
+    permalink_public?:                        string;
+    last_editor?:                             string;
+    updated?:                                 number;
+    comments_count?:                          number;
+    shares?:                                  Shares;
+    has_more_shares?:                         boolean;
+    private_channels_with_file_access_count?: number;
+    private_file_with_access_count?:          number;
+    has_rich_preview?:                        boolean;
+    file_access?:                             string;
+}
+
+export interface ListLimits {
+    over_row_maximum?:         boolean;
+    row_count_limit?:          number;
+    row_count?:                number;
+    over_column_maximum?:      boolean;
+    column_count?:             number;
+    column_count_limit?:       number;
+    over_view_maximum?:        boolean;
+    view_count?:               number;
+    view_count_limit?:         number;
+    max_attachments_per_cell?: number;
+}
+
+export interface ListMetadata {
+    icon?:            string;
+    icon_url?:        string;
+    icon_team_id?:    string;
+    description?:     string;
+    is_trial?:        boolean;
+    creation_source?: CreationSource;
+}
+
+export interface CreationSource {
+    type?:                 string;
+    reference_id?:         string;
+    workflow_function_id?: string;
+}
+
+export interface Shares {
+}
+
+export interface ListRecord {
+    record?: Record;
+}
+
+export interface Record {
+    record_id?: string;
+}
+
+export interface ListView {
+    id?:                   string;
+    name?:                 string;
+    type?:                 string;
+    is_locked?:            boolean;
+    position?:             string;
+    date_created?:         number;
+    created_by?:           string;
+    stick_column_left?:    boolean;
+    is_all_items_view?:    boolean;
+    default_view_key?:     string;
+    show_completed_items?: boolean;
+    grouping?:             Grouping;
+}
+
+export interface Grouping {
+    group_by?:           string;
+    group_by_column_id?: string;
+}
+
 export interface Metadata {
     thumb_64?:    boolean;
     thumb_80?:    boolean;
@@ -133,6 +241,26 @@ export interface Metadata {
     thumb_tiny?:  string;
 }
 
+export interface Preview {
+    type?:       string;
+    can_remove?: boolean;
+    title?:      Text;
+    subtitle?:   Text;
+    icon_url?:   string;
+}
+
+export interface Text {
+    type?:     Type;
+    text?:     string;
+    emoji?:    boolean;
+    verbatim?: boolean;
+}
+
+export enum Type {
+    Mrkdwn = "mrkdwn",
+    PlainText = "plain_text",
+}
+
 export interface Block {
     type?:         string;
     elements?:     Element[];
@@ -142,6 +270,8 @@ export interface Block {
     image_width?:  number;
     image_height?: number;
     image_bytes?:  number;
+    is_animated?:  boolean;
+    slack_file?:   SlackFile;
     alt_text?:     string;
     title?:        Text;
     text?:         Text;
@@ -157,6 +287,12 @@ export interface Accessory {
     image_width?:  number;
     image_height?: number;
     image_bytes?:  number;
+    slack_file?:   SlackFile;
+}
+
+export interface SlackFile {
+    id?:  string;
+    url?: string;
 }
 
 export interface Element {
@@ -185,6 +321,7 @@ export interface Element {
     image_width?:                     number;
     image_height?:                    number;
     image_bytes?:                     number;
+    slack_file?:                      SlackFile;
     initial_user?:                    string;
 }
 
@@ -194,18 +331,6 @@ export interface ElementConfirm {
     confirm?: Text;
     deny?:    Text;
     style?:   string;
-}
-
-export interface Text {
-    type?:     Type;
-    text?:     string;
-    emoji?:    boolean;
-    verbatim?: boolean;
-}
-
-export enum Type {
-    Mrkdwn = "mrkdwn",
-    PlainText = "plain_text",
 }
 
 export interface Filter {
@@ -242,6 +367,8 @@ export interface Root {
     last_read?:         string;
     unread_count?:      number;
     ts?:                string;
+    room?:              Room;
+    no_notifications?:  boolean;
 }
 
 export interface BotProfile {
@@ -271,4 +398,39 @@ export interface RootIcons {
     image_48?: string;
     image_64?: string;
     image_72?: string;
+}
+
+export interface Room {
+    id?:                 string;
+    name?:               string;
+    media_server?:       string;
+    created_by?:         string;
+    date_start?:         number;
+    date_end?:           number;
+    canvas_thread_ts?:   string;
+    thread_root_ts?:     string;
+    is_dm_call?:         boolean;
+    was_rejected?:       boolean;
+    was_missed?:         boolean;
+    was_accepted?:       boolean;
+    has_ended?:          boolean;
+    background_id?:      string;
+    canvas_background?:  string;
+    is_prewarmed?:       boolean;
+    is_scheduled?:       boolean;
+    media_backend_type?: string;
+    display_id?:         string;
+    external_unique_id?: string;
+    app_id?:             string;
+    call_family?:        string;
+    recording?:          Recording;
+    huddle_link?:        string;
+}
+
+export interface Recording {
+    transcript?:         boolean;
+    summary?:            boolean;
+    notetaking?:         boolean;
+    summary_status?:     string;
+    can_record_summary?: string;
 }

@@ -4,6 +4,7 @@ export interface AdminTeamsSettingsInfoResponse {
     error?:    string;
     needed?:   string;
     provided?: string;
+    warning?:  string;
 }
 
 export interface Team {
@@ -30,4 +31,5 @@ export interface Icon {
     image_132?:      string;
     image_230?:      string;
     image_original?: string;
+    image_default?:  boolean;
 }

@@ -81,6 +81,7 @@ class StatusEmojiDisplayInfo:
     emoji_name: Optional[str] = None
     display_alias: Optional[str] = None
     display_url: Optional[str] = None
+    unicode: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'StatusEmojiDisplayInfo':
@@ -88,13 +89,15 @@ class StatusEmojiDisplayInfo:
         emoji_name = from_union([from_str, from_none], obj.get("emoji_name"))
         display_alias = from_union([from_str, from_none], obj.get("display_alias"))
         display_url = from_union([from_str, from_none], obj.get("display_url"))
-        return StatusEmojiDisplayInfo(emoji_name, display_alias, display_url)
+        unicode = from_union([from_str, from_none], obj.get("unicode"))
+        return StatusEmojiDisplayInfo(emoji_name, display_alias, display_url, unicode)
 
     def to_dict(self) -> dict:
         result: dict = {}
         result["emoji_name"] = from_union([from_str, from_none], self.emoji_name)
         result["display_alias"] = from_union([from_str, from_none], self.display_alias)
         result["display_url"] = from_union([from_str, from_none], self.display_url)
+        result["unicode"] = from_union([from_str, from_none], self.unicode)
         return result
 
 
@@ -127,7 +130,11 @@ class Profile:
     status_text_canonical: Optional[str] = None
     status_emoji_url: Optional[str] = None
     pronouns: Optional[str] = None
+    huddle_state: Optional[str] = None
+    huddle_state_expiration_ts: Optional[int] = None
     status_emoji_display_info: Optional[List[StatusEmojiDisplayInfo]] = None
+    start_date: Optional[str] = None
+    status_clear_on_focus_end: Optional[bool] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Profile':
@@ -159,8 +166,12 @@ class Profile:
         status_text_canonical = from_union([from_str, from_none], obj.get("status_text_canonical"))
         status_emoji_url = from_union([from_str, from_none], obj.get("status_emoji_url"))
         pronouns = from_union([from_str, from_none], obj.get("pronouns"))
+        huddle_state = from_union([from_str, from_none], obj.get("huddle_state"))
+        huddle_state_expiration_ts = from_union([from_int, from_none], obj.get("huddle_state_expiration_ts"))
         status_emoji_display_info = from_union([lambda x: from_list(StatusEmojiDisplayInfo.from_dict, x), from_none], obj.get("status_emoji_display_info"))
-        return Profile(title, phone, skype, real_name, real_name_normalized, display_name, display_name_normalized, fields, status_text, status_emoji, status_expiration, avatar_hash, image_original, is_custom_image, email, first_name, last_name, image_24, image_32, image_48, image_72, image_192, image_512, image_1024, status_text_canonical, status_emoji_url, pronouns, status_emoji_display_info)
+        start_date = from_union([from_str, from_none], obj.get("start_date"))
+        status_clear_on_focus_end = from_union([from_bool, from_none], obj.get("status_clear_on_focus_end"))
+        return Profile(title, phone, skype, real_name, real_name_normalized, display_name, display_name_normalized, fields, status_text, status_emoji, status_expiration, avatar_hash, image_original, is_custom_image, email, first_name, last_name, image_24, image_32, image_48, image_72, image_192, image_512, image_1024, status_text_canonical, status_emoji_url, pronouns, huddle_state, huddle_state_expiration_ts, status_emoji_display_info, start_date, status_clear_on_focus_end)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -191,7 +202,11 @@ class Profile:
         result["status_text_canonical"] = from_union([from_str, from_none], self.status_text_canonical)
         result["status_emoji_url"] = from_union([from_str, from_none], self.status_emoji_url)
         result["pronouns"] = from_union([from_str, from_none], self.pronouns)
+        result["huddle_state"] = from_union([from_str, from_none], self.huddle_state)
+        result["huddle_state_expiration_ts"] = from_union([from_int, from_none], self.huddle_state_expiration_ts)
         result["status_emoji_display_info"] = from_union([lambda x: from_list(lambda x: to_class(StatusEmojiDisplayInfo, x), x), from_none], self.status_emoji_display_info)
+        result["start_date"] = from_union([from_str, from_none], self.start_date)
+        result["status_clear_on_focus_end"] = from_union([from_bool, from_none], self.status_clear_on_focus_end)
         return result
 
 
@@ -203,6 +218,7 @@ class UsersProfileSetResponse:
     error: Optional[str] = None
     needed: Optional[str] = None
     provided: Optional[str] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'UsersProfileSetResponse':
@@ -213,7 +229,8 @@ class UsersProfileSetResponse:
         error = from_union([from_str, from_none], obj.get("error"))
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
-        return UsersProfileSetResponse(profile, ok, username, error, needed, provided)
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return UsersProfileSetResponse(profile, ok, username, error, needed, provided, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -223,6 +240,7 @@ class UsersProfileSetResponse:
         result["error"] = from_union([from_str, from_none], self.error)
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

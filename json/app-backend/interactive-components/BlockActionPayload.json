@@ -23,9 +23,12 @@
     "message_ts": "",
     "attachment_id": 123,
     "channel_id": "",
+    "view_id": "",
     "text": "",
     "is_ephemeral": false,
-    "is_app_unfurl": false
+    "is_app_unfurl": false,
+    "app_unfurl_url": "",
+    "thread_ts": ""
   },
   "trigger_id": "",
   "channel": {
@@ -358,7 +361,11 @@
             "fallback": "",
             "image_width": 123,
             "image_height": 123,
-            "image_bytes": 123
+            "image_bytes": 123,
+            "slack_file": {
+              "id": "",
+              "url": ""
+            }
           },
           {
             "type": "overflow",
@@ -549,7 +556,11 @@
             "fallback": "",
             "image_width": 123,
             "image_height": 123,
-            "image_bytes": 123
+            "image_bytes": 123,
+            "slack_file": {
+              "id": "",
+              "url": ""
+            }
           }
         ],
         "block_id": ""
@@ -565,6 +576,11 @@
         "image_width": 123,
         "image_height": 123,
         "image_bytes": 123,
+        "is_animated": false,
+        "slack_file": {
+          "id": "",
+          "url": ""
+        },
         "alt_text": "",
         "title": {
           "type": "plain_text",
@@ -600,7 +616,11 @@
           "fallback": "",
           "image_width": 123,
           "image_height": 123,
-          "image_bytes": 123
+          "image_bytes": 123,
+          "slack_file": {
+            "id": "",
+            "url": ""
+          }
         }
       }
     ],
@@ -610,6 +630,7 @@
         "fallback": "",
         "callback_id": "",
         "color": "",
+        "hide_color": false,
         "pretext": "",
         "service_url": "",
         "service_name": "",
@@ -623,7 +644,9 @@
         "author_subname": "",
         "channel_id": "",
         "channel_name": "",
+        "channel_team": "",
         "id": 123,
+        "app_id": "",
         "bot_id": "",
         "indent": false,
         "is_msg_unfurl": false,
@@ -650,8 +673,8 @@
         "thumb_height": 123,
         "video_url": "",
         "video_html": "",
-        "video_html_width": 123,
-        "video_html_height": 123,
+        "video_html_width": 12.3,
+        "video_html_height": 12.3,
         "footer": "",
         "footer_icon": "",
         "ts": "",
@@ -679,6 +702,105 @@
             "url": ""
           }
         ],
+        "preview": {
+          "type": "",
+          "can_remove": false,
+          "title": {
+            "type": "plain_text",
+            "text": "",
+            "emoji": false
+          },
+          "subtitle": {
+            "type": "plain_text",
+            "text": "",
+            "emoji": false
+          },
+          "icon_url": ""
+        },
+        "file_id": "",
+        "list_record_id": "",
+        "list_record": {
+          "record": {
+            "record_id": ""
+          }
+        },
+        "hide_border": false,
+        "list_view_id": "",
+        "list": {
+          "id": "",
+          "created": 123,
+          "timestamp": 123,
+          "name": "",
+          "title": "",
+          "mimetype": "",
+          "filetype": "",
+          "external_type": "",
+          "pretty_type": "",
+          "user": "",
+          "user_team": "",
+          "editable": false,
+          "size": 123,
+          "mode": "",
+          "is_external": false,
+          "is_public": false,
+          "public_url_shared": false,
+          "display_as_bot": false,
+          "username": "",
+          "list_metadata": {
+            "icon": "",
+            "icon_url": "",
+            "icon_team_id": "",
+            "description": "",
+            "is_trial": false,
+            "creation_source": {
+              "type": "",
+              "reference_id": "",
+              "workflow_function_id": ""
+            }
+          },
+          "list_limits": {
+            "over_row_maximum": false,
+            "row_count_limit": 123,
+            "row_count": 123,
+            "over_column_maximum": false,
+            "column_count": 123,
+            "column_count_limit": 123,
+            "over_view_maximum": false,
+            "view_count": 123,
+            "view_count_limit": 123,
+            "max_attachments_per_cell": 123
+          },
+          "url_private": "",
+          "url_private_download": "",
+          "permalink": "",
+          "permalink_public": "",
+          "last_editor": "",
+          "updated": 123,
+          "comments_count": 123,
+          "shares": {},
+          "has_more_shares": false,
+          "private_channels_with_file_access_count": 123,
+          "private_file_with_access_count": 123,
+          "has_rich_preview": false,
+          "file_access": ""
+        },
+        "list_view": {
+          "id": "",
+          "name": "",
+          "type": "",
+          "is_locked": false,
+          "position": "",
+          "date_created": 123,
+          "created_by": "",
+          "stick_column_left": false,
+          "is_all_items_view": false,
+          "default_view_key": "",
+          "show_completed_items": false,
+          "grouping": {
+            "group_by": "",
+            "group_by_column_id": ""
+          }
+        },
         "filename": "",
         "size": 123,
         "mimetype": "",
@@ -695,7 +817,8 @@
           "extension": "",
           "rotation": 123,
           "thumb_tiny": ""
-        }
+        },
+        "is_file_attachment": false
       }
     ],
     "ts": "",
@@ -713,6 +836,7 @@
         "url": ""
       }
     ],
+    "app_id": "",
     "bot_id": "",
     "bot_link": "",
     "display_as_bot": false,
@@ -747,12 +871,34 @@
       "filetype": "",
       "pretty_type": "",
       "user": "",
+      "user_team": "",
+      "source_team": "",
       "mode": "",
       "editable": false,
       "non_owner_editable": false,
       "editor": "",
       "last_editor": "",
       "updated": 123,
+      "file_access": "",
+      "edit_timestamp": 123,
+      "alt_txt": "",
+      "subtype": "",
+      "transcription": {
+        "status": "",
+        "locale": "",
+        "preview": {
+          "content": "",
+          "has_more": false
+        }
+      },
+      "mp4": "",
+      "mp4_low": "",
+      "vtt": "",
+      "hls": "",
+      "hls_embed": "",
+      "duration_ms": 123,
+      "thumb_video_w": 123,
+      "thumb_video_h": 123,
       "original_attachment_count": 123,
       "is_external": false,
       "external_type": "",
@@ -762,6 +908,7 @@
       "size": 123,
       "url_private": "",
       "url_private_download": "",
+      "url_static_preview": "",
       "app_id": "",
       "app_name": "",
       "thumb_64": "",
@@ -844,7 +991,10 @@
               "thread_ts": "",
               "latest_reply": "",
               "channel_name": "",
-              "team_id": ""
+              "team_id": "",
+              "access": "",
+              "source": "",
+              "date_last_shared": 123
             }
           ],
           "C03E94MKU_": [
@@ -859,7 +1009,10 @@
               "thread_ts": "",
               "latest_reply": "",
               "channel_name": "",
-              "team_id": ""
+              "team_id": "",
+              "access": "",
+              "source": "",
+              "date_last_shared": 123
             }
           ]
         },
@@ -876,7 +1029,10 @@
               "thread_ts": "",
               "latest_reply": "",
               "channel_name": "",
-              "team_id": ""
+              "team_id": "",
+              "access": "",
+              "source": "",
+              "date_last_shared": 123
             }
           ],
           "C03E94MKU_": [
@@ -891,11 +1047,15 @@
               "thread_ts": "",
               "latest_reply": "",
               "channel_name": "",
-              "team_id": ""
+              "team_id": "",
+              "access": "",
+              "source": "",
+              "date_last_shared": 123
             }
           ]
         }
       },
+      "has_more_shares": false,
       "channel_actions_ts": "",
       "channel_actions_count": 123,
       "headers": {
@@ -905,6 +1065,63 @@
         "message_id": ""
       },
       "simplified_html": "",
+      "media_progress": {
+        "offset_ms": 123,
+        "max_offset_ms": 123,
+        "duration_ms": 123,
+        "media_watched": false
+      },
+      "saved": {
+        "is_archived": false,
+        "date_completed": 123,
+        "date_due": 123,
+        "state": ""
+      },
+      "quip_thread_id": "",
+      "is_channel_space": false,
+      "linked_channel_id": "",
+      "access": "",
+      "last_read": 123,
+      "private_channels_with_file_access_count": 123,
+      "private_file_with_access_count": 123,
+      "org_or_workspace_access": "",
+      "update_notification": 123,
+      "canvas_template_mode": "",
+      "template_conversion_ts": 123,
+      "template_name": "",
+      "template_title": "",
+      "template_description": "",
+      "template_icon": "",
+      "team_pref_version_history_enabled": false,
+      "show_badge": false,
+      "list_metadata": {
+        "icon": "",
+        "icon_url": "",
+        "icon_team_id": "",
+        "description": "",
+        "is_trial": false,
+        "creation_source": {
+          "type": "",
+          "reference_id": "",
+          "workflow_function_id": ""
+        }
+      },
+      "list_limits": {
+        "over_row_maximum": false,
+        "row_count_limit": 123,
+        "row_count": 123,
+        "over_column_maximum": false,
+        "column_count": 123,
+        "column_count_limit": 123,
+        "over_view_maximum": false,
+        "view_count": 123,
+        "view_count_limit": 123,
+        "max_attachments_per_cell": 123
+      },
+      "list_csv_download_url": "",
+      "can_toggle_canvas_lock": false,
+      "is_restricted_sharing_enabled": false,
+      "canvas_printing_enabled": false,
       "bot_id": "",
       "initial_comment": {
         "id": "",
@@ -931,12 +1148,34 @@
         "filetype": "",
         "pretty_type": "",
         "user": "",
+        "user_team": "",
+        "source_team": "",
         "mode": "",
         "editable": false,
         "non_owner_editable": false,
         "editor": "",
         "last_editor": "",
         "updated": 123,
+        "file_access": "",
+        "edit_timestamp": 123,
+        "alt_txt": "",
+        "subtype": "",
+        "transcription": {
+          "status": "",
+          "locale": "",
+          "preview": {
+            "content": "",
+            "has_more": false
+          }
+        },
+        "mp4": "",
+        "mp4_low": "",
+        "vtt": "",
+        "hls": "",
+        "hls_embed": "",
+        "duration_ms": 123,
+        "thumb_video_w": 123,
+        "thumb_video_h": 123,
         "original_attachment_count": 123,
         "is_external": false,
         "external_type": "",
@@ -946,6 +1185,7 @@
         "size": 123,
         "url_private": "",
         "url_private_download": "",
+        "url_static_preview": "",
         "app_id": "",
         "app_name": "",
         "thumb_64": "",
@@ -1028,7 +1268,10 @@
                 "thread_ts": "",
                 "latest_reply": "",
                 "channel_name": "",
-                "team_id": ""
+                "team_id": "",
+                "access": "",
+                "source": "",
+                "date_last_shared": 123
               }
             ],
             "C03E94MKU_": [
@@ -1043,7 +1286,10 @@
                 "thread_ts": "",
                 "latest_reply": "",
                 "channel_name": "",
-                "team_id": ""
+                "team_id": "",
+                "access": "",
+                "source": "",
+                "date_last_shared": 123
               }
             ]
           },
@@ -1060,7 +1306,10 @@
                 "thread_ts": "",
                 "latest_reply": "",
                 "channel_name": "",
-                "team_id": ""
+                "team_id": "",
+                "access": "",
+                "source": "",
+                "date_last_shared": 123
               }
             ],
             "C03E94MKU_": [
@@ -1075,11 +1324,15 @@
                 "thread_ts": "",
                 "latest_reply": "",
                 "channel_name": "",
-                "team_id": ""
+                "team_id": "",
+                "access": "",
+                "source": "",
+                "date_last_shared": 123
               }
             ]
           }
         },
+        "has_more_shares": false,
         "channel_actions_ts": "",
         "channel_actions_count": 123,
         "headers": {
@@ -1089,6 +1342,63 @@
           "message_id": ""
         },
         "simplified_html": "",
+        "media_progress": {
+          "offset_ms": 123,
+          "max_offset_ms": 123,
+          "duration_ms": 123,
+          "media_watched": false
+        },
+        "saved": {
+          "is_archived": false,
+          "date_completed": 123,
+          "date_due": 123,
+          "state": ""
+        },
+        "quip_thread_id": "",
+        "is_channel_space": false,
+        "linked_channel_id": "",
+        "access": "",
+        "last_read": 123,
+        "private_channels_with_file_access_count": 123,
+        "private_file_with_access_count": 123,
+        "org_or_workspace_access": "",
+        "update_notification": 123,
+        "canvas_template_mode": "",
+        "template_conversion_ts": 123,
+        "template_name": "",
+        "template_title": "",
+        "template_description": "",
+        "template_icon": "",
+        "team_pref_version_history_enabled": false,
+        "show_badge": false,
+        "list_metadata": {
+          "icon": "",
+          "icon_url": "",
+          "icon_team_id": "",
+          "description": "",
+          "is_trial": false,
+          "creation_source": {
+            "type": "",
+            "reference_id": "",
+            "workflow_function_id": ""
+          }
+        },
+        "list_limits": {
+          "over_row_maximum": false,
+          "row_count_limit": 123,
+          "row_count": 123,
+          "over_column_maximum": false,
+          "column_count": 123,
+          "column_count_limit": 123,
+          "over_view_maximum": false,
+          "view_count": 123,
+          "view_count_limit": 123,
+          "max_attachments_per_cell": 123
+        },
+        "list_csv_download_url": "",
+        "can_toggle_canvas_lock": false,
+        "is_restricted_sharing_enabled": false,
+        "canvas_printing_enabled": false,
         "bot_id": "",
         "initial_comment": {
           "id": "",
@@ -1203,7 +1513,40 @@
       "subscribed": false,
       "last_read": "",
       "unread_count": 123,
-      "ts": ""
+      "ts": "",
+      "room": {
+        "id": "",
+        "name": "",
+        "media_server": "",
+        "created_by": "",
+        "date_start": 123,
+        "date_end": 123,
+        "canvas_thread_ts": "",
+        "thread_root_ts": "",
+        "is_dm_call": false,
+        "was_rejected": false,
+        "was_missed": false,
+        "was_accepted": false,
+        "has_ended": false,
+        "background_id": "",
+        "canvas_background": "",
+        "is_prewarmed": false,
+        "is_scheduled": false,
+        "media_backend_type": "",
+        "display_id": "",
+        "external_unique_id": "",
+        "app_id": "",
+        "call_family": "",
+        "recording": {
+          "transcript": false,
+          "summary": false,
+          "notetaking": false,
+          "summary_status": "",
+          "can_record_summary": ""
+        },
+        "huddle_link": ""
+      },
+      "no_notifications": false
     },
     "item_type": "",
     "item": {
@@ -1240,6 +1583,47 @@
       "size": 123,
       "mode": "",
       "comment": ""
+    },
+    "metadata": {
+      "event_type": "",
+      "event_payload": {}
+    },
+    "room": {
+      "id": "",
+      "name": "",
+      "media_server": "",
+      "created_by": "",
+      "date_start": 123,
+      "date_end": 123,
+      "canvas_thread_ts": "",
+      "thread_root_ts": "",
+      "is_dm_call": false,
+      "was_rejected": false,
+      "was_missed": false,
+      "was_accepted": false,
+      "has_ended": false,
+      "background_id": "",
+      "canvas_background": "",
+      "is_prewarmed": false,
+      "is_scheduled": false,
+      "media_backend_type": "",
+      "display_id": "",
+      "external_unique_id": "",
+      "app_id": "",
+      "call_family": "",
+      "recording": {
+        "transcript": false,
+        "summary": false,
+        "notetaking": false,
+        "summary_status": "",
+        "can_record_summary": ""
+      },
+      "huddle_link": ""
+    },
+    "no_notifications": false,
+    "assistant_app_thread": {
+      "title": "",
+      "first_user_thread_reply": ""
     }
   },
   "response_url": "",
@@ -1277,6 +1661,14 @@
     "bot_id": ""
   },
   "state": {},
+  "app_unfurl": {
+    "id": 123,
+    "fallback": "",
+    "bot_id": "",
+    "app_unfurl_url": "",
+    "is_app_unfurl": false,
+    "app_id": ""
+  },
   "actions": [
     {
       "action_id": "",
@@ -1288,6 +1680,7 @@
       },
       "value": "",
       "type": "",
+      "style": "",
       "action_ts": "",
       "placeholder": {
         "type": "plain_text",
@@ -1351,6 +1744,11 @@
       "initial_date": "",
       "selected_time": "",
       "initial_time": "",
+      "rich_text_value": {
+        "type": "rich_text",
+        "elements": [],
+        "block_id": ""
+      },
       "selected_options": [
         {
           "text": {
@@ -1363,5 +1761,19 @@
       ]
     }
   ],
-  "is_enterprise_install": false
+  "is_enterprise_install": false,
+  "bot_access_token": "",
+  "function_data": {
+    "execution_id": "",
+    "function": {
+      "callback_id": ""
+    }
+  },
+  "interactivity": {
+    "interactivity_pointer": "",
+    "interactor": {
+      "id": "",
+      "secret": ""
+    }
+  }
 }

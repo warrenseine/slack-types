@@ -49,6 +49,7 @@ class TeamBillingInfoResponse:
     needed: Optional[str] = None
     provided: Optional[str] = None
     plan: Optional[str] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'TeamBillingInfoResponse':
@@ -58,7 +59,8 @@ class TeamBillingInfoResponse:
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
         plan = from_union([from_str, from_none], obj.get("plan"))
-        return TeamBillingInfoResponse(ok, error, needed, provided, plan)
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return TeamBillingInfoResponse(ok, error, needed, provided, plan, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -67,6 +69,7 @@ class TeamBillingInfoResponse:
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
         result["plan"] = from_union([from_str, from_none], self.plan)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

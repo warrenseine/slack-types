@@ -32,11 +32,6 @@ def from_union(fs, x):
     assert False
 
 
-def from_int(x: Any) -> int:
-    assert isinstance(x, int) and not isinstance(x, bool)
-    return x
-
-
 def from_bool(x: Any) -> bool:
     assert isinstance(x, bool)
     return x
@@ -50,6 +45,74 @@ def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
 def to_class(c: Type[T], x: Any) -> dict:
     assert isinstance(x, c)
     return cast(Any, x).to_dict()
+
+
+def from_int(x: Any) -> int:
+    assert isinstance(x, int) and not isinstance(x, bool)
+    return x
+
+
+@dataclass
+class Tab:
+    type: Optional[str] = None
+    label: Optional[str] = None
+    id: Optional[str] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Tab':
+        assert isinstance(obj, dict)
+        type = from_union([from_str, from_none], obj.get("type"))
+        label = from_union([from_str, from_none], obj.get("label"))
+        id = from_union([from_str, from_none], obj.get("id"))
+        return Tab(type, label, id)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["type"] = from_union([from_str, from_none], self.type)
+        result["label"] = from_union([from_str, from_none], self.label)
+        result["id"] = from_union([from_str, from_none], self.id)
+        return result
+
+
+@dataclass
+class Tabz:
+    type: Optional[str] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Tabz':
+        assert isinstance(obj, dict)
+        type = from_union([from_str, from_none], obj.get("type"))
+        return Tabz(type)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["type"] = from_union([from_str, from_none], self.type)
+        return result
+
+
+@dataclass
+class Properties:
+    is_dormant: Optional[bool] = None
+    tabs: Optional[List[Tab]] = None
+    tabz: Optional[List[Tabz]] = None
+    has_slack_connect_invite_created: Optional[bool] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Properties':
+        assert isinstance(obj, dict)
+        is_dormant = from_union([from_bool, from_none], obj.get("is_dormant"))
+        tabs = from_union([lambda x: from_list(Tab.from_dict, x), from_none], obj.get("tabs"))
+        tabz = from_union([lambda x: from_list(Tabz.from_dict, x), from_none], obj.get("tabz"))
+        has_slack_connect_invite_created = from_union([from_bool, from_none], obj.get("has_slack_connect_invite_created"))
+        return Properties(is_dormant, tabs, tabz, has_slack_connect_invite_created)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["is_dormant"] = from_union([from_bool, from_none], self.is_dormant)
+        result["tabs"] = from_union([lambda x: from_list(lambda x: to_class(Tab, x), x), from_none], self.tabs)
+        result["tabz"] = from_union([lambda x: from_list(lambda x: to_class(Tabz, x), x), from_none], self.tabz)
+        result["has_slack_connect_invite_created"] = from_union([from_bool, from_none], self.has_slack_connect_invite_created)
+        return result
 
 
 @dataclass
@@ -114,6 +177,9 @@ class Channel:
     is_org_default: Optional[bool] = None
     is_org_mandatory: Optional[bool] = None
     connected_limited_team_ids: Optional[List[str]] = None
+    context_team_id: Optional[str] = None
+    updated: Optional[int] = None
+    properties: Optional[Properties] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Channel':
@@ -156,7 +222,10 @@ class Channel:
         is_org_default = from_union([from_bool, from_none], obj.get("is_org_default"))
         is_org_mandatory = from_union([from_bool, from_none], obj.get("is_org_mandatory"))
         connected_limited_team_ids = from_union([lambda x: from_list(from_str, x), from_none], obj.get("connected_limited_team_ids"))
-        return Channel(id, name, is_channel, is_group, is_im, created, is_archived, is_general, unlinked, name_normalized, is_shared, creator, is_ext_shared, is_org_shared, shared_team_ids, pending_shared, pending_connected_team_ids, is_pending_ext_shared, is_member, is_private, is_mpim, last_read, topic, purpose, previous_names, locale, num_members, is_read_only, is_thread_only, is_non_threadable, internal_team_ids, connected_team_ids, conversation_host_id, is_moved, is_global_shared, is_org_default, is_org_mandatory, connected_limited_team_ids)
+        context_team_id = from_union([from_str, from_none], obj.get("context_team_id"))
+        updated = from_union([from_int, from_none], obj.get("updated"))
+        properties = from_union([Properties.from_dict, from_none], obj.get("properties"))
+        return Channel(id, name, is_channel, is_group, is_im, created, is_archived, is_general, unlinked, name_normalized, is_shared, creator, is_ext_shared, is_org_shared, shared_team_ids, pending_shared, pending_connected_team_ids, is_pending_ext_shared, is_member, is_private, is_mpim, last_read, topic, purpose, previous_names, locale, num_members, is_read_only, is_thread_only, is_non_threadable, internal_team_ids, connected_team_ids, conversation_host_id, is_moved, is_global_shared, is_org_default, is_org_mandatory, connected_limited_team_ids, context_team_id, updated, properties)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -198,6 +267,9 @@ class Channel:
         result["is_org_default"] = from_union([from_bool, from_none], self.is_org_default)
         result["is_org_mandatory"] = from_union([from_bool, from_none], self.is_org_mandatory)
         result["connected_limited_team_ids"] = from_union([lambda x: from_list(from_str, x), from_none], self.connected_limited_team_ids)
+        result["context_team_id"] = from_union([from_str, from_none], self.context_team_id)
+        result["updated"] = from_union([from_int, from_none], self.updated)
+        result["properties"] = from_union([lambda x: to_class(Properties, x), from_none], self.properties)
         return result
 
 
@@ -208,6 +280,7 @@ class ConversationsInfoResponse:
     error: Optional[str] = None
     needed: Optional[str] = None
     provided: Optional[str] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'ConversationsInfoResponse':
@@ -217,7 +290,8 @@ class ConversationsInfoResponse:
         error = from_union([from_str, from_none], obj.get("error"))
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
-        return ConversationsInfoResponse(ok, channel, error, needed, provided)
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return ConversationsInfoResponse(ok, channel, error, needed, provided, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -226,6 +300,7 @@ class ConversationsInfoResponse:
         result["error"] = from_union([from_str, from_none], self.error)
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

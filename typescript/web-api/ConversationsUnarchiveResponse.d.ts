@@ -3,4 +3,5 @@ export interface ConversationsUnarchiveResponse {
     error?:    string;
     needed?:   string;
     provided?: string;
+    warning?:  string;
 }

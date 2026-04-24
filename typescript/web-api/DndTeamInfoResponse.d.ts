@@ -4,6 +4,7 @@ export interface DndTeamInfoResponse {
     error?:    string;
     needed?:   string;
     provided?: string;
+    warning?:  string;
 }
 
 export interface User {

@@ -130,16 +130,19 @@ class IncomingWebhook:
 @dataclass
 class ResponseMetadata:
     messages: Optional[List[str]] = None
+    warnings: Optional[List[Any]] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'ResponseMetadata':
         assert isinstance(obj, dict)
         messages = from_union([lambda x: from_list(from_str, x), from_none], obj.get("messages"))
-        return ResponseMetadata(messages)
+        warnings = from_union([lambda x: from_list(lambda x: x, x), from_none], obj.get("warnings"))
+        return ResponseMetadata(messages, warnings)
 
     def to_dict(self) -> dict:
         result: dict = {}
         result["messages"] = from_union([lambda x: from_list(from_str, x), from_none], self.messages)
+        result["warnings"] = from_union([lambda x: from_list(lambda x: x, x), from_none], self.warnings)
         return result
 
 

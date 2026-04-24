@@ -88,6 +88,7 @@ class DNDStatus:
     snooze_enabled: Optional[bool] = None
     snooze_endtime: Optional[int] = None
     snooze_remaining: Optional[int] = None
+    snooze_is_indefinite: Optional[bool] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'DNDStatus':
@@ -98,7 +99,8 @@ class DNDStatus:
         snooze_enabled = from_union([from_bool, from_none], obj.get("snooze_enabled"))
         snooze_endtime = from_union([from_int, from_none], obj.get("snooze_endtime"))
         snooze_remaining = from_union([from_int, from_none], obj.get("snooze_remaining"))
-        return DNDStatus(dnd_enabled, next_dnd_start_ts, next_dnd_end_ts, snooze_enabled, snooze_endtime, snooze_remaining)
+        snooze_is_indefinite = from_union([from_bool, from_none], obj.get("snooze_is_indefinite"))
+        return DNDStatus(dnd_enabled, next_dnd_start_ts, next_dnd_end_ts, snooze_enabled, snooze_endtime, snooze_remaining, snooze_is_indefinite)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -108,6 +110,7 @@ class DNDStatus:
         result["snooze_enabled"] = from_union([from_bool, from_none], self.snooze_enabled)
         result["snooze_endtime"] = from_union([from_int, from_none], self.snooze_endtime)
         result["snooze_remaining"] = from_union([from_int, from_none], self.snooze_remaining)
+        result["snooze_is_indefinite"] = from_union([from_bool, from_none], self.snooze_is_indefinite)
         return result
 
 

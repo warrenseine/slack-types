@@ -2,3 +2,5 @@ java-slack-sdk/
 node_modules/
 dist/
 *.egg-info
+.venv/
+uv.lock

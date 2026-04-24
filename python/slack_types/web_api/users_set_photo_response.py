@@ -89,6 +89,7 @@ class UsersSetPhotoResponse:
     error: Optional[str] = None
     needed: Optional[str] = None
     provided: Optional[str] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'UsersSetPhotoResponse':
@@ -98,7 +99,8 @@ class UsersSetPhotoResponse:
         error = from_union([from_str, from_none], obj.get("error"))
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
-        return UsersSetPhotoResponse(ok, profile, error, needed, provided)
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return UsersSetPhotoResponse(ok, profile, error, needed, provided, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -107,6 +109,7 @@ class UsersSetPhotoResponse:
         result["error"] = from_union([from_str, from_none], self.error)
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

@@ -47,6 +47,7 @@ export interface Subteam {
     user_count?:            number;
     channel_count?:         number;
     deleted_by?:            string;
+    is_section?:            boolean;
 }
 
 export interface Prefs {

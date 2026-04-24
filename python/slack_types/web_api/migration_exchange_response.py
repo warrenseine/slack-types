@@ -7,7 +7,7 @@
 #     result = migration_exchange_response_from_dict(json.loads(json_string))
 
 from dataclasses import dataclass
-from typing import Any, Optional, List, TypeVar, Callable, Type, cast
+from typing import Optional, List, Dict, Any, TypeVar, Callable, Type, cast
 
 
 T = TypeVar("T")
@@ -42,23 +42,14 @@ def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
     return [f(y) for y in x]
 
 
+def from_dict(f: Callable[[Any], T], x: Any) -> Dict[str, T]:
+    assert isinstance(x, dict)
+    return { k: f(v) for (k, v) in x.items() }
+
+
 def to_class(c: Type[T], x: Any) -> dict:
     assert isinstance(x, c)
     return cast(Any, x).to_dict()
-
-
-@dataclass
-class UserIDMap:
-    pass
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'UserIDMap':
-        assert isinstance(obj, dict)
-        return UserIDMap()
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        return result
 
 
 @dataclass
@@ -71,7 +62,7 @@ class MigrationExchangeResponse:
     team_id: Optional[str] = None
     enterprise_id: Optional[str] = None
     invalid_user_ids: Optional[List[str]] = None
-    user_id_map: Optional[UserIDMap] = None
+    user_id_map: Optional[Dict[str, int]] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'MigrationExchangeResponse':
@@ -84,7 +75,7 @@ class MigrationExchangeResponse:
         team_id = from_union([from_str, from_none], obj.get("team_id"))
         enterprise_id = from_union([from_str, from_none], obj.get("enterprise_id"))
         invalid_user_ids = from_union([lambda x: from_list(from_str, x), from_none], obj.get("invalid_user_ids"))
-        user_id_map = from_union([UserIDMap.from_dict, from_none], obj.get("user_id_map"))
+        user_id_map = from_union([lambda x: from_dict(lambda x: int(from_str(x)), x), from_none], obj.get("user_id_map"))
         return MigrationExchangeResponse(ok, warning, error, needed, provided, team_id, enterprise_id, invalid_user_ids, user_id_map)
 
     def to_dict(self) -> dict:
@@ -97,7 +88,7 @@ class MigrationExchangeResponse:
         result["team_id"] = from_union([from_str, from_none], self.team_id)
         result["enterprise_id"] = from_union([from_str, from_none], self.enterprise_id)
         result["invalid_user_ids"] = from_union([lambda x: from_list(from_str, x), from_none], self.invalid_user_ids)
-        result["user_id_map"] = from_union([lambda x: to_class(UserIDMap, x), from_none], self.user_id_map)
+        result["user_id_map"] = from_union([lambda x: from_dict(lambda x: from_str((lambda x: str(x))(x)), x), from_none], self.user_id_map)
         return result
 
 

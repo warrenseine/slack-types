@@ -3,5 +3,11 @@
   "error": "",
   "needed": "",
   "provided": "",
-  "url": ""
+  "url": "",
+  "warning": "",
+  "response_metadata": {
+    "messages": [
+      ""
+    ]
+  }
 }

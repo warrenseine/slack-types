@@ -6,6 +6,8 @@ export interface RtmConnectResponse {
     error?:    string;
     needed?:   string;
     provided?: string;
+    context?:  string;
+    warning?:  string;
 }
 
 export interface Self {

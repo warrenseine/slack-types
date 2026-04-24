@@ -70,6 +70,7 @@ class AdminAnalyticsGetFileResponse:
     needed: Optional[str] = None
     provided: Optional[str] = None
     response_metadata: Optional[ResponseMetadata] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'AdminAnalyticsGetFileResponse':
@@ -79,7 +80,8 @@ class AdminAnalyticsGetFileResponse:
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
         response_metadata = from_union([ResponseMetadata.from_dict, from_none], obj.get("response_metadata"))
-        return AdminAnalyticsGetFileResponse(ok, error, needed, provided, response_metadata)
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return AdminAnalyticsGetFileResponse(ok, error, needed, provided, response_metadata, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -88,6 +90,7 @@ class AdminAnalyticsGetFileResponse:
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
         result["response_metadata"] = from_union([lambda x: to_class(ResponseMetadata, x), from_none], self.response_metadata)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

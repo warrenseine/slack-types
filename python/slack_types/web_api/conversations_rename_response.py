@@ -104,6 +104,8 @@ class Channel:
     is_moved: Optional[int] = None
     internal_team_ids: Optional[List[str]] = None
     is_open: Optional[bool] = None
+    context_team_id: Optional[str] = None
+    updated: Optional[int] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Channel':
@@ -136,7 +138,9 @@ class Channel:
         is_moved = from_union([from_int, from_none], obj.get("is_moved"))
         internal_team_ids = from_union([lambda x: from_list(from_str, x), from_none], obj.get("internal_team_ids"))
         is_open = from_union([from_bool, from_none], obj.get("is_open"))
-        return Channel(id, name, is_channel, is_group, is_im, created, is_archived, is_general, unlinked, name_normalized, is_shared, creator, is_ext_shared, is_org_shared, shared_team_ids, pending_shared, pending_connected_team_ids, is_pending_ext_shared, is_member, is_private, is_mpim, last_read, topic, purpose, previous_names, is_moved, internal_team_ids, is_open)
+        context_team_id = from_union([from_str, from_none], obj.get("context_team_id"))
+        updated = from_union([from_int, from_none], obj.get("updated"))
+        return Channel(id, name, is_channel, is_group, is_im, created, is_archived, is_general, unlinked, name_normalized, is_shared, creator, is_ext_shared, is_org_shared, shared_team_ids, pending_shared, pending_connected_team_ids, is_pending_ext_shared, is_member, is_private, is_mpim, last_read, topic, purpose, previous_names, is_moved, internal_team_ids, is_open, context_team_id, updated)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -168,6 +172,8 @@ class Channel:
         result["is_moved"] = from_union([from_int, from_none], self.is_moved)
         result["internal_team_ids"] = from_union([lambda x: from_list(from_str, x), from_none], self.internal_team_ids)
         result["is_open"] = from_union([from_bool, from_none], self.is_open)
+        result["context_team_id"] = from_union([from_str, from_none], self.context_team_id)
+        result["updated"] = from_union([from_int, from_none], self.updated)
         return result
 
 

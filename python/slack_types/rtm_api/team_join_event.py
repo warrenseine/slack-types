@@ -57,6 +57,7 @@ class EnterpriseUser:
     id: Optional[str] = None
     enterprise_id: Optional[str] = None
     enterprise_name: Optional[str] = None
+    is_primary_owner: Optional[bool] = None
     is_admin: Optional[bool] = None
     is_owner: Optional[bool] = None
     teams: Optional[List[Any]] = None
@@ -67,16 +68,18 @@ class EnterpriseUser:
         id = from_union([from_str, from_none], obj.get("id"))
         enterprise_id = from_union([from_str, from_none], obj.get("enterprise_id"))
         enterprise_name = from_union([from_str, from_none], obj.get("enterprise_name"))
+        is_primary_owner = from_union([from_bool, from_none], obj.get("is_primary_owner"))
         is_admin = from_union([from_bool, from_none], obj.get("is_admin"))
         is_owner = from_union([from_bool, from_none], obj.get("is_owner"))
         teams = from_union([lambda x: from_list(lambda x: x, x), from_none], obj.get("teams"))
-        return EnterpriseUser(id, enterprise_id, enterprise_name, is_admin, is_owner, teams)
+        return EnterpriseUser(id, enterprise_id, enterprise_name, is_primary_owner, is_admin, is_owner, teams)
 
     def to_dict(self) -> dict:
         result: dict = {}
         result["id"] = from_union([from_str, from_none], self.id)
         result["enterprise_id"] = from_union([from_str, from_none], self.enterprise_id)
         result["enterprise_name"] = from_union([from_str, from_none], self.enterprise_name)
+        result["is_primary_owner"] = from_union([from_bool, from_none], self.is_primary_owner)
         result["is_admin"] = from_union([from_bool, from_none], self.is_admin)
         result["is_owner"] = from_union([from_bool, from_none], self.is_owner)
         result["teams"] = from_union([lambda x: from_list(lambda x: x, x), from_none], self.teams)
@@ -117,6 +120,8 @@ class Profile:
     is_custom_image: Optional[bool] = None
     pronouns: Optional[str] = None
     status_emoji_display_info: Optional[List[Any]] = None
+    huddle_state: Optional[str] = None
+    huddle_state_expiration_ts: Optional[int] = None
     first_name: Optional[str] = None
     last_name: Optional[str] = None
 
@@ -155,9 +160,11 @@ class Profile:
         is_custom_image = from_union([from_bool, from_none], obj.get("is_custom_image"))
         pronouns = from_union([from_str, from_none], obj.get("pronouns"))
         status_emoji_display_info = from_union([lambda x: from_list(lambda x: x, x), from_none], obj.get("status_emoji_display_info"))
+        huddle_state = from_union([from_str, from_none], obj.get("huddle_state"))
+        huddle_state_expiration_ts = from_union([from_int, from_none], obj.get("huddle_state_expiration_ts"))
         first_name = from_union([from_str, from_none], obj.get("first_name"))
         last_name = from_union([from_str, from_none], obj.get("last_name"))
-        return Profile(guest_channels, guest_invited_by, guest_expiration_ts, avatar_hash, status_text, status_text_canonical, status_emoji, status_emoji_url, status_expiration, display_name, display_name_normalized, real_name, real_name_normalized, bot_id, title, email, skype, phone, team, api_app_id, always_active, image_original, image_24, image_32, image_48, image_72, image_192, image_512, image_1024, is_custom_image, pronouns, status_emoji_display_info, first_name, last_name)
+        return Profile(guest_channels, guest_invited_by, guest_expiration_ts, avatar_hash, status_text, status_text_canonical, status_emoji, status_emoji_url, status_expiration, display_name, display_name_normalized, real_name, real_name_normalized, bot_id, title, email, skype, phone, team, api_app_id, always_active, image_original, image_24, image_32, image_48, image_72, image_192, image_512, image_1024, is_custom_image, pronouns, status_emoji_display_info, huddle_state, huddle_state_expiration_ts, first_name, last_name)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -193,6 +200,8 @@ class Profile:
         result["is_custom_image"] = from_union([from_bool, from_none], self.is_custom_image)
         result["pronouns"] = from_union([from_str, from_none], self.pronouns)
         result["status_emoji_display_info"] = from_union([lambda x: from_list(lambda x: x, x), from_none], self.status_emoji_display_info)
+        result["huddle_state"] = from_union([from_str, from_none], self.huddle_state)
+        result["huddle_state_expiration_ts"] = from_union([from_int, from_none], self.huddle_state_expiration_ts)
         result["first_name"] = from_union([from_str, from_none], self.first_name)
         result["last_name"] = from_union([from_str, from_none], self.last_name)
         return result
@@ -217,6 +226,7 @@ class User:
     is_restricted: Optional[bool] = None
     is_ultra_restricted: Optional[bool] = None
     is_bot: Optional[bool] = None
+    is_connector_bot: Optional[bool] = None
     is_stranger: Optional[bool] = None
     is_app_user: Optional[bool] = None
     updated: Optional[int] = None
@@ -228,7 +238,7 @@ class User:
     has_files: Optional[bool] = None
     locale: Optional[str] = None
     is_workflow_bot: Optional[bool] = None
-    who_can_share_contact_card: Optional[bool] = None
+    who_can_share_contact_card: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'User':
@@ -250,6 +260,7 @@ class User:
         is_restricted = from_union([from_bool, from_none], obj.get("is_restricted"))
         is_ultra_restricted = from_union([from_bool, from_none], obj.get("is_ultra_restricted"))
         is_bot = from_union([from_bool, from_none], obj.get("is_bot"))
+        is_connector_bot = from_union([from_bool, from_none], obj.get("is_connector_bot"))
         is_stranger = from_union([from_bool, from_none], obj.get("is_stranger"))
         is_app_user = from_union([from_bool, from_none], obj.get("is_app_user"))
         updated = from_union([from_int, from_none], obj.get("updated"))
@@ -261,8 +272,8 @@ class User:
         has_files = from_union([from_bool, from_none], obj.get("has_files"))
         locale = from_union([from_str, from_none], obj.get("locale"))
         is_workflow_bot = from_union([from_bool, from_none], obj.get("is_workflow_bot"))
-        who_can_share_contact_card = from_union([from_bool, from_none], obj.get("who_can_share_contact_card"))
-        return User(id, team_id, name, deleted, color, real_name, tz, tz_label, tz_offset, profile, is_admin, is_owner, is_primary_owner, is_invited_user, is_restricted, is_ultra_restricted, is_bot, is_stranger, is_app_user, updated, has_2_fa, is_email_confirmed, presence, enterprise_user, two_factor_type, has_files, locale, is_workflow_bot, who_can_share_contact_card)
+        who_can_share_contact_card = from_union([from_str, from_none], obj.get("who_can_share_contact_card"))
+        return User(id, team_id, name, deleted, color, real_name, tz, tz_label, tz_offset, profile, is_admin, is_owner, is_primary_owner, is_invited_user, is_restricted, is_ultra_restricted, is_bot, is_connector_bot, is_stranger, is_app_user, updated, has_2_fa, is_email_confirmed, presence, enterprise_user, two_factor_type, has_files, locale, is_workflow_bot, who_can_share_contact_card)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -283,6 +294,7 @@ class User:
         result["is_restricted"] = from_union([from_bool, from_none], self.is_restricted)
         result["is_ultra_restricted"] = from_union([from_bool, from_none], self.is_ultra_restricted)
         result["is_bot"] = from_union([from_bool, from_none], self.is_bot)
+        result["is_connector_bot"] = from_union([from_bool, from_none], self.is_connector_bot)
         result["is_stranger"] = from_union([from_bool, from_none], self.is_stranger)
         result["is_app_user"] = from_union([from_bool, from_none], self.is_app_user)
         result["updated"] = from_union([from_int, from_none], self.updated)
@@ -294,7 +306,7 @@ class User:
         result["has_files"] = from_union([from_bool, from_none], self.has_files)
         result["locale"] = from_union([from_str, from_none], self.locale)
         result["is_workflow_bot"] = from_union([from_bool, from_none], self.is_workflow_bot)
-        result["who_can_share_contact_card"] = from_union([from_bool, from_none], self.who_can_share_contact_card)
+        result["who_can_share_contact_card"] = from_union([from_str, from_none], self.who_can_share_contact_card)
         return result
 
 

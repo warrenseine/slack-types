@@ -5,6 +5,7 @@ export interface AdminTeamsAdminsListResponse {
     error?:             string;
     needed?:            string;
     provided?:          string;
+    warning?:           string;
 }
 
 export interface ResponseMetadata {

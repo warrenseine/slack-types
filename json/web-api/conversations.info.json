@@ -60,9 +60,28 @@
     "is_org_mandatory": false,
     "connected_limited_team_ids": [
       ""
-    ]
+    ],
+    "context_team_id": "T00000000",
+    "updated": 12345,
+    "properties": {
+      "is_dormant": false,
+      "tabs": [
+        {
+          "type": "",
+          "label": "",
+          "id": ""
+        }
+      ],
+      "tabz": [
+        {
+          "type": ""
+        }
+      ],
+      "has_slack_connect_invite_created": false
+    }
   },
   "error": "",
   "needed": "",
-  "provided": ""
+  "provided": "",
+  "warning": ""
 }

@@ -101,6 +101,8 @@ class Channel:
     topic: Optional[Purpose] = None
     purpose: Optional[Purpose] = None
     previous_names: Optional[List[str]] = None
+    context_team_id: Optional[str] = None
+    updated: Optional[int] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Channel':
@@ -130,7 +132,9 @@ class Channel:
         topic = from_union([Purpose.from_dict, from_none], obj.get("topic"))
         purpose = from_union([Purpose.from_dict, from_none], obj.get("purpose"))
         previous_names = from_union([lambda x: from_list(from_str, x), from_none], obj.get("previous_names"))
-        return Channel(id, name, is_channel, is_group, is_im, created, is_archived, is_general, unlinked, name_normalized, is_shared, creator, is_ext_shared, is_org_shared, shared_team_ids, pending_shared, pending_connected_team_ids, is_pending_ext_shared, is_member, is_private, is_mpim, last_read, topic, purpose, previous_names)
+        context_team_id = from_union([from_str, from_none], obj.get("context_team_id"))
+        updated = from_union([from_int, from_none], obj.get("updated"))
+        return Channel(id, name, is_channel, is_group, is_im, created, is_archived, is_general, unlinked, name_normalized, is_shared, creator, is_ext_shared, is_org_shared, shared_team_ids, pending_shared, pending_connected_team_ids, is_pending_ext_shared, is_member, is_private, is_mpim, last_read, topic, purpose, previous_names, context_team_id, updated)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -159,6 +163,8 @@ class Channel:
         result["topic"] = from_union([lambda x: to_class(Purpose, x), from_none], self.topic)
         result["purpose"] = from_union([lambda x: to_class(Purpose, x), from_none], self.purpose)
         result["previous_names"] = from_union([lambda x: from_list(from_str, x), from_none], self.previous_names)
+        result["context_team_id"] = from_union([from_str, from_none], self.context_team_id)
+        result["updated"] = from_union([from_int, from_none], self.updated)
         return result
 
 
@@ -169,6 +175,7 @@ class ConversationsSetPurposeResponse:
     error: Optional[str] = None
     needed: Optional[str] = None
     provided: Optional[str] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'ConversationsSetPurposeResponse':
@@ -178,7 +185,8 @@ class ConversationsSetPurposeResponse:
         error = from_union([from_str, from_none], obj.get("error"))
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
-        return ConversationsSetPurposeResponse(ok, channel, error, needed, provided)
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return ConversationsSetPurposeResponse(ok, channel, error, needed, provided, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -187,6 +195,7 @@ class ConversationsSetPurposeResponse:
         result["error"] = from_union([from_str, from_none], self.error)
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

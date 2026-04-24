@@ -46,10 +46,6 @@
       ],
       "groups": [
         {
-          "value": "S00000000",
-          "display": ""
-        },
-        {
           "value": "",
           "display": ""
         }
@@ -91,7 +87,16 @@
       },
       "urn:scim:schemas:extension:slack:guest:1.0": {
         "type": "",
-        "expiration": ""
+        "expiration": "",
+        "channels": [
+          {
+            "value": "C00000000",
+            "display": ""
+          }
+        ]
+      },
+      "urn:scim:schemas:extension:slack:profile:1.0": {
+        "startDate": ""
       }
     }
   ],

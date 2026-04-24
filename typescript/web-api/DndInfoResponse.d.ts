@@ -6,4 +6,5 @@ export interface DndInfoResponse {
     error?:             string;
     needed?:            string;
     provided?:          string;
+    warning?:           string;
 }

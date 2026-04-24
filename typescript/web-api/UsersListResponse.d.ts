@@ -7,6 +7,8 @@ export interface UsersListResponse {
     error?:             string;
     needed?:            string;
     provided?:          string;
+    arg?:               string;
+    warning?:           string;
 }
 
 export interface Member {
@@ -35,56 +37,67 @@ export interface Member {
     locale?:                     string;
     enterprise_user?:            EnterpriseUser;
     is_invited_user?:            boolean;
+    is_connector_bot?:           boolean;
+    two_factor_type?:            string;
 }
 
 export interface EnterpriseUser {
-    id?:              string;
-    enterprise_id?:   string;
-    enterprise_name?: string;
-    is_admin?:        boolean;
-    is_owner?:        boolean;
-    teams?:           string[];
+    id?:               string;
+    enterprise_id?:    string;
+    enterprise_name?:  string;
+    is_admin?:         boolean;
+    is_owner?:         boolean;
+    teams?:            string[];
+    is_primary_owner?: boolean;
 }
 
 export interface Profile {
-    title?:                     string;
-    phone?:                     string;
-    skype?:                     string;
-    real_name?:                 string;
-    real_name_normalized?:      string;
-    display_name?:              string;
-    display_name_normalized?:   string;
-    status_text?:               string;
-    status_emoji?:              string;
-    status_emoji_display_info?: StatusEmojiDisplayInfo[];
-    status_expiration?:         number;
-    avatar_hash?:               string;
-    image_original?:            string;
-    is_custom_image?:           boolean;
-    email?:                     string;
-    pronouns?:                  string;
-    first_name?:                string;
-    last_name?:                 string;
-    image_24?:                  string;
-    image_32?:                  string;
-    image_48?:                  string;
-    image_72?:                  string;
-    image_192?:                 string;
-    image_512?:                 string;
-    image_1024?:                string;
-    status_text_canonical?:     string;
-    team?:                      string;
-    api_app_id?:                string;
-    bot_id?:                    string;
-    always_active?:             boolean;
-    guest_invited_by?:          string;
-    guest_expiration_ts?:       number;
+    title?:                      string;
+    phone?:                      string;
+    skype?:                      string;
+    real_name?:                  string;
+    real_name_normalized?:       string;
+    display_name?:               string;
+    display_name_normalized?:    string;
+    status_text?:                string;
+    status_emoji?:               string;
+    status_expiration?:          number;
+    avatar_hash?:                string;
+    image_original?:             string;
+    is_custom_image?:            boolean;
+    email?:                      string;
+    pronouns?:                   string;
+    first_name?:                 string;
+    last_name?:                  string;
+    image_24?:                   string;
+    image_32?:                   string;
+    image_48?:                   string;
+    image_72?:                   string;
+    image_192?:                  string;
+    image_512?:                  string;
+    image_1024?:                 string;
+    status_text_canonical?:      string;
+    team?:                       string;
+    api_app_id?:                 string;
+    bot_id?:                     string;
+    always_active?:              boolean;
+    guest_invited_by?:           string;
+    guest_expiration_ts?:        number;
+    huddle_state?:               string;
+    huddle_state_expiration_ts?: number;
+    fields?:                     Fields;
+    status_emoji_display_info?:  StatusEmojiDisplayInfo[];
+    start_date?:                 string;
+}
+
+export interface Fields {
 }
 
 export interface StatusEmojiDisplayInfo {
     emoji_name?:    string;
     display_alias?: string;
     display_url?:   string;
+    unicode?:       string;
 }
 
 export interface ResponseMetadata {

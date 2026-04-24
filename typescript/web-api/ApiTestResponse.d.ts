@@ -4,6 +4,7 @@ export interface ApiTestResponse {
     args?:     Args;
     needed?:   string;
     provided?: string;
+    warning?:  string;
 }
 
 export interface Args {

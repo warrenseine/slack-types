@@ -5,6 +5,7 @@ export interface AdminUsersListResponse {
     error?:             string;
     needed?:            string;
     provided?:          string;
+    warning?:           string;
 }
 
 export interface ResponseMetadata {
@@ -22,4 +23,13 @@ export interface User {
     is_ultra_restricted?: boolean;
     is_bot?:              boolean;
     expiration_ts?:       number;
+    username?:            string;
+    full_name?:           string;
+    is_active?:           boolean;
+    date_created?:        number;
+    roles?:               string[];
+    workspaces?:          string[];
+    has_2fa?:             boolean;
+    has_sso?:             boolean;
+    last_active_ts?:      number;
 }

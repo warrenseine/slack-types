@@ -7,7 +7,7 @@
 #     result = conversations_join_response_from_dict(json.loads(json_string))
 
 from dataclasses import dataclass
-from typing import Optional, Any, List, TypeVar, Callable, Type, cast
+from typing import Optional, Any, List, TypeVar, Type, cast, Callable
 
 
 T = TypeVar("T")
@@ -32,14 +32,14 @@ def from_union(fs, x):
     assert False
 
 
-def from_int(x: Any) -> int:
-    assert isinstance(x, int) and not isinstance(x, bool)
-    return x
-
-
 def from_bool(x: Any) -> bool:
     assert isinstance(x, bool)
     return x
+
+
+def to_class(c: Type[T], x: Any) -> dict:
+    assert isinstance(x, c)
+    return cast(Any, x).to_dict()
 
 
 def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
@@ -47,9 +47,125 @@ def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
     return [f(y) for y in x]
 
 
-def to_class(c: Type[T], x: Any) -> dict:
-    assert isinstance(x, c)
-    return cast(Any, x).to_dict()
+def from_int(x: Any) -> int:
+    assert isinstance(x, int) and not isinstance(x, bool)
+    return x
+
+
+@dataclass
+class Canvas:
+    file_id: Optional[str] = None
+    is_empty: Optional[bool] = None
+    quip_thread_id: Optional[str] = None
+    is_migrated: Optional[bool] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Canvas':
+        assert isinstance(obj, dict)
+        file_id = from_union([from_str, from_none], obj.get("file_id"))
+        is_empty = from_union([from_bool, from_none], obj.get("is_empty"))
+        quip_thread_id = from_union([from_str, from_none], obj.get("quip_thread_id"))
+        is_migrated = from_union([from_bool, from_none], obj.get("is_migrated"))
+        return Canvas(file_id, is_empty, quip_thread_id, is_migrated)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["file_id"] = from_union([from_str, from_none], self.file_id)
+        result["is_empty"] = from_union([from_bool, from_none], self.is_empty)
+        result["quip_thread_id"] = from_union([from_str, from_none], self.quip_thread_id)
+        result["is_migrated"] = from_union([from_bool, from_none], self.is_migrated)
+        return result
+
+
+@dataclass
+class MeetingNotes:
+    file_id: Optional[str] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'MeetingNotes':
+        assert isinstance(obj, dict)
+        file_id = from_union([from_str, from_none], obj.get("file_id"))
+        return MeetingNotes(file_id)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["file_id"] = from_union([from_str, from_none], self.file_id)
+        return result
+
+
+@dataclass
+class Data:
+    file_id: Optional[str] = None
+    shared_ts: Optional[str] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Data':
+        assert isinstance(obj, dict)
+        file_id = from_union([from_str, from_none], obj.get("file_id"))
+        shared_ts = from_union([from_str, from_none], obj.get("shared_ts"))
+        return Data(file_id, shared_ts)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["file_id"] = from_union([from_str, from_none], self.file_id)
+        result["shared_ts"] = from_union([from_str, from_none], self.shared_ts)
+        return result
+
+
+@dataclass
+class Tab:
+    id: Optional[str] = None
+    label: Optional[str] = None
+    type: Optional[str] = None
+    data: Optional[Data] = None
+    is_disabled: Optional[bool] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Tab':
+        assert isinstance(obj, dict)
+        id = from_union([from_str, from_none], obj.get("id"))
+        label = from_union([from_str, from_none], obj.get("label"))
+        type = from_union([from_str, from_none], obj.get("type"))
+        data = from_union([Data.from_dict, from_none], obj.get("data"))
+        is_disabled = from_union([from_bool, from_none], obj.get("is_disabled"))
+        return Tab(id, label, type, data, is_disabled)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["id"] = from_union([from_str, from_none], self.id)
+        result["label"] = from_union([from_str, from_none], self.label)
+        result["type"] = from_union([from_str, from_none], self.type)
+        result["data"] = from_union([lambda x: to_class(Data, x), from_none], self.data)
+        result["is_disabled"] = from_union([from_bool, from_none], self.is_disabled)
+        return result
+
+
+@dataclass
+class Properties:
+    canvas: Optional[Canvas] = None
+    tabs: Optional[List[Tab]] = None
+    tabz: Optional[List[Tab]] = None
+    meeting_notes: Optional[MeetingNotes] = None
+    use_case: Optional[str] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Properties':
+        assert isinstance(obj, dict)
+        canvas = from_union([Canvas.from_dict, from_none], obj.get("canvas"))
+        tabs = from_union([lambda x: from_list(Tab.from_dict, x), from_none], obj.get("tabs"))
+        tabz = from_union([lambda x: from_list(Tab.from_dict, x), from_none], obj.get("tabz"))
+        meeting_notes = from_union([MeetingNotes.from_dict, from_none], obj.get("meeting_notes"))
+        use_case = from_union([from_str, from_none], obj.get("use_case"))
+        return Properties(canvas, tabs, tabz, meeting_notes, use_case)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["canvas"] = from_union([lambda x: to_class(Canvas, x), from_none], self.canvas)
+        result["tabs"] = from_union([lambda x: from_list(lambda x: to_class(Tab, x), x), from_none], self.tabs)
+        result["tabz"] = from_union([lambda x: from_list(lambda x: to_class(Tab, x), x), from_none], self.tabz)
+        result["meeting_notes"] = from_union([lambda x: to_class(MeetingNotes, x), from_none], self.meeting_notes)
+        result["use_case"] = from_union([from_str, from_none], self.use_case)
+        return result
 
 
 @dataclass
@@ -105,6 +221,9 @@ class Channel:
     is_moved: Optional[int] = None
     internal_team_ids: Optional[List[str]] = None
     is_starred: Optional[bool] = None
+    context_team_id: Optional[str] = None
+    updated: Optional[int] = None
+    properties: Optional[Properties] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Channel':
@@ -138,7 +257,10 @@ class Channel:
         is_moved = from_union([from_int, from_none], obj.get("is_moved"))
         internal_team_ids = from_union([lambda x: from_list(from_str, x), from_none], obj.get("internal_team_ids"))
         is_starred = from_union([from_bool, from_none], obj.get("is_starred"))
-        return Channel(id, name, is_channel, is_group, is_im, created, is_archived, is_general, unlinked, name_normalized, is_shared, creator, is_ext_shared, is_org_shared, shared_team_ids, pending_shared, pending_connected_team_ids, is_pending_ext_shared, is_member, is_private, is_mpim, topic, purpose, previous_names, last_read, priority, is_moved, internal_team_ids, is_starred)
+        context_team_id = from_union([from_str, from_none], obj.get("context_team_id"))
+        updated = from_union([from_int, from_none], obj.get("updated"))
+        properties = from_union([Properties.from_dict, from_none], obj.get("properties"))
+        return Channel(id, name, is_channel, is_group, is_im, created, is_archived, is_general, unlinked, name_normalized, is_shared, creator, is_ext_shared, is_org_shared, shared_team_ids, pending_shared, pending_connected_team_ids, is_pending_ext_shared, is_member, is_private, is_mpim, topic, purpose, previous_names, last_read, priority, is_moved, internal_team_ids, is_starred, context_team_id, updated, properties)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -171,6 +293,9 @@ class Channel:
         result["is_moved"] = from_union([from_int, from_none], self.is_moved)
         result["internal_team_ids"] = from_union([lambda x: from_list(from_str, x), from_none], self.internal_team_ids)
         result["is_starred"] = from_union([from_bool, from_none], self.is_starred)
+        result["context_team_id"] = from_union([from_str, from_none], self.context_team_id)
+        result["updated"] = from_union([from_int, from_none], self.updated)
+        result["properties"] = from_union([lambda x: to_class(Properties, x), from_none], self.properties)
         return result
 
 

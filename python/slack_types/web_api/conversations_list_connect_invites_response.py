@@ -61,8 +61,8 @@ class Icon:
     image_44: Optional[str] = None
     image_68: Optional[str] = None
     image_88: Optional[str] = None
-    image_original: Optional[str] = None
     image_default: Optional[bool] = None
+    image_original: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Icon':
@@ -74,9 +74,9 @@ class Icon:
         image_44 = from_union([from_str, from_none], obj.get("image_44"))
         image_68 = from_union([from_str, from_none], obj.get("image_68"))
         image_88 = from_union([from_str, from_none], obj.get("image_88"))
-        image_original = from_union([from_str, from_none], obj.get("image_original"))
         image_default = from_union([from_bool, from_none], obj.get("image_default"))
-        return Icon(image_102, image_132, image_230, image_34, image_44, image_68, image_88, image_original, image_default)
+        image_original = from_union([from_str, from_none], obj.get("image_original"))
+        return Icon(image_102, image_132, image_230, image_34, image_44, image_68, image_88, image_default, image_original)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -87,8 +87,8 @@ class Icon:
         result["image_44"] = from_union([from_str, from_none], self.image_44)
         result["image_68"] = from_union([from_str, from_none], self.image_68)
         result["image_88"] = from_union([from_str, from_none], self.image_88)
-        result["image_original"] = from_union([from_str, from_none], self.image_original)
         result["image_default"] = from_union([from_bool, from_none], self.image_default)
+        result["image_original"] = from_union([from_str, from_none], self.image_original)
         return result
 
 
@@ -100,6 +100,8 @@ class IngTeam:
     is_verified: Optional[bool] = None
     domain: Optional[str] = None
     date_created: Optional[int] = None
+    avatar_base_url: Optional[str] = None
+    requires_sponsorship: Optional[bool] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'IngTeam':
@@ -110,7 +112,9 @@ class IngTeam:
         is_verified = from_union([from_bool, from_none], obj.get("is_verified"))
         domain = from_union([from_str, from_none], obj.get("domain"))
         date_created = from_union([from_int, from_none], obj.get("date_created"))
-        return IngTeam(id, name, icon, is_verified, domain, date_created)
+        avatar_base_url = from_union([from_str, from_none], obj.get("avatar_base_url"))
+        requires_sponsorship = from_union([from_bool, from_none], obj.get("requires_sponsorship"))
+        return IngTeam(id, name, icon, is_verified, domain, date_created, avatar_base_url, requires_sponsorship)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -120,6 +124,8 @@ class IngTeam:
         result["is_verified"] = from_union([from_bool, from_none], self.is_verified)
         result["domain"] = from_union([from_str, from_none], self.domain)
         result["date_created"] = from_union([from_int, from_none], self.date_created)
+        result["avatar_base_url"] = from_union([from_str, from_none], self.avatar_base_url)
+        result["requires_sponsorship"] = from_union([from_bool, from_none], self.requires_sponsorship)
         return result
 
 
@@ -191,6 +197,7 @@ class TingUser:
     name: Optional[str] = None
     updated: Optional[int] = None
     profile: Optional[Profile] = None
+    who_can_share_contact_card: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'TingUser':
@@ -200,7 +207,8 @@ class TingUser:
         name = from_union([from_str, from_none], obj.get("name"))
         updated = from_union([from_int, from_none], obj.get("updated"))
         profile = from_union([Profile.from_dict, from_none], obj.get("profile"))
-        return TingUser(id, team_id, name, updated, profile)
+        who_can_share_contact_card = from_union([from_str, from_none], obj.get("who_can_share_contact_card"))
+        return TingUser(id, team_id, name, updated, profile, who_can_share_contact_card)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -209,6 +217,7 @@ class TingUser:
         result["name"] = from_union([from_str, from_none], self.name)
         result["updated"] = from_union([from_int, from_none], self.updated)
         result["profile"] = from_union([lambda x: to_class(Profile, x), from_none], self.profile)
+        result["who_can_share_contact_card"] = from_union([from_str, from_none], self.who_can_share_contact_card)
         return result
 
 
@@ -303,6 +312,7 @@ class InviteInvite:
     link: Optional[str] = None
     recipient_user_id: Optional[str] = None
     recipient_email: Optional[str] = None
+    sig: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'InviteInvite':
@@ -315,7 +325,8 @@ class InviteInvite:
         link = from_union([from_str, from_none], obj.get("link"))
         recipient_user_id = from_union([from_str, from_none], obj.get("recipient_user_id"))
         recipient_email = from_union([from_str, from_none], obj.get("recipient_email"))
-        return InviteInvite(id, date_created, date_invalid, inviting_team, inviting_user, link, recipient_user_id, recipient_email)
+        sig = from_union([from_str, from_none], obj.get("sig"))
+        return InviteInvite(id, date_created, date_invalid, inviting_team, inviting_user, link, recipient_user_id, recipient_email, sig)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -327,6 +338,32 @@ class InviteInvite:
         result["link"] = from_union([from_str, from_none], self.link)
         result["recipient_user_id"] = from_union([from_str, from_none], self.recipient_user_id)
         result["recipient_email"] = from_union([from_str, from_none], self.recipient_email)
+        result["sig"] = from_union([from_str, from_none], self.sig)
+        return result
+
+
+@dataclass
+class InvitePayload:
+    invite_type: Optional[str] = None
+    is_sponsored: Optional[bool] = None
+    is_external_limited: Optional[bool] = None
+    channel: Optional[Channel] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'InvitePayload':
+        assert isinstance(obj, dict)
+        invite_type = from_union([from_str, from_none], obj.get("invite_type"))
+        is_sponsored = from_union([from_bool, from_none], obj.get("is_sponsored"))
+        is_external_limited = from_union([from_bool, from_none], obj.get("is_external_limited"))
+        channel = from_union([Channel.from_dict, from_none], obj.get("channel"))
+        return InvitePayload(invite_type, is_sponsored, is_external_limited, channel)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["invite_type"] = from_union([from_str, from_none], self.invite_type)
+        result["is_sponsored"] = from_union([from_bool, from_none], self.is_sponsored)
+        result["is_external_limited"] = from_union([from_bool, from_none], self.is_external_limited)
+        result["channel"] = from_union([lambda x: to_class(Channel, x), from_none], self.channel)
         return result
 
 
@@ -339,6 +376,15 @@ class InviteElement:
     invite: Optional[InviteInvite] = None
     channel: Optional[Channel] = None
     acceptances: Optional[List[Acceptance]] = None
+    id: Optional[str] = None
+    date_created: Optional[int] = None
+    date_invalid: Optional[int] = None
+    inviting_team: Optional[IngTeam] = None
+    inviting_user: Optional[TingUser] = None
+    invite_payload: Optional[InvitePayload] = None
+    sig: Optional[str] = None
+    link: Optional[str] = None
+    recipient_user_id: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'InviteElement':
@@ -350,7 +396,16 @@ class InviteElement:
         invite = from_union([InviteInvite.from_dict, from_none], obj.get("invite"))
         channel = from_union([Channel.from_dict, from_none], obj.get("channel"))
         acceptances = from_union([lambda x: from_list(Acceptance.from_dict, x), from_none], obj.get("acceptances"))
-        return InviteElement(direction, status, date_last_updated, invite_type, invite, channel, acceptances)
+        id = from_union([from_str, from_none], obj.get("id"))
+        date_created = from_union([from_int, from_none], obj.get("date_created"))
+        date_invalid = from_union([from_int, from_none], obj.get("date_invalid"))
+        inviting_team = from_union([IngTeam.from_dict, from_none], obj.get("inviting_team"))
+        inviting_user = from_union([TingUser.from_dict, from_none], obj.get("inviting_user"))
+        invite_payload = from_union([InvitePayload.from_dict, from_none], obj.get("invite_payload"))
+        sig = from_union([from_str, from_none], obj.get("sig"))
+        link = from_union([from_str, from_none], obj.get("link"))
+        recipient_user_id = from_union([from_str, from_none], obj.get("recipient_user_id"))
+        return InviteElement(direction, status, date_last_updated, invite_type, invite, channel, acceptances, id, date_created, date_invalid, inviting_team, inviting_user, invite_payload, sig, link, recipient_user_id)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -361,6 +416,15 @@ class InviteElement:
         result["invite"] = from_union([lambda x: to_class(InviteInvite, x), from_none], self.invite)
         result["channel"] = from_union([lambda x: to_class(Channel, x), from_none], self.channel)
         result["acceptances"] = from_union([lambda x: from_list(lambda x: to_class(Acceptance, x), x), from_none], self.acceptances)
+        result["id"] = from_union([from_str, from_none], self.id)
+        result["date_created"] = from_union([from_int, from_none], self.date_created)
+        result["date_invalid"] = from_union([from_int, from_none], self.date_invalid)
+        result["inviting_team"] = from_union([lambda x: to_class(IngTeam, x), from_none], self.inviting_team)
+        result["inviting_user"] = from_union([lambda x: to_class(TingUser, x), from_none], self.inviting_user)
+        result["invite_payload"] = from_union([lambda x: to_class(InvitePayload, x), from_none], self.invite_payload)
+        result["sig"] = from_union([from_str, from_none], self.sig)
+        result["link"] = from_union([from_str, from_none], self.link)
+        result["recipient_user_id"] = from_union([from_str, from_none], self.recipient_user_id)
         return result
 
 

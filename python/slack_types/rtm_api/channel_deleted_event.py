@@ -41,18 +41,24 @@ def to_class(c: Type[T], x: Any) -> dict:
 class ChannelDeletedEvent:
     type: Optional[str] = None
     channel: Optional[str] = None
+    actor_id: Optional[str] = None
+    event_ts: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'ChannelDeletedEvent':
         assert isinstance(obj, dict)
         type = from_union([from_str, from_none], obj.get("type"))
         channel = from_union([from_str, from_none], obj.get("channel"))
-        return ChannelDeletedEvent(type, channel)
+        actor_id = from_union([from_str, from_none], obj.get("actor_id"))
+        event_ts = from_union([from_str, from_none], obj.get("event_ts"))
+        return ChannelDeletedEvent(type, channel, actor_id, event_ts)
 
     def to_dict(self) -> dict:
         result: dict = {}
         result["type"] = from_union([from_str, from_none], self.type)
         result["channel"] = from_union([from_str, from_none], self.channel)
+        result["actor_id"] = from_union([from_str, from_none], self.actor_id)
+        result["event_ts"] = from_union([from_str, from_none], self.event_ts)
         return result
 
 

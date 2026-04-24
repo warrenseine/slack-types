@@ -84,18 +84,24 @@ class Authorization:
 class Event:
     type: Optional[str] = None
     channel: Optional[str] = None
+    actor_id: Optional[str] = None
+    event_ts: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Event':
         assert isinstance(obj, dict)
         type = from_union([from_str, from_none], obj.get("type"))
         channel = from_union([from_str, from_none], obj.get("channel"))
-        return Event(type, channel)
+        actor_id = from_union([from_str, from_none], obj.get("actor_id"))
+        event_ts = from_union([from_str, from_none], obj.get("event_ts"))
+        return Event(type, channel, actor_id, event_ts)
 
     def to_dict(self) -> dict:
         result: dict = {}
         result["type"] = from_union([from_str, from_none], self.type)
         result["channel"] = from_union([from_str, from_none], self.channel)
+        result["actor_id"] = from_union([from_str, from_none], self.actor_id)
+        result["event_ts"] = from_union([from_str, from_none], self.event_ts)
         return result
 
 

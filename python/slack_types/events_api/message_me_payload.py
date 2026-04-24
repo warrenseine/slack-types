@@ -86,6 +86,7 @@ class Event:
     subtype: Optional[str] = None
     channel: Optional[str] = None
     username: Optional[str] = None
+    user: Optional[str] = None
     bot_id: Optional[str] = None
     text: Optional[str] = None
     event_ts: Optional[str] = None
@@ -99,12 +100,13 @@ class Event:
         subtype = from_union([from_str, from_none], obj.get("subtype"))
         channel = from_union([from_str, from_none], obj.get("channel"))
         username = from_union([from_str, from_none], obj.get("username"))
+        user = from_union([from_str, from_none], obj.get("user"))
         bot_id = from_union([from_str, from_none], obj.get("bot_id"))
         text = from_union([from_str, from_none], obj.get("text"))
         event_ts = from_union([from_str, from_none], obj.get("event_ts"))
         ts = from_union([from_str, from_none], obj.get("ts"))
         channel_type = from_union([from_str, from_none], obj.get("channel_type"))
-        return Event(type, subtype, channel, username, bot_id, text, event_ts, ts, channel_type)
+        return Event(type, subtype, channel, username, user, bot_id, text, event_ts, ts, channel_type)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -112,6 +114,7 @@ class Event:
         result["subtype"] = from_union([from_str, from_none], self.subtype)
         result["channel"] = from_union([from_str, from_none], self.channel)
         result["username"] = from_union([from_str, from_none], self.username)
+        result["user"] = from_union([from_str, from_none], self.user)
         result["bot_id"] = from_union([from_str, from_none], self.bot_id)
         result["text"] = from_union([from_str, from_none], self.text)
         result["event_ts"] = from_union([from_str, from_none], self.event_ts)

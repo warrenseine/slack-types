@@ -4,6 +4,7 @@ export interface ConversationsInfoResponse {
     error?:    string;
     needed?:   string;
     provided?: string;
+    warning?:  string;
 }
 
 export interface Channel {
@@ -45,6 +46,26 @@ export interface Channel {
     is_org_default?:             boolean;
     is_org_mandatory?:           boolean;
     connected_limited_team_ids?: string[];
+    context_team_id?:            string;
+    updated?:                    number;
+    properties?:                 Properties;
+}
+
+export interface Properties {
+    is_dormant?:                       boolean;
+    tabs?:                             Tab[];
+    tabz?:                             Tabz[];
+    has_slack_connect_invite_created?: boolean;
+}
+
+export interface Tab {
+    type?:  string;
+    label?: string;
+    id?:    string;
+}
+
+export interface Tabz {
+    type?: string;
 }
 
 export interface Purpose {

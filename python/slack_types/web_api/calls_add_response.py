@@ -138,6 +138,7 @@ class CallsAddResponse:
     response_metadata: Optional[ResponseMetadata] = None
     needed: Optional[str] = None
     provided: Optional[str] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'CallsAddResponse':
@@ -148,7 +149,8 @@ class CallsAddResponse:
         response_metadata = from_union([ResponseMetadata.from_dict, from_none], obj.get("response_metadata"))
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
-        return CallsAddResponse(ok, call, error, response_metadata, needed, provided)
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return CallsAddResponse(ok, call, error, response_metadata, needed, provided, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -158,6 +160,7 @@ class CallsAddResponse:
         result["response_metadata"] = from_union([lambda x: to_class(ResponseMetadata, x), from_none], self.response_metadata)
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

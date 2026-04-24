@@ -7,8 +7,5 @@ export interface MigrationExchangeResponse {
     team_id?:          string;
     enterprise_id?:    string;
     invalid_user_ids?: string[];
-    user_id_map?:      UseridMap;
-}
-
-export interface UseridMap {
+    user_id_map?:      { [key: string]: string };
 }

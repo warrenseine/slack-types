@@ -4,6 +4,7 @@ export interface AppsEventAuthorizationsListResponse {
     authorizations?: Authorization[];
     needed?:         string;
     provided?:       string;
+    warning?:        string;
 }
 
 export interface Authorization {

@@ -7,4 +7,5 @@ export interface DndSetSnoozeResponse {
     snooze_is_indefinite?: boolean;
     needed?:               string;
     provided?:             string;
+    warning?:              string;
 }

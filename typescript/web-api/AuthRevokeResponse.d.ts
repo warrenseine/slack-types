@@ -3,4 +3,5 @@ export interface AuthRevokeResponse {
     error?:    string;
     needed?:   string;
     provided?: string;
+    warning?:  string;
 }

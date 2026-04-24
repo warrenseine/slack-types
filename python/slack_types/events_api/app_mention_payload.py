@@ -44,14 +44,14 @@ def from_int(x: Any) -> int:
     return x
 
 
-def to_enum(c: Type[EnumT], x: Any) -> EnumT:
-    assert isinstance(x, c)
-    return x.value
-
-
 def to_class(c: Type[T], x: Any) -> dict:
     assert isinstance(x, c)
     return cast(Any, x).to_dict()
+
+
+def to_enum(c: Type[EnumT], x: Any) -> EnumT:
+    assert isinstance(x, c)
+    return x.value
 
 
 def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
@@ -88,6 +88,25 @@ class Authorization:
 
 
 @dataclass
+class SlackFile:
+    id: Optional[str] = None
+    url: Optional[str] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'SlackFile':
+        assert isinstance(obj, dict)
+        id = from_union([from_str, from_none], obj.get("id"))
+        url = from_union([from_str, from_none], obj.get("url"))
+        return SlackFile(id, url)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["id"] = from_union([from_str, from_none], self.id)
+        result["url"] = from_union([from_str, from_none], self.url)
+        return result
+
+
+@dataclass
 class Accessory:
     type: Optional[str] = None
     image_url: Optional[str] = None
@@ -96,6 +115,7 @@ class Accessory:
     image_width: Optional[int] = None
     image_height: Optional[int] = None
     image_bytes: Optional[int] = None
+    slack_file: Optional[SlackFile] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Accessory':
@@ -107,7 +127,8 @@ class Accessory:
         image_width = from_union([from_int, from_none], obj.get("image_width"))
         image_height = from_union([from_int, from_none], obj.get("image_height"))
         image_bytes = from_union([from_int, from_none], obj.get("image_bytes"))
-        return Accessory(type, image_url, alt_text, fallback, image_width, image_height, image_bytes)
+        slack_file = from_union([SlackFile.from_dict, from_none], obj.get("slack_file"))
+        return Accessory(type, image_url, alt_text, fallback, image_width, image_height, image_bytes, slack_file)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -118,6 +139,7 @@ class Accessory:
         result["image_width"] = from_union([from_int, from_none], self.image_width)
         result["image_height"] = from_union([from_int, from_none], self.image_height)
         result["image_bytes"] = from_union([from_int, from_none], self.image_bytes)
+        result["slack_file"] = from_union([lambda x: to_class(SlackFile, x), from_none], self.slack_file)
         return result
 
 
@@ -253,6 +275,7 @@ class Element:
     image_width: Optional[int] = None
     image_height: Optional[int] = None
     image_bytes: Optional[int] = None
+    slack_file: Optional[SlackFile] = None
     initial_user: Optional[str] = None
 
     @staticmethod
@@ -283,8 +306,9 @@ class Element:
         image_width = from_union([from_int, from_none], obj.get("image_width"))
         image_height = from_union([from_int, from_none], obj.get("image_height"))
         image_bytes = from_union([from_int, from_none], obj.get("image_bytes"))
+        slack_file = from_union([SlackFile.from_dict, from_none], obj.get("slack_file"))
         initial_user = from_union([from_str, from_none], obj.get("initial_user"))
-        return Element(type, text, action_id, url, value, style, confirm, accessibility_label, placeholder, initial_channel, response_url_enabled, focus_on_load, max_selected_items, initial_conversation, default_to_current_conversation, filter, initial_date, initial_option, min_query_length, image_url, alt_text, fallback, image_width, image_height, image_bytes, initial_user)
+        return Element(type, text, action_id, url, value, style, confirm, accessibility_label, placeholder, initial_channel, response_url_enabled, focus_on_load, max_selected_items, initial_conversation, default_to_current_conversation, filter, initial_date, initial_option, min_query_length, image_url, alt_text, fallback, image_width, image_height, image_bytes, slack_file, initial_user)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -313,6 +337,7 @@ class Element:
         result["image_width"] = from_union([from_int, from_none], self.image_width)
         result["image_height"] = from_union([from_int, from_none], self.image_height)
         result["image_bytes"] = from_union([from_int, from_none], self.image_bytes)
+        result["slack_file"] = from_union([lambda x: to_class(SlackFile, x), from_none], self.slack_file)
         result["initial_user"] = from_union([from_str, from_none], self.initial_user)
         return result
 
@@ -327,6 +352,8 @@ class Block:
     image_width: Optional[int] = None
     image_height: Optional[int] = None
     image_bytes: Optional[int] = None
+    is_animated: Optional[bool] = None
+    slack_file: Optional[SlackFile] = None
     alt_text: Optional[str] = None
     title: Optional[Text] = None
     text: Optional[Text] = None
@@ -344,12 +371,14 @@ class Block:
         image_width = from_union([from_int, from_none], obj.get("image_width"))
         image_height = from_union([from_int, from_none], obj.get("image_height"))
         image_bytes = from_union([from_int, from_none], obj.get("image_bytes"))
+        is_animated = from_union([from_bool, from_none], obj.get("is_animated"))
+        slack_file = from_union([SlackFile.from_dict, from_none], obj.get("slack_file"))
         alt_text = from_union([from_str, from_none], obj.get("alt_text"))
         title = from_union([Text.from_dict, from_none], obj.get("title"))
         text = from_union([Text.from_dict, from_none], obj.get("text"))
         fields = from_union([lambda x: from_list(Text.from_dict, x), from_none], obj.get("fields"))
         accessory = from_union([Accessory.from_dict, from_none], obj.get("accessory"))
-        return Block(type, elements, block_id, fallback, image_url, image_width, image_height, image_bytes, alt_text, title, text, fields, accessory)
+        return Block(type, elements, block_id, fallback, image_url, image_width, image_height, image_bytes, is_animated, slack_file, alt_text, title, text, fields, accessory)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -361,6 +390,8 @@ class Block:
         result["image_width"] = from_union([from_int, from_none], self.image_width)
         result["image_height"] = from_union([from_int, from_none], self.image_height)
         result["image_bytes"] = from_union([from_int, from_none], self.image_bytes)
+        result["is_animated"] = from_union([from_bool, from_none], self.is_animated)
+        result["slack_file"] = from_union([lambda x: to_class(SlackFile, x), from_none], self.slack_file)
         result["alt_text"] = from_union([from_str, from_none], self.alt_text)
         result["title"] = from_union([lambda x: to_class(Text, x), from_none], self.title)
         result["text"] = from_union([lambda x: to_class(Text, x), from_none], self.text)
@@ -445,19 +476,65 @@ class Edited:
 
 
 @dataclass
+class UserProfile:
+    name: Optional[str] = None
+    first_name: Optional[str] = None
+    real_name: Optional[str] = None
+    display_name: Optional[str] = None
+    team: Optional[str] = None
+    is_restricted: Optional[bool] = None
+    is_ultra_restricted: Optional[bool] = None
+    avatar_hash: Optional[str] = None
+    image_72: Optional[str] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'UserProfile':
+        assert isinstance(obj, dict)
+        name = from_union([from_str, from_none], obj.get("name"))
+        first_name = from_union([from_str, from_none], obj.get("first_name"))
+        real_name = from_union([from_str, from_none], obj.get("real_name"))
+        display_name = from_union([from_str, from_none], obj.get("display_name"))
+        team = from_union([from_str, from_none], obj.get("team"))
+        is_restricted = from_union([from_bool, from_none], obj.get("is_restricted"))
+        is_ultra_restricted = from_union([from_bool, from_none], obj.get("is_ultra_restricted"))
+        avatar_hash = from_union([from_str, from_none], obj.get("avatar_hash"))
+        image_72 = from_union([from_str, from_none], obj.get("image_72"))
+        return UserProfile(name, first_name, real_name, display_name, team, is_restricted, is_ultra_restricted, avatar_hash, image_72)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["name"] = from_union([from_str, from_none], self.name)
+        result["first_name"] = from_union([from_str, from_none], self.first_name)
+        result["real_name"] = from_union([from_str, from_none], self.real_name)
+        result["display_name"] = from_union([from_str, from_none], self.display_name)
+        result["team"] = from_union([from_str, from_none], self.team)
+        result["is_restricted"] = from_union([from_bool, from_none], self.is_restricted)
+        result["is_ultra_restricted"] = from_union([from_bool, from_none], self.is_ultra_restricted)
+        result["avatar_hash"] = from_union([from_str, from_none], self.avatar_hash)
+        result["image_72"] = from_union([from_str, from_none], self.image_72)
+        return result
+
+
+@dataclass
 class Event:
     type: Optional[str] = None
     client_msg_id: Optional[str] = None
     user: Optional[str] = None
     username: Optional[str] = None
+    app_id: Optional[str] = None
     bot_id: Optional[str] = None
     bot_profile: Optional[BotProfile] = None
     subtype: Optional[str] = None
     text: Optional[str] = None
     blocks: Optional[List[Block]] = None
+    upload: Optional[bool] = None
+    display_as_bot: Optional[bool] = None
     ts: Optional[str] = None
     team: Optional[str] = None
     channel: Optional[str] = None
+    user_team: Optional[str] = None
+    source_team: Optional[str] = None
+    user_profile: Optional[UserProfile] = None
     edited: Optional[Edited] = None
     event_ts: Optional[str] = None
     thread_ts: Optional[str] = None
@@ -469,18 +546,24 @@ class Event:
         client_msg_id = from_union([from_str, from_none], obj.get("client_msg_id"))
         user = from_union([from_str, from_none], obj.get("user"))
         username = from_union([from_str, from_none], obj.get("username"))
+        app_id = from_union([from_str, from_none], obj.get("app_id"))
         bot_id = from_union([from_str, from_none], obj.get("bot_id"))
         bot_profile = from_union([BotProfile.from_dict, from_none], obj.get("bot_profile"))
         subtype = from_union([from_str, from_none], obj.get("subtype"))
         text = from_union([from_str, from_none], obj.get("text"))
         blocks = from_union([lambda x: from_list(Block.from_dict, x), from_none], obj.get("blocks"))
+        upload = from_union([from_bool, from_none], obj.get("upload"))
+        display_as_bot = from_union([from_bool, from_none], obj.get("display_as_bot"))
         ts = from_union([from_str, from_none], obj.get("ts"))
         team = from_union([from_str, from_none], obj.get("team"))
         channel = from_union([from_str, from_none], obj.get("channel"))
+        user_team = from_union([from_str, from_none], obj.get("user_team"))
+        source_team = from_union([from_str, from_none], obj.get("source_team"))
+        user_profile = from_union([UserProfile.from_dict, from_none], obj.get("user_profile"))
         edited = from_union([Edited.from_dict, from_none], obj.get("edited"))
         event_ts = from_union([from_str, from_none], obj.get("event_ts"))
         thread_ts = from_union([from_str, from_none], obj.get("thread_ts"))
-        return Event(type, client_msg_id, user, username, bot_id, bot_profile, subtype, text, blocks, ts, team, channel, edited, event_ts, thread_ts)
+        return Event(type, client_msg_id, user, username, app_id, bot_id, bot_profile, subtype, text, blocks, upload, display_as_bot, ts, team, channel, user_team, source_team, user_profile, edited, event_ts, thread_ts)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -488,14 +571,20 @@ class Event:
         result["client_msg_id"] = from_union([from_str, from_none], self.client_msg_id)
         result["user"] = from_union([from_str, from_none], self.user)
         result["username"] = from_union([from_str, from_none], self.username)
+        result["app_id"] = from_union([from_str, from_none], self.app_id)
         result["bot_id"] = from_union([from_str, from_none], self.bot_id)
         result["bot_profile"] = from_union([lambda x: to_class(BotProfile, x), from_none], self.bot_profile)
         result["subtype"] = from_union([from_str, from_none], self.subtype)
         result["text"] = from_union([from_str, from_none], self.text)
         result["blocks"] = from_union([lambda x: from_list(lambda x: to_class(Block, x), x), from_none], self.blocks)
+        result["upload"] = from_union([from_bool, from_none], self.upload)
+        result["display_as_bot"] = from_union([from_bool, from_none], self.display_as_bot)
         result["ts"] = from_union([from_str, from_none], self.ts)
         result["team"] = from_union([from_str, from_none], self.team)
         result["channel"] = from_union([from_str, from_none], self.channel)
+        result["user_team"] = from_union([from_str, from_none], self.user_team)
+        result["source_team"] = from_union([from_str, from_none], self.source_team)
+        result["user_profile"] = from_union([lambda x: to_class(UserProfile, x), from_none], self.user_profile)
         result["edited"] = from_union([lambda x: to_class(Edited, x), from_none], self.edited)
         result["event_ts"] = from_union([from_str, from_none], self.event_ts)
         result["thread_ts"] = from_union([from_str, from_none], self.thread_ts)

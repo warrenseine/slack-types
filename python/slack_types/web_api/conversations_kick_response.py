@@ -7,7 +7,7 @@
 #     result = conversations_kick_response_from_dict(json.loads(json_string))
 
 from dataclasses import dataclass
-from typing import Optional, Any, TypeVar, Type, cast
+from typing import Any, Optional, TypeVar, Type, cast
 
 
 T = TypeVar("T")
@@ -43,11 +43,27 @@ def to_class(c: Type[T], x: Any) -> dict:
 
 
 @dataclass
+class Errors:
+    pass
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Errors':
+        assert isinstance(obj, dict)
+        return Errors()
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        return result
+
+
+@dataclass
 class ConversationsKickResponse:
     ok: Optional[bool] = None
     error: Optional[str] = None
     needed: Optional[str] = None
     provided: Optional[str] = None
+    errors: Optional[Errors] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'ConversationsKickResponse':
@@ -56,7 +72,9 @@ class ConversationsKickResponse:
         error = from_union([from_str, from_none], obj.get("error"))
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
-        return ConversationsKickResponse(ok, error, needed, provided)
+        errors = from_union([Errors.from_dict, from_none], obj.get("errors"))
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return ConversationsKickResponse(ok, error, needed, provided, errors, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -64,6 +82,8 @@ class ConversationsKickResponse:
         result["error"] = from_union([from_str, from_none], self.error)
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
+        result["errors"] = from_union([lambda x: to_class(Errors, x), from_none], self.errors)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

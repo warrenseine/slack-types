@@ -27,12 +27,37 @@ export interface Event {
 }
 
 export interface Channel {
-    id?:              string;
-    is_channel?:      boolean;
-    name?:            string;
-    name_normalized?: string;
-    created?:         number;
-    creator?:         string;
-    is_shared?:       boolean;
-    is_org_shared?:   boolean;
+    id?:                         string;
+    is_channel?:                 boolean;
+    name?:                       string;
+    name_normalized?:            string;
+    created?:                    number;
+    creator?:                    string;
+    is_shared?:                  boolean;
+    is_org_shared?:              boolean;
+    context_team_id?:            string;
+    is_group?:                   boolean;
+    is_im?:                      boolean;
+    is_mpim?:                    boolean;
+    is_private?:                 boolean;
+    is_archived?:                boolean;
+    is_general?:                 boolean;
+    unlinked?:                   number;
+    is_pending_ext_shared?:      boolean;
+    pending_shared?:             string[];
+    updated?:                    number;
+    is_moved?:                   number;
+    is_ext_shared?:              boolean;
+    shared_team_ids?:            string[];
+    internal_team_ids?:          string[];
+    pending_connected_team_ids?: string[];
+    topic?:                      Purpose;
+    purpose?:                    Purpose;
+    previous_names?:             string[];
+}
+
+export interface Purpose {
+    value?:    string;
+    creator?:  string;
+    last_set?: number;
 }

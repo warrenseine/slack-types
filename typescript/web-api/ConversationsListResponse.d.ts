@@ -5,6 +5,9 @@ export interface ConversationsListResponse {
     error?:             string;
     needed?:            string;
     provided?:          string;
+    arg?:               string;
+    callstack?:         string;
+    warning?:           string;
 }
 
 export interface Channel {
@@ -42,6 +45,58 @@ export interface Channel {
     is_org_mandatory?:           boolean;
     conversation_host_id?:       string;
     internal_team_ids?:          string[];
+    context_team_id?:            string;
+    updated?:                    number;
+    properties?:                 Properties;
+}
+
+export interface Properties {
+    posting_restricted_to?:            RestrictedTo;
+    threads_restricted_to?:            RestrictedTo;
+    canvas?:                           Canvas;
+    tabs?:                             Tab[];
+    tabz?:                             Tab[];
+    meeting_notes?:                    MeetingNotes;
+    is_dormant?:                       boolean;
+    use_case?:                         string;
+    channel_workflows?:                ChannelWorkflow[];
+    has_slack_connect_invite_created?: boolean;
+}
+
+export interface Canvas {
+    file_id?:        string;
+    is_empty?:       boolean;
+    quip_thread_id?: string;
+    is_migrated?:    boolean;
+}
+
+export interface ChannelWorkflow {
+    workflow_trigger_id?: string;
+    title?:               string;
+}
+
+export interface MeetingNotes {
+    file_id?: string;
+}
+
+export interface RestrictedTo {
+    type?: string[];
+    user?: string[];
+}
+
+export interface Tab {
+    id?:          string;
+    label?:       string;
+    type?:        string;
+    data?:        Data;
+    is_disabled?: boolean;
+}
+
+export interface Data {
+    file_id?:            string;
+    shared_ts?:          string;
+    folder_bookmark_id?: string;
+    mute_edit_updates?:  boolean;
 }
 
 export interface Purpose {

@@ -28,6 +28,7 @@
     "client_msg_id": "",
     "user": "",
     "username": "",
+    "app_id": "",
     "bot_id": "",
     "bot_profile": {
       "id": "",
@@ -362,7 +363,11 @@
             "fallback": "",
             "image_width": 123,
             "image_height": 123,
-            "image_bytes": 123
+            "image_bytes": 123,
+            "slack_file": {
+              "id": "",
+              "url": ""
+            }
           },
           {
             "type": "overflow",
@@ -553,7 +558,11 @@
             "fallback": "",
             "image_width": 123,
             "image_height": 123,
-            "image_bytes": 123
+            "image_bytes": 123,
+            "slack_file": {
+              "id": "",
+              "url": ""
+            }
           }
         ],
         "block_id": ""
@@ -569,6 +578,11 @@
         "image_width": 123,
         "image_height": 123,
         "image_bytes": 123,
+        "is_animated": false,
+        "slack_file": {
+          "id": "",
+          "url": ""
+        },
         "alt_text": "",
         "title": {
           "type": "plain_text",
@@ -604,13 +618,32 @@
           "fallback": "",
           "image_width": 123,
           "image_height": 123,
-          "image_bytes": 123
+          "image_bytes": 123,
+          "slack_file": {
+            "id": "",
+            "url": ""
+          }
         }
       }
     ],
+    "upload": false,
+    "display_as_bot": false,
     "ts": "",
     "team": "",
     "channel": "",
+    "user_team": "",
+    "source_team": "",
+    "user_profile": {
+      "name": "",
+      "first_name": "",
+      "real_name": "",
+      "display_name": "",
+      "team": "",
+      "is_restricted": false,
+      "is_ultra_restricted": false,
+      "avatar_hash": "",
+      "image_72": ""
+    },
     "edited": {
       "user": "",
       "ts": ""

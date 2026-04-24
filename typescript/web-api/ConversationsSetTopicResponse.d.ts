@@ -4,6 +4,7 @@ export interface ConversationsSetTopicResponse {
     error?:    string;
     needed?:   string;
     provided?: string;
+    warning?:  string;
 }
 
 export interface Channel {
@@ -32,6 +33,8 @@ export interface Channel {
     topic?:                      Purpose;
     purpose?:                    Purpose;
     previous_names?:             string[];
+    context_team_id?:            string;
+    updated?:                    number;
 }
 
 export interface Purpose {

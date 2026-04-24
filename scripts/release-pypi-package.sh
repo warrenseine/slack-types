@@ -1,8 +1,12 @@
 #!/bin/bash
 
+set -e
+
 [[ "$npm_package_name" == "slack-types" ]] || {
-    >&2 echo "error: run with pip (npm run release)"
+    >&2 echo "error: run with npm (npm run release)"
     exit 1
 }
 
-python3 -m build
+rm -rf dist/
+uv build
+uv publish

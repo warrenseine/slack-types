@@ -35,6 +35,19 @@ export interface Context {
     location?:   Location;
     ua?:         string;
     ip_address?: string;
+    app?:        App;
+}
+
+export interface App {
+    id?:                    string;
+    name?:                  string;
+    is_distributed?:        boolean;
+    is_directory_approved?: boolean;
+    is_workflow_app?:       boolean;
+    scopes?:                string[];
+    scopes_bot?:            any[];
+    creator?:               string;
+    team?:                  string;
 }
 
 export interface Location {
@@ -101,6 +114,73 @@ export interface Details {
     who_can_post?:                  CanThread;
     can_thread?:                    CanThread;
     is_external_limited?:           boolean;
+    exporting_team_id?:             number;
+    session_search_start?:          number;
+    deprecation_search_end?:        number;
+    is_error?:                      boolean;
+    app_id?:                        string;
+    enable_at_here?:                CanHuddle;
+    enable_at_channel?:             CanHuddle;
+    can_huddle?:                    CanHuddle;
+    url_private?:                   string;
+    shared_with?:                   SharedWith;
+    initiated_by?:                  string;
+    source_team?:                   string;
+    destination_team?:              string;
+    succeeded_users?:               any[];
+    failed_users?:                  any[];
+    enterprise?:                    string;
+    team?:                          string;
+    subteam?:                       string;
+    action?:                        string;
+    idp_group_member_count?:        number;
+    workspace_member_count?:        number;
+    added_user_count?:              number;
+    added_user_error_count?:        number;
+    reactivated_user_count?:        number;
+    removed_user_count?:            number;
+    removed_user_error_count?:      number;
+    total_removal_count?:           number;
+    is_flagged?:                    string;
+    target_user?:                   string;
+    target_entity?:                 string;
+    idp_config_id?:                 string;
+    config_type?:                   string;
+    idp_entity_id?:                 string;
+    idp_entity_id_hash?:            string;
+    label?:                         string;
+    previous_profile?:              Profile;
+    new_profile?:                   Profile;
+    target_user_id?:                string;
+    space_file_id?:                 SpaceFileid;
+    target_entity_id?:              string;
+    changed_permissions?:           any[];
+    datastore_name?:                string;
+    attributes?:                    any[];
+    channel?:                       string;
+    entity_type?:                   string;
+    actor?:                         string;
+    access_level?:                  string;
+    functions?:                     any[];
+    workflows?:                     any[];
+    datastores?:                    any[];
+    permissions_updated?:           boolean;
+    matched_rule?:                  MatchedRule;
+    request?:                       Request;
+    rules_checked?:                 any[];
+    disconnecting_team?:            string;
+    is_channel_canvas?:             boolean;
+    linked_channel_id?:             string;
+    column_id?:                     string;
+    row_id?:                        string;
+    cell_date_updated?:             number;
+    view_id?:                       string;
+    user?:                          string;
+    file_id?:                       string;
+}
+
+export interface CanHuddle {
+    enabled?: boolean;
 }
 
 export interface CanThread {
@@ -115,6 +195,45 @@ export interface Inviter {
     name?:  string;
     email?: string;
     team?:  string;
+}
+
+export interface MatchedRule {
+    id?:        string;
+    team_id?:   string;
+    title?:     string;
+    action?:    Action;
+    condition?: Condition;
+}
+
+export interface Action {
+    resolution?: Resolution;
+    notify?:     any[];
+}
+
+export interface Resolution {
+    value?: string;
+}
+
+export interface Condition {
+    datatype?:    string;
+    operator?:    string;
+    values?:      any[];
+    entity_type?: string;
+}
+
+export interface Profile {
+    real_name?:      string;
+    first_name?:     string;
+    last_name?:      string;
+    display_name?:   string;
+    image_original?: string;
+    image_24?:       string;
+    image_32?:       string;
+    image_48?:       string;
+    image_72?:       string;
+    image_192?:      string;
+    image_512?:      string;
+    image_1024?:     string;
 }
 
 export interface RetentionPolicy {
@@ -142,26 +261,42 @@ export interface Wildcard {
     type?: string;
 }
 
-export interface Entity {
-    type?:       string;
-    app?:        App;
-    user?:       User;
-    usergroup?:  Usergroup;
-    workspace?:  Location;
-    enterprise?: Location;
-    file?:       File;
-    channel?:    Channel;
-    workflow?:   Usergroup;
-    barrier?:    Barrier;
+export interface Request {
+    id?:      string;
+    team_id?: string;
 }
 
-export interface App {
-    id?:                    string;
-    name?:                  string;
-    is_distributed?:        boolean;
-    is_directory_approved?: boolean;
-    is_workflow_app?:       boolean;
-    scopes?:                string[];
+export interface SharedWith {
+    channel_id?:   string;
+    access_level?: string;
+}
+
+export interface SpaceFileid {
+    payload?: string;
+}
+
+export interface Entity {
+    type?:              string;
+    app?:               App;
+    user?:              User;
+    usergroup?:         AccountTypeRole;
+    workspace?:         Location;
+    enterprise?:        Location;
+    file?:              File;
+    channel?:           Channel;
+    message?:           Message;
+    huddle?:            Huddle;
+    role?:              Location;
+    account_type_role?: AccountTypeRole;
+    workflow?:          AccountTypeRole;
+    barrier?:           Barrier;
+    workflow_v2?:       WorkflowV2;
+    list?:              List;
+}
+
+export interface AccountTypeRole {
+    id?:   string;
+    name?: string;
 }
 
 export interface Barrier {
@@ -179,6 +314,7 @@ export interface Channel {
     is_org_shared?:                 boolean;
     teams_shared_with?:             string[];
     original_connected_channel_id?: string;
+    is_salesforce_channel?:         boolean;
 }
 
 export interface File {
@@ -188,9 +324,31 @@ export interface File {
     title?:    string;
 }
 
-export interface Usergroup {
-    id?:   string;
-    name?: string;
+export interface Huddle {
+    id?:           string;
+    date_start?:   number;
+    date_end?:     number;
+    participants?: any[];
+}
+
+export interface List {
+    id?: string;
+}
+
+export interface Message {
+    channel?:   string;
+    team?:      string;
+    timestamp?: string;
+}
+
+export interface WorkflowV2 {
+    id?:                 string;
+    app_id?:             string;
+    date_updated?:       number;
+    callback_id?:        string;
+    name?:               string;
+    updated_by?:         string;
+    step_configuration?: any[];
 }
 
 export interface ResponseMetadata {

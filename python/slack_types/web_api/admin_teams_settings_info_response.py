@@ -32,14 +32,14 @@ def from_union(fs, x):
     assert False
 
 
-def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
-    assert isinstance(x, list)
-    return [f(y) for y in x]
-
-
 def from_bool(x: Any) -> bool:
     assert isinstance(x, bool)
     return x
+
+
+def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
+    assert isinstance(x, list)
+    return [f(y) for y in x]
 
 
 def to_class(c: Type[T], x: Any) -> dict:
@@ -57,6 +57,7 @@ class Icon:
     image_132: Optional[str] = None
     image_230: Optional[str] = None
     image_original: Optional[str] = None
+    image_default: Optional[bool] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Icon':
@@ -69,7 +70,8 @@ class Icon:
         image_132 = from_union([from_str, from_none], obj.get("image_132"))
         image_230 = from_union([from_str, from_none], obj.get("image_230"))
         image_original = from_union([from_str, from_none], obj.get("image_original"))
-        return Icon(image_34, image_44, image_68, image_88, image_102, image_132, image_230, image_original)
+        image_default = from_union([from_bool, from_none], obj.get("image_default"))
+        return Icon(image_34, image_44, image_68, image_88, image_102, image_132, image_230, image_original, image_default)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -81,6 +83,7 @@ class Icon:
         result["image_132"] = from_union([from_str, from_none], self.image_132)
         result["image_230"] = from_union([from_str, from_none], self.image_230)
         result["image_original"] = from_union([from_str, from_none], self.image_original)
+        result["image_default"] = from_union([from_bool, from_none], self.image_default)
         return result
 
 
@@ -140,6 +143,7 @@ class AdminTeamsSettingsInfoResponse:
     error: Optional[str] = None
     needed: Optional[str] = None
     provided: Optional[str] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'AdminTeamsSettingsInfoResponse':
@@ -149,7 +153,8 @@ class AdminTeamsSettingsInfoResponse:
         error = from_union([from_str, from_none], obj.get("error"))
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
-        return AdminTeamsSettingsInfoResponse(ok, team, error, needed, provided)
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return AdminTeamsSettingsInfoResponse(ok, team, error, needed, provided, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -158,6 +163,7 @@ class AdminTeamsSettingsInfoResponse:
         result["error"] = from_union([from_str, from_none], self.error)
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

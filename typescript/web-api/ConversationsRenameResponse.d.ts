@@ -35,6 +35,8 @@ export interface Channel {
     is_moved?:                   number;
     internal_team_ids?:          string[];
     is_open?:                    boolean;
+    context_team_id?:            string;
+    updated?:                    number;
 }
 
 export interface Purpose {

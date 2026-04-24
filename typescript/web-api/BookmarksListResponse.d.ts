@@ -5,6 +5,7 @@ export interface BookmarksListResponse {
     needed?:            string;
     provided?:          string;
     bookmarks?:         Bookmark[];
+    warning?:           string;
 }
 
 export interface Bookmark {
@@ -23,6 +24,7 @@ export interface Bookmark {
     last_updated_by_team_id?: string;
     shortcut_id?:             string;
     app_id?:                  string;
+    app_action_id?:           string;
 }
 
 export interface ResponseMetadata {

@@ -3,4 +3,5 @@ export interface AdminUsersUnsupportedVersionsExportResponse {
     error?:    string;
     needed?:   string;
     provided?: string;
+    warning?:  string;
 }

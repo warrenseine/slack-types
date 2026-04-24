@@ -7,10 +7,15 @@
 #     result = users_lookup_by_email_response_from_dict(json.loads(json_string))
 
 from dataclasses import dataclass
-from typing import Optional, Any, List, TypeVar, Callable, Type, cast
+from typing import Optional, List, Any, TypeVar, Callable, Type, cast
 
 
 T = TypeVar("T")
+
+
+def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
+    assert isinstance(x, list)
+    return [f(y) for y in x]
 
 
 def from_str(x: Any) -> str:
@@ -42,14 +47,25 @@ def from_bool(x: Any) -> bool:
     return x
 
 
-def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
-    assert isinstance(x, list)
-    return [f(y) for y in x]
-
-
 def to_class(c: Type[T], x: Any) -> dict:
     assert isinstance(x, c)
     return cast(Any, x).to_dict()
+
+
+@dataclass
+class ResponseMetadata:
+    messages: Optional[List[str]] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'ResponseMetadata':
+        assert isinstance(obj, dict)
+        messages = from_union([lambda x: from_list(from_str, x), from_none], obj.get("messages"))
+        return ResponseMetadata(messages)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["messages"] = from_union([lambda x: from_list(from_str, x), from_none], self.messages)
+        return result
 
 
 @dataclass
@@ -57,6 +73,7 @@ class StatusEmojiDisplayInfo:
     emoji_name: Optional[str] = None
     display_alias: Optional[str] = None
     display_url: Optional[str] = None
+    unicode: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'StatusEmojiDisplayInfo':
@@ -64,13 +81,15 @@ class StatusEmojiDisplayInfo:
         emoji_name = from_union([from_str, from_none], obj.get("emoji_name"))
         display_alias = from_union([from_str, from_none], obj.get("display_alias"))
         display_url = from_union([from_str, from_none], obj.get("display_url"))
-        return StatusEmojiDisplayInfo(emoji_name, display_alias, display_url)
+        unicode = from_union([from_str, from_none], obj.get("unicode"))
+        return StatusEmojiDisplayInfo(emoji_name, display_alias, display_url, unicode)
 
     def to_dict(self) -> dict:
         result: dict = {}
         result["emoji_name"] = from_union([from_str, from_none], self.emoji_name)
         result["display_alias"] = from_union([from_str, from_none], self.display_alias)
         result["display_url"] = from_union([from_str, from_none], self.display_url)
+        result["unicode"] = from_union([from_str, from_none], self.unicode)
         return result
 
 
@@ -103,6 +122,9 @@ class Profile:
     team: Optional[str] = None
     status_emoji_url: Optional[str] = None
     pronouns: Optional[str] = None
+    huddle_state: Optional[str] = None
+    huddle_state_expiration_ts: Optional[int] = None
+    guest_invited_by: Optional[str] = None
     status_emoji_display_info: Optional[List[StatusEmojiDisplayInfo]] = None
 
     @staticmethod
@@ -135,8 +157,11 @@ class Profile:
         team = from_union([from_str, from_none], obj.get("team"))
         status_emoji_url = from_union([from_str, from_none], obj.get("status_emoji_url"))
         pronouns = from_union([from_str, from_none], obj.get("pronouns"))
+        huddle_state = from_union([from_str, from_none], obj.get("huddle_state"))
+        huddle_state_expiration_ts = from_union([from_int, from_none], obj.get("huddle_state_expiration_ts"))
+        guest_invited_by = from_union([from_str, from_none], obj.get("guest_invited_by"))
         status_emoji_display_info = from_union([lambda x: from_list(StatusEmojiDisplayInfo.from_dict, x), from_none], obj.get("status_emoji_display_info"))
-        return Profile(title, phone, skype, real_name, real_name_normalized, display_name, display_name_normalized, status_text, status_emoji, status_expiration, avatar_hash, image_original, is_custom_image, email, first_name, last_name, image_24, image_32, image_48, image_72, image_192, image_512, image_1024, status_text_canonical, team, status_emoji_url, pronouns, status_emoji_display_info)
+        return Profile(title, phone, skype, real_name, real_name_normalized, display_name, display_name_normalized, status_text, status_emoji, status_expiration, avatar_hash, image_original, is_custom_image, email, first_name, last_name, image_24, image_32, image_48, image_72, image_192, image_512, image_1024, status_text_canonical, team, status_emoji_url, pronouns, huddle_state, huddle_state_expiration_ts, guest_invited_by, status_emoji_display_info)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -167,6 +192,9 @@ class Profile:
         result["team"] = from_union([from_str, from_none], self.team)
         result["status_emoji_url"] = from_union([from_str, from_none], self.status_emoji_url)
         result["pronouns"] = from_union([from_str, from_none], self.pronouns)
+        result["huddle_state"] = from_union([from_str, from_none], self.huddle_state)
+        result["huddle_state_expiration_ts"] = from_union([from_int, from_none], self.huddle_state_expiration_ts)
+        result["guest_invited_by"] = from_union([from_str, from_none], self.guest_invited_by)
         result["status_emoji_display_info"] = from_union([lambda x: from_list(lambda x: to_class(StatusEmojiDisplayInfo, x), x), from_none], self.status_emoji_display_info)
         return result
 
@@ -194,6 +222,7 @@ class User:
     has_2_fa: Optional[bool] = None
     is_email_confirmed: Optional[bool] = None
     who_can_share_contact_card: Optional[str] = None
+    is_invited_user: Optional[bool] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'User':
@@ -219,7 +248,8 @@ class User:
         has_2_fa = from_union([from_bool, from_none], obj.get("has_2fa"))
         is_email_confirmed = from_union([from_bool, from_none], obj.get("is_email_confirmed"))
         who_can_share_contact_card = from_union([from_str, from_none], obj.get("who_can_share_contact_card"))
-        return User(id, team_id, name, deleted, color, real_name, tz, tz_label, tz_offset, profile, is_admin, is_owner, is_primary_owner, is_restricted, is_ultra_restricted, is_bot, is_app_user, updated, has_2_fa, is_email_confirmed, who_can_share_contact_card)
+        is_invited_user = from_union([from_bool, from_none], obj.get("is_invited_user"))
+        return User(id, team_id, name, deleted, color, real_name, tz, tz_label, tz_offset, profile, is_admin, is_owner, is_primary_owner, is_restricted, is_ultra_restricted, is_bot, is_app_user, updated, has_2_fa, is_email_confirmed, who_can_share_contact_card, is_invited_user)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -244,6 +274,7 @@ class User:
         result["has_2fa"] = from_union([from_bool, from_none], self.has_2_fa)
         result["is_email_confirmed"] = from_union([from_bool, from_none], self.is_email_confirmed)
         result["who_can_share_contact_card"] = from_union([from_str, from_none], self.who_can_share_contact_card)
+        result["is_invited_user"] = from_union([from_bool, from_none], self.is_invited_user)
         return result
 
 
@@ -254,6 +285,8 @@ class UsersLookupByEmailResponse:
     error: Optional[str] = None
     needed: Optional[str] = None
     provided: Optional[str] = None
+    response_metadata: Optional[ResponseMetadata] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'UsersLookupByEmailResponse':
@@ -263,7 +296,9 @@ class UsersLookupByEmailResponse:
         error = from_union([from_str, from_none], obj.get("error"))
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
-        return UsersLookupByEmailResponse(ok, user, error, needed, provided)
+        response_metadata = from_union([ResponseMetadata.from_dict, from_none], obj.get("response_metadata"))
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return UsersLookupByEmailResponse(ok, user, error, needed, provided, response_metadata, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -272,6 +307,8 @@ class UsersLookupByEmailResponse:
         result["error"] = from_union([from_str, from_none], self.error)
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
+        result["response_metadata"] = from_union([lambda x: to_class(ResponseMetadata, x), from_none], self.response_metadata)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

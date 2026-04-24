@@ -10,6 +10,8 @@ export interface GroupRenamePayload {
     authorizations?:        Authorization[];
     is_ext_shared_channel?: boolean;
     event_context?:         string;
+    context_team_id?:       string;
+    context_enterprise_id?: string;
 }
 
 export interface Authorization {

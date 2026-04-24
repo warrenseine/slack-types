@@ -36,17 +36,23 @@
     "status_text_canonical": "",
     "status_emoji_url": "",
     "pronouns": "",
+    "huddle_state": "",
+    "huddle_state_expiration_ts": 12345,
     "status_emoji_display_info": [
       {
         "emoji_name": "",
         "display_alias": "",
-        "display_url": ""
+        "display_url": "",
+        "unicode": ""
       }
-    ]
+    ],
+    "start_date": "",
+    "status_clear_on_focus_end": false
   },
   "ok": false,
   "username": "",
   "error": "",
   "needed": "",
-  "provided": ""
+  "provided": "",
+  "warning": ""
 }

@@ -1,5 +1,5 @@
 {
-  "ok": false,
+  "ok": true,
   "warning": "",
   "error": "",
   "needed": "",
@@ -33,7 +33,10 @@
           "is_workflow_app": false,
           "scopes": [
             ""
-          ]
+          ],
+          "scopes_bot": [],
+          "creator": "",
+          "team": ""
         },
         "user": {
           "id": "",
@@ -70,7 +73,28 @@
           "teams_shared_with": [
             ""
           ],
-          "original_connected_channel_id": ""
+          "original_connected_channel_id": "",
+          "is_salesforce_channel": false
+        },
+        "message": {
+          "channel": "",
+          "team": "",
+          "timestamp": ""
+        },
+        "huddle": {
+          "id": "",
+          "date_start": 123,
+          "date_end": 123,
+          "participants": []
+        },
+        "role": {
+          "id": "",
+          "name": "",
+          "type": ""
+        },
+        "account_type_role": {
+          "id": "",
+          "name": ""
         },
         "workflow": {
           "id": "",
@@ -85,6 +109,18 @@
           "restricted_subjects": [
             ""
           ]
+        },
+        "workflow_v2": {
+          "id": "",
+          "app_id": "",
+          "date_updated": 123,
+          "callback_id": "",
+          "name": "",
+          "updated_by": "",
+          "step_configuration": []
+        },
+        "list": {
+          "id": ""
         }
       },
       "context": {
@@ -96,7 +132,18 @@
           "domain": ""
         },
         "ua": "",
-        "ip_address": ""
+        "ip_address": "",
+        "app": {
+          "id": "",
+          "name": "",
+          "is_distributed": false,
+          "is_directory_approved": false,
+          "is_workflow_app": false,
+          "scopes": [],
+          "scopes_bot": [],
+          "creator": "",
+          "team": ""
+        }
       },
       "details": {
         "type": "",
@@ -230,7 +277,126 @@
             ""
           ]
         },
-        "is_external_limited": false
+        "is_external_limited": false,
+        "exporting_team_id": 123,
+        "session_search_start": 123,
+        "deprecation_search_end": 123,
+        "is_error": false,
+        "app_id": "",
+        "enable_at_here": {
+          "enabled": false
+        },
+        "enable_at_channel": {
+          "enabled": false
+        },
+        "can_huddle": {
+          "enabled": false
+        },
+        "url_private": "",
+        "shared_with": {
+          "channel_id": "",
+          "access_level": ""
+        },
+        "initiated_by": "",
+        "source_team": "",
+        "destination_team": "",
+        "succeeded_users": [],
+        "failed_users": [],
+        "enterprise": "",
+        "team": "",
+        "subteam": "",
+        "action": "",
+        "idp_group_member_count": 123,
+        "workspace_member_count": 123,
+        "added_user_count": 123,
+        "added_user_error_count": 123,
+        "reactivated_user_count": 123,
+        "removed_user_count": 123,
+        "removed_user_error_count": 123,
+        "total_removal_count": 123,
+        "is_flagged": "",
+        "target_user": "",
+        "target_entity": "",
+        "idp_config_id": "",
+        "config_type": "",
+        "idp_entity_id": "",
+        "idp_entity_id_hash": "",
+        "label": "",
+        "previous_profile": {
+          "real_name": "",
+          "first_name": "",
+          "last_name": "",
+          "display_name": "",
+          "image_original": "",
+          "image_24": "",
+          "image_32": "",
+          "image_48": "",
+          "image_72": "",
+          "image_192": "",
+          "image_512": "",
+          "image_1024": ""
+        },
+        "new_profile": {
+          "real_name": "",
+          "first_name": "",
+          "last_name": "",
+          "display_name": "",
+          "image_original": "",
+          "image_24": "",
+          "image_32": "",
+          "image_48": "",
+          "image_72": "",
+          "image_192": "",
+          "image_512": "",
+          "image_1024": ""
+        },
+        "target_user_id": "",
+        "space_file_id": {
+          "payload": ""
+        },
+        "target_entity_id": "",
+        "changed_permissions": [],
+        "datastore_name": "",
+        "attributes": [],
+        "channel": "",
+        "entity_type": "",
+        "actor": "",
+        "access_level": "",
+        "functions": [],
+        "workflows": [],
+        "datastores": [],
+        "permissions_updated": false,
+        "matched_rule": {
+          "id": "",
+          "team_id": "",
+          "title": "",
+          "action": {
+            "resolution": {
+              "value": ""
+            },
+            "notify": []
+          },
+          "condition": {
+            "datatype": "",
+            "operator": "",
+            "values": [],
+            "entity_type": ""
+          }
+        },
+        "request": {
+          "id": "",
+          "team_id": ""
+        },
+        "rules_checked": [],
+        "disconnecting_team": "",
+        "is_channel_canvas": false,
+        "linked_channel_id": "",
+        "column_id": "",
+        "row_id": "",
+        "cell_date_updated": 123,
+        "view_id": "",
+        "user": "",
+        "file_id": ""
       }
     }
   ]

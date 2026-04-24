@@ -4,6 +4,7 @@ export interface AdminAnalyticsGetFileResponse {
     needed?:            string;
     provided?:          string;
     response_metadata?: ResponseMetadata;
+    warning?:           string;
 }
 
 export interface ResponseMetadata {

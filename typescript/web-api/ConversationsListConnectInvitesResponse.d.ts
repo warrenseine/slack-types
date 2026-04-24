@@ -16,6 +16,15 @@ export interface InviteElement {
     invite?:            InviteInvite;
     channel?:           Channel;
     acceptances?:       Acceptance[];
+    id?:                string;
+    date_created?:      number;
+    date_invalid?:      number;
+    inviting_team?:     IngTeam;
+    inviting_user?:     TingUser;
+    invite_payload?:    InvitePayload;
+    sig?:               string;
+    link?:              string;
+    recipient_user_id?: string;
 }
 
 export interface Acceptance {
@@ -29,12 +38,14 @@ export interface Acceptance {
 }
 
 export interface IngTeam {
-    id?:           string;
-    name?:         string;
-    icon?:         Icon;
-    is_verified?:  boolean;
-    domain?:       string;
-    date_created?: number;
+    id?:                   string;
+    name?:                 string;
+    icon?:                 Icon;
+    is_verified?:          boolean;
+    domain?:               string;
+    date_created?:         number;
+    avatar_base_url?:      string;
+    requires_sponsorship?: boolean;
 }
 
 export interface Icon {
@@ -45,16 +56,17 @@ export interface Icon {
     image_44?:       string;
     image_68?:       string;
     image_88?:       string;
-    image_original?: string;
     image_default?:  boolean;
+    image_original?: string;
 }
 
 export interface TingUser {
-    id?:      string;
-    team_id?: string;
-    name?:    string;
-    updated?: number;
-    profile?: Profile;
+    id?:                         string;
+    team_id?:                    string;
+    name?:                       string;
+    updated?:                    number;
+    profile?:                    Profile;
+    who_can_share_contact_card?: string;
 }
 
 export interface Profile {
@@ -98,6 +110,14 @@ export interface InviteInvite {
     link?:              string;
     recipient_user_id?: string;
     recipient_email?:   string;
+    sig?:               string;
+}
+
+export interface InvitePayload {
+    invite_type?:         string;
+    is_sponsored?:        boolean;
+    is_external_limited?: boolean;
+    channel?:             Channel;
 }
 
 export interface ResponseMetadata {

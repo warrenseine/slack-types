@@ -69,6 +69,7 @@ class Bookmark:
     last_updated_by_team_id: Optional[str] = None
     shortcut_id: Optional[str] = None
     app_id: Optional[str] = None
+    app_action_id: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Bookmark':
@@ -88,7 +89,8 @@ class Bookmark:
         last_updated_by_team_id = from_union([from_str, from_none], obj.get("last_updated_by_team_id"))
         shortcut_id = from_union([from_str, from_none], obj.get("shortcut_id"))
         app_id = from_union([from_str, from_none], obj.get("app_id"))
-        return Bookmark(id, channel_id, title, link, emoji, icon_url, entity_id, type, date_created, date_updated, rank, last_updated_by_user_id, last_updated_by_team_id, shortcut_id, app_id)
+        app_action_id = from_union([from_str, from_none], obj.get("app_action_id"))
+        return Bookmark(id, channel_id, title, link, emoji, icon_url, entity_id, type, date_created, date_updated, rank, last_updated_by_user_id, last_updated_by_team_id, shortcut_id, app_id, app_action_id)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -107,6 +109,7 @@ class Bookmark:
         result["last_updated_by_team_id"] = from_union([from_str, from_none], self.last_updated_by_team_id)
         result["shortcut_id"] = from_union([from_str, from_none], self.shortcut_id)
         result["app_id"] = from_union([from_str, from_none], self.app_id)
+        result["app_action_id"] = from_union([from_str, from_none], self.app_action_id)
         return result
 
 
@@ -134,6 +137,7 @@ class BookmarksListResponse:
     needed: Optional[str] = None
     provided: Optional[str] = None
     bookmarks: Optional[List[Bookmark]] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'BookmarksListResponse':
@@ -144,7 +148,8 @@ class BookmarksListResponse:
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
         bookmarks = from_union([lambda x: from_list(Bookmark.from_dict, x), from_none], obj.get("bookmarks"))
-        return BookmarksListResponse(ok, error, response_metadata, needed, provided, bookmarks)
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return BookmarksListResponse(ok, error, response_metadata, needed, provided, bookmarks, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -154,6 +159,7 @@ class BookmarksListResponse:
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
         result["bookmarks"] = from_union([lambda x: from_list(lambda x: to_class(Bookmark, x), x), from_none], self.bookmarks)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

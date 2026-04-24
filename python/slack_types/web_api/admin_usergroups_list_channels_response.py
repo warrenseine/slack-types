@@ -7,10 +7,15 @@
 #     result = admin_usergroups_list_channels_response_from_dict(json.loads(json_string))
 
 from dataclasses import dataclass
-from typing import Optional, Any, List, TypeVar, Callable, Type, cast
+from typing import Optional, List, Any, TypeVar, Callable, Type, cast
 
 
 T = TypeVar("T")
+
+
+def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
+    assert isinstance(x, list)
+    return [f(y) for y in x]
 
 
 def from_str(x: Any) -> str:
@@ -32,6 +37,11 @@ def from_union(fs, x):
     assert False
 
 
+def to_class(c: Type[T], x: Any) -> dict:
+    assert isinstance(x, c)
+    return cast(Any, x).to_dict()
+
+
 def from_int(x: Any) -> int:
     assert isinstance(x, int) and not isinstance(x, bool)
     return x
@@ -42,14 +52,39 @@ def from_bool(x: Any) -> bool:
     return x
 
 
-def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
-    assert isinstance(x, list)
-    return [f(y) for y in x]
+@dataclass
+class RestrictedTo:
+    type: Optional[List[str]] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'RestrictedTo':
+        assert isinstance(obj, dict)
+        type = from_union([lambda x: from_list(from_str, x), from_none], obj.get("type"))
+        return RestrictedTo(type)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["type"] = from_union([lambda x: from_list(from_str, x), from_none], self.type)
+        return result
 
 
-def to_class(c: Type[T], x: Any) -> dict:
-    assert isinstance(x, c)
-    return cast(Any, x).to_dict()
+@dataclass
+class Properties:
+    posting_restricted_to: Optional[RestrictedTo] = None
+    threads_restricted_to: Optional[RestrictedTo] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Properties':
+        assert isinstance(obj, dict)
+        posting_restricted_to = from_union([RestrictedTo.from_dict, from_none], obj.get("posting_restricted_to"))
+        threads_restricted_to = from_union([RestrictedTo.from_dict, from_none], obj.get("threads_restricted_to"))
+        return Properties(posting_restricted_to, threads_restricted_to)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["posting_restricted_to"] = from_union([lambda x: to_class(RestrictedTo, x), from_none], self.posting_restricted_to)
+        result["threads_restricted_to"] = from_union([lambda x: to_class(RestrictedTo, x), from_none], self.threads_restricted_to)
+        return result
 
 
 @dataclass
@@ -105,6 +140,9 @@ class Channel:
     purpose: Optional[Purpose] = None
     previous_names: Optional[List[str]] = None
     date_connected: Optional[int] = None
+    context_team_id: Optional[str] = None
+    updated: Optional[int] = None
+    properties: Optional[Properties] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Channel':
@@ -138,7 +176,10 @@ class Channel:
         purpose = from_union([Purpose.from_dict, from_none], obj.get("purpose"))
         previous_names = from_union([lambda x: from_list(from_str, x), from_none], obj.get("previous_names"))
         date_connected = from_union([from_int, from_none], obj.get("date_connected"))
-        return Channel(id, name, is_channel, is_group, is_im, created, is_archived, is_general, unlinked, name_normalized, is_shared, creator, is_moved, is_ext_shared, enterprise_id, is_global_shared, is_org_default, is_org_mandatory, is_org_shared, pending_shared, pending_connected_team_ids, is_pending_ext_shared, is_member, is_private, is_mpim, topic, purpose, previous_names, date_connected)
+        context_team_id = from_union([from_str, from_none], obj.get("context_team_id"))
+        updated = from_union([from_int, from_none], obj.get("updated"))
+        properties = from_union([Properties.from_dict, from_none], obj.get("properties"))
+        return Channel(id, name, is_channel, is_group, is_im, created, is_archived, is_general, unlinked, name_normalized, is_shared, creator, is_moved, is_ext_shared, enterprise_id, is_global_shared, is_org_default, is_org_mandatory, is_org_shared, pending_shared, pending_connected_team_ids, is_pending_ext_shared, is_member, is_private, is_mpim, topic, purpose, previous_names, date_connected, context_team_id, updated, properties)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -171,6 +212,9 @@ class Channel:
         result["purpose"] = from_union([lambda x: to_class(Purpose, x), from_none], self.purpose)
         result["previous_names"] = from_union([lambda x: from_list(from_str, x), from_none], self.previous_names)
         result["date_connected"] = from_union([from_int, from_none], self.date_connected)
+        result["context_team_id"] = from_union([from_str, from_none], self.context_team_id)
+        result["updated"] = from_union([from_int, from_none], self.updated)
+        result["properties"] = from_union([lambda x: to_class(Properties, x), from_none], self.properties)
         return result
 
 

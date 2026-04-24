@@ -57,6 +57,7 @@ class DNDSetSnoozeResponse:
     snooze_is_indefinite: Optional[bool] = None
     needed: Optional[str] = None
     provided: Optional[str] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'DNDSetSnoozeResponse':
@@ -69,7 +70,8 @@ class DNDSetSnoozeResponse:
         snooze_is_indefinite = from_union([from_bool, from_none], obj.get("snooze_is_indefinite"))
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
-        return DNDSetSnoozeResponse(ok, error, snooze_enabled, snooze_endtime, snooze_remaining, snooze_is_indefinite, needed, provided)
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return DNDSetSnoozeResponse(ok, error, snooze_enabled, snooze_endtime, snooze_remaining, snooze_is_indefinite, needed, provided, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -81,6 +83,7 @@ class DNDSetSnoozeResponse:
         result["snooze_is_indefinite"] = from_union([from_bool, from_none], self.snooze_is_indefinite)
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

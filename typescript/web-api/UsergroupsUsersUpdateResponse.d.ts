@@ -1,9 +1,15 @@
 export interface UsergroupsUsersUpdateResponse {
-    ok?:        boolean;
-    usergroup?: Usergroup;
-    error?:     string;
-    needed?:    string;
-    provided?:  string;
+    ok?:                boolean;
+    usergroup?:         Usergroup;
+    error?:             string;
+    needed?:            string;
+    provided?:          string;
+    warning?:           string;
+    response_metadata?: ResponseMetadata;
+}
+
+export interface ResponseMetadata {
+    messages?: string[];
 }
 
 export interface Usergroup {
@@ -25,6 +31,12 @@ export interface Usergroup {
     prefs?:                 Prefs;
     users?:                 string[];
     channel_count?:         number;
+    is_section?:            boolean;
+    is_idp_group?:          boolean;
+    is_visible?:            boolean;
+    is_editing_restricted?: boolean;
+    is_membership_locked?:  boolean;
+    is_org_level?:          boolean;
 }
 
 export interface Prefs {

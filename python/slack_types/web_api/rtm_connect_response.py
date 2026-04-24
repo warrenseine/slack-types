@@ -92,6 +92,8 @@ class RtmConnectResponse:
     error: Optional[str] = None
     needed: Optional[str] = None
     provided: Optional[str] = None
+    context: Optional[str] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'RtmConnectResponse':
@@ -103,7 +105,9 @@ class RtmConnectResponse:
         error = from_union([from_str, from_none], obj.get("error"))
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
-        return RtmConnectResponse(ok, url, team, rtm_connect_response_self, error, needed, provided)
+        context = from_union([from_str, from_none], obj.get("context"))
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return RtmConnectResponse(ok, url, team, rtm_connect_response_self, error, needed, provided, context, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -114,6 +118,8 @@ class RtmConnectResponse:
         result["error"] = from_union([from_str, from_none], self.error)
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
+        result["context"] = from_union([from_str, from_none], self.context)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

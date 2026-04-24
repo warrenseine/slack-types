@@ -23,21 +23,27 @@ export interface Authorization {
 }
 
 export interface Event {
-    type?:          string;
-    client_msg_id?: string;
-    user?:          string;
-    username?:      string;
-    bot_id?:        string;
-    bot_profile?:   BotProfile;
-    subtype?:       string;
-    text?:          string;
-    blocks?:        Block[];
-    ts?:            string;
-    team?:          string;
-    channel?:       string;
-    edited?:        Edited;
-    event_ts?:      string;
-    thread_ts?:     string;
+    type?:           string;
+    client_msg_id?:  string;
+    user?:           string;
+    username?:       string;
+    app_id?:         string;
+    bot_id?:         string;
+    bot_profile?:    BotProfile;
+    subtype?:        string;
+    text?:           string;
+    blocks?:         Block[];
+    upload?:         boolean;
+    display_as_bot?: boolean;
+    ts?:             string;
+    team?:           string;
+    channel?:        string;
+    user_team?:      string;
+    source_team?:    string;
+    user_profile?:   UserProfile;
+    edited?:         Edited;
+    event_ts?:       string;
+    thread_ts?:      string;
 }
 
 export interface Block {
@@ -49,6 +55,8 @@ export interface Block {
     image_width?:  number;
     image_height?: number;
     image_bytes?:  number;
+    is_animated?:  boolean;
+    slack_file?:   SlackFile;
     alt_text?:     string;
     title?:        Text;
     text?:         Text;
@@ -64,6 +72,12 @@ export interface Accessory {
     image_width?:  number;
     image_height?: number;
     image_bytes?:  number;
+    slack_file?:   SlackFile;
+}
+
+export interface SlackFile {
+    id?:  string;
+    url?: string;
 }
 
 export interface Element {
@@ -92,6 +106,7 @@ export interface Element {
     image_width?:                     number;
     image_height?:                    number;
     image_bytes?:                     number;
+    slack_file?:                      SlackFile;
     initial_user?:                    string;
 }
 
@@ -147,4 +162,16 @@ export interface Icons {
 export interface Edited {
     user?: string;
     ts?:   string;
+}
+
+export interface UserProfile {
+    name?:                string;
+    first_name?:          string;
+    real_name?:           string;
+    display_name?:        string;
+    team?:                string;
+    is_restricted?:       boolean;
+    is_ultra_restricted?: boolean;
+    avatar_hash?:         string;
+    image_72?:            string;
 }

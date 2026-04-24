@@ -1,10 +1,12 @@
 export interface TeamAccessLogsResponse {
-    ok?:       boolean;
-    logins?:   Login[];
-    paging?:   Paging;
-    error?:    string;
-    needed?:   string;
-    provided?: string;
+    ok?:                boolean;
+    logins?:            Login[];
+    paging?:            Paging;
+    error?:             string;
+    needed?:            string;
+    provided?:          string;
+    response_metadata?: ResponseMetadata;
+    warning?:           string;
 }
 
 export interface Login {
@@ -21,8 +23,13 @@ export interface Login {
 }
 
 export interface Paging {
-    count?: number;
-    total?: number;
-    page?:  number;
-    pages?: number;
+    count?:    number;
+    total?:    number;
+    page?:     number;
+    pages?:    number;
+    warnings?: string[];
+}
+
+export interface ResponseMetadata {
+    next_cursor?: string;
 }

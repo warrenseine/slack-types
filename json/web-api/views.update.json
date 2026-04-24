@@ -33,6 +33,2413 @@
           "emoji": false
         },
         "element": {
+          "type": "rich_text_input",
+          "action_id": "",
+          "initial_value": {
+            "type": "rich_text",
+            "elements": [
+              {
+                "type": "rich_text_list",
+                "elements": [
+                  {
+                    "type": "rich_text_list",
+                    "elements": [
+                      {
+                        "type": "broadcast",
+                        "range": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "text": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "channel",
+                        "channel_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "color",
+                        "value": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "date",
+                        "timestamp": 123,
+                        "format": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        },
+                        "url": "",
+                        "fallback": ""
+                      },
+                      {
+                        "type": "link",
+                        "url": "",
+                        "text": "",
+                        "unsafe": false,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "team",
+                        "team_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "user",
+                        "user_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "usergroup",
+                        "usergroup_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "emoji",
+                        "name": "",
+                        "skin_tone": 123,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        },
+                        "unicode": ""
+                      }
+                    ],
+                    "style": "",
+                    "indent": 123,
+                    "offset": 123,
+                    "border": 123
+                  },
+                  {
+                    "type": "rich_text_preformatted",
+                    "elements": [
+                      {
+                        "type": "broadcast",
+                        "range": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "text": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "channel",
+                        "channel_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "color",
+                        "value": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "date",
+                        "timestamp": 123,
+                        "format": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        },
+                        "url": "",
+                        "fallback": ""
+                      },
+                      {
+                        "type": "link",
+                        "url": "",
+                        "text": "",
+                        "unsafe": false,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "team",
+                        "team_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "user",
+                        "user_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "usergroup",
+                        "usergroup_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "emoji",
+                        "name": "",
+                        "skin_tone": 123,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        },
+                        "unicode": ""
+                      }
+                    ],
+                    "border": 123
+                  },
+                  {
+                    "type": "rich_text_quote",
+                    "elements": [
+                      {
+                        "type": "broadcast",
+                        "range": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "text": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "channel",
+                        "channel_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "color",
+                        "value": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "date",
+                        "timestamp": 123,
+                        "format": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        },
+                        "url": "",
+                        "fallback": ""
+                      },
+                      {
+                        "type": "link",
+                        "url": "",
+                        "text": "",
+                        "unsafe": false,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "team",
+                        "team_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "user",
+                        "user_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "usergroup",
+                        "usergroup_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "emoji",
+                        "name": "",
+                        "skin_tone": 123,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        },
+                        "unicode": ""
+                      }
+                    ],
+                    "border": 123
+                  },
+                  {
+                    "type": "rich_text_section",
+                    "elements": [
+                      {
+                        "type": "broadcast",
+                        "range": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "text": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "channel",
+                        "channel_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "color",
+                        "value": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "date",
+                        "timestamp": 123,
+                        "format": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        },
+                        "url": "",
+                        "fallback": ""
+                      },
+                      {
+                        "type": "link",
+                        "url": "",
+                        "text": "",
+                        "unsafe": false,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "team",
+                        "team_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "user",
+                        "user_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "usergroup",
+                        "usergroup_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "emoji",
+                        "name": "",
+                        "skin_tone": 123,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        },
+                        "unicode": ""
+                      }
+                    ]
+                  }
+                ],
+                "style": "",
+                "indent": 123,
+                "offset": 123,
+                "border": 123
+              },
+              {
+                "type": "rich_text_preformatted",
+                "elements": [
+                  {
+                    "type": "rich_text_list",
+                    "elements": [
+                      {
+                        "type": "broadcast",
+                        "range": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "text": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "channel",
+                        "channel_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "color",
+                        "value": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "date",
+                        "timestamp": 123,
+                        "format": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        },
+                        "url": "",
+                        "fallback": ""
+                      },
+                      {
+                        "type": "link",
+                        "url": "",
+                        "text": "",
+                        "unsafe": false,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "team",
+                        "team_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "user",
+                        "user_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "usergroup",
+                        "usergroup_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "emoji",
+                        "name": "",
+                        "skin_tone": 123,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        },
+                        "unicode": ""
+                      }
+                    ],
+                    "style": "",
+                    "indent": 123,
+                    "offset": 123,
+                    "border": 123
+                  },
+                  {
+                    "type": "rich_text_preformatted",
+                    "elements": [
+                      {
+                        "type": "broadcast",
+                        "range": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "text": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "channel",
+                        "channel_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "color",
+                        "value": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "date",
+                        "timestamp": 123,
+                        "format": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        },
+                        "url": "",
+                        "fallback": ""
+                      },
+                      {
+                        "type": "link",
+                        "url": "",
+                        "text": "",
+                        "unsafe": false,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "team",
+                        "team_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "user",
+                        "user_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "usergroup",
+                        "usergroup_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "emoji",
+                        "name": "",
+                        "skin_tone": 123,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        },
+                        "unicode": ""
+                      }
+                    ],
+                    "border": 123
+                  },
+                  {
+                    "type": "rich_text_quote",
+                    "elements": [
+                      {
+                        "type": "broadcast",
+                        "range": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "text": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "channel",
+                        "channel_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "color",
+                        "value": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "date",
+                        "timestamp": 123,
+                        "format": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        },
+                        "url": "",
+                        "fallback": ""
+                      },
+                      {
+                        "type": "link",
+                        "url": "",
+                        "text": "",
+                        "unsafe": false,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "team",
+                        "team_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "user",
+                        "user_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "usergroup",
+                        "usergroup_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "emoji",
+                        "name": "",
+                        "skin_tone": 123,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        },
+                        "unicode": ""
+                      }
+                    ],
+                    "border": 123
+                  },
+                  {
+                    "type": "rich_text_section",
+                    "elements": [
+                      {
+                        "type": "broadcast",
+                        "range": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "text": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "channel",
+                        "channel_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "color",
+                        "value": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "date",
+                        "timestamp": 123,
+                        "format": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        },
+                        "url": "",
+                        "fallback": ""
+                      },
+                      {
+                        "type": "link",
+                        "url": "",
+                        "text": "",
+                        "unsafe": false,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "team",
+                        "team_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "user",
+                        "user_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "usergroup",
+                        "usergroup_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "emoji",
+                        "name": "",
+                        "skin_tone": 123,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        },
+                        "unicode": ""
+                      }
+                    ]
+                  }
+                ],
+                "border": 123
+              },
+              {
+                "type": "rich_text_quote",
+                "elements": [
+                  {
+                    "type": "rich_text_list",
+                    "elements": [
+                      {
+                        "type": "broadcast",
+                        "range": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "text": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "channel",
+                        "channel_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "color",
+                        "value": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "date",
+                        "timestamp": 123,
+                        "format": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        },
+                        "url": "",
+                        "fallback": ""
+                      },
+                      {
+                        "type": "link",
+                        "url": "",
+                        "text": "",
+                        "unsafe": false,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "team",
+                        "team_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "user",
+                        "user_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "usergroup",
+                        "usergroup_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "emoji",
+                        "name": "",
+                        "skin_tone": 123,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        },
+                        "unicode": ""
+                      }
+                    ],
+                    "style": "",
+                    "indent": 123,
+                    "offset": 123,
+                    "border": 123
+                  },
+                  {
+                    "type": "rich_text_preformatted",
+                    "elements": [
+                      {
+                        "type": "broadcast",
+                        "range": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "text": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "channel",
+                        "channel_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "color",
+                        "value": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "date",
+                        "timestamp": 123,
+                        "format": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        },
+                        "url": "",
+                        "fallback": ""
+                      },
+                      {
+                        "type": "link",
+                        "url": "",
+                        "text": "",
+                        "unsafe": false,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "team",
+                        "team_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "user",
+                        "user_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "usergroup",
+                        "usergroup_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "emoji",
+                        "name": "",
+                        "skin_tone": 123,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        },
+                        "unicode": ""
+                      }
+                    ],
+                    "border": 123
+                  },
+                  {
+                    "type": "rich_text_quote",
+                    "elements": [
+                      {
+                        "type": "broadcast",
+                        "range": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "text": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "channel",
+                        "channel_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "color",
+                        "value": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "date",
+                        "timestamp": 123,
+                        "format": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        },
+                        "url": "",
+                        "fallback": ""
+                      },
+                      {
+                        "type": "link",
+                        "url": "",
+                        "text": "",
+                        "unsafe": false,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "team",
+                        "team_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "user",
+                        "user_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "usergroup",
+                        "usergroup_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "emoji",
+                        "name": "",
+                        "skin_tone": 123,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        },
+                        "unicode": ""
+                      }
+                    ],
+                    "border": 123
+                  },
+                  {
+                    "type": "rich_text_section",
+                    "elements": [
+                      {
+                        "type": "broadcast",
+                        "range": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "text": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "channel",
+                        "channel_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "color",
+                        "value": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "date",
+                        "timestamp": 123,
+                        "format": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        },
+                        "url": "",
+                        "fallback": ""
+                      },
+                      {
+                        "type": "link",
+                        "url": "",
+                        "text": "",
+                        "unsafe": false,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "team",
+                        "team_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "user",
+                        "user_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "usergroup",
+                        "usergroup_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "emoji",
+                        "name": "",
+                        "skin_tone": 123,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        },
+                        "unicode": ""
+                      }
+                    ]
+                  }
+                ],
+                "border": 123
+              },
+              {
+                "type": "rich_text_section",
+                "elements": [
+                  {
+                    "type": "rich_text_list",
+                    "elements": [
+                      {
+                        "type": "broadcast",
+                        "range": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "text": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "channel",
+                        "channel_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "color",
+                        "value": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "date",
+                        "timestamp": 123,
+                        "format": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        },
+                        "url": "",
+                        "fallback": ""
+                      },
+                      {
+                        "type": "link",
+                        "url": "",
+                        "text": "",
+                        "unsafe": false,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "team",
+                        "team_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "user",
+                        "user_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "usergroup",
+                        "usergroup_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "emoji",
+                        "name": "",
+                        "skin_tone": 123,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        },
+                        "unicode": ""
+                      }
+                    ],
+                    "style": "",
+                    "indent": 123,
+                    "offset": 123,
+                    "border": 123
+                  },
+                  {
+                    "type": "rich_text_preformatted",
+                    "elements": [
+                      {
+                        "type": "broadcast",
+                        "range": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "text": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "channel",
+                        "channel_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "color",
+                        "value": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "date",
+                        "timestamp": 123,
+                        "format": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        },
+                        "url": "",
+                        "fallback": ""
+                      },
+                      {
+                        "type": "link",
+                        "url": "",
+                        "text": "",
+                        "unsafe": false,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "team",
+                        "team_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "user",
+                        "user_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "usergroup",
+                        "usergroup_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "emoji",
+                        "name": "",
+                        "skin_tone": 123,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        },
+                        "unicode": ""
+                      }
+                    ],
+                    "border": 123
+                  },
+                  {
+                    "type": "rich_text_quote",
+                    "elements": [
+                      {
+                        "type": "broadcast",
+                        "range": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "text": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "channel",
+                        "channel_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "color",
+                        "value": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "date",
+                        "timestamp": 123,
+                        "format": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        },
+                        "url": "",
+                        "fallback": ""
+                      },
+                      {
+                        "type": "link",
+                        "url": "",
+                        "text": "",
+                        "unsafe": false,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "team",
+                        "team_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "user",
+                        "user_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "usergroup",
+                        "usergroup_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "emoji",
+                        "name": "",
+                        "skin_tone": 123,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        },
+                        "unicode": ""
+                      }
+                    ],
+                    "border": 123
+                  },
+                  {
+                    "type": "rich_text_section",
+                    "elements": [
+                      {
+                        "type": "broadcast",
+                        "range": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "text",
+                        "text": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "channel",
+                        "channel_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "color",
+                        "value": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "date",
+                        "timestamp": 123,
+                        "format": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        },
+                        "url": "",
+                        "fallback": ""
+                      },
+                      {
+                        "type": "link",
+                        "url": "",
+                        "text": "",
+                        "unsafe": false,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false,
+                          "code": false
+                        }
+                      },
+                      {
+                        "type": "team",
+                        "team_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "user",
+                        "user_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "usergroup",
+                        "usergroup_id": "",
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        }
+                      },
+                      {
+                        "type": "emoji",
+                        "name": "",
+                        "skin_tone": 123,
+                        "style": {
+                          "bold": false,
+                          "italic": false,
+                          "strike": false,
+                          "highlight": false,
+                          "client_highlight": false,
+                          "underline": false,
+                          "unlink": false
+                        },
+                        "unicode": ""
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "block_id": ""
+          },
+          "dispatch_action_config": {
+            "trigger_actions_on": [
+              ""
+            ]
+          },
+          "focus_on_load": false,
+          "placeholder": {
+            "type": "plain_text",
+            "text": "",
+            "emoji": false
+          }
+        },
+        "dispatch_action": false,
+        "hint": {
+          "type": "plain_text",
+          "text": "",
+          "emoji": false
+        },
+        "optional": false
+      },
+      {
+        "type": "input",
+        "block_id": "",
+        "label": {
+          "type": "plain_text",
+          "text": "",
+          "emoji": false
+        },
+        "element": {
           "type": "plain_text_input",
           "action_id": "",
           "placeholder": {
@@ -374,6 +2781,52 @@
             "emoji": false
           },
           "initial_time": "",
+          "timezone": "",
+          "confirm": {
+            "title": {
+              "type": "plain_text",
+              "text": "",
+              "emoji": false
+            },
+            "text": {
+              "type": "plain_text",
+              "text": "",
+              "emoji": false
+            },
+            "confirm": {
+              "type": "plain_text",
+              "text": "",
+              "emoji": false
+            },
+            "deny": {
+              "type": "plain_text",
+              "text": "",
+              "emoji": false
+            },
+            "style": ""
+          },
+          "focus_on_load": false
+        },
+        "dispatch_action": false,
+        "hint": {
+          "type": "plain_text",
+          "text": "",
+          "emoji": false
+        },
+        "optional": false
+      },
+      {
+        "type": "input",
+        "block_id": "",
+        "label": {
+          "type": "plain_text",
+          "text": "",
+          "emoji": false
+        },
+        "element": {
+          "type": "datetimepicker",
+          "action_id": "",
+          "initial_date_time": 123,
           "confirm": {
             "title": {
               "type": "plain_text",
@@ -486,7 +2939,11 @@
           "fallback": "",
           "image_width": 123,
           "image_height": 123,
-          "image_bytes": 123
+          "image_bytes": 123,
+          "slack_file": {
+            "id": "",
+            "url": ""
+          }
         },
         "dispatch_action": false,
         "hint": {
@@ -746,6 +3203,28 @@
               },
               "style": ""
             },
+            "accessibility_label": ""
+          },
+          {
+            "type": "workflow_button",
+            "action_id": "",
+            "text": {
+              "type": "plain_text",
+              "text": "",
+              "emoji": false
+            },
+            "workflow": {
+              "trigger": {
+                "url": "",
+                "customizable_input_parameters": [
+                  {
+                    "name": "",
+                    "value": ""
+                  }
+                ]
+              }
+            },
+            "style": "",
             "accessibility_label": ""
           },
           {
@@ -1065,6 +3544,36 @@
               "emoji": false
             },
             "initial_time": "",
+            "timezone": "",
+            "confirm": {
+              "title": {
+                "type": "plain_text",
+                "text": "",
+                "emoji": false
+              },
+              "text": {
+                "type": "plain_text",
+                "text": "",
+                "emoji": false
+              },
+              "confirm": {
+                "type": "plain_text",
+                "text": "",
+                "emoji": false
+              },
+              "deny": {
+                "type": "plain_text",
+                "text": "",
+                "emoji": false
+              },
+              "style": ""
+            },
+            "focus_on_load": false
+          },
+          {
+            "type": "datetimepicker",
+            "action_id": "",
+            "initial_date_time": 123,
             "confirm": {
               "title": {
                 "type": "plain_text",
@@ -1196,7 +3705,11 @@
             "fallback": "",
             "image_width": 123,
             "image_height": 123,
-            "image_bytes": 123
+            "image_bytes": 123,
+            "slack_file": {
+              "id": "",
+              "url": ""
+            }
           },
           {
             "type": "overflow",
@@ -1504,7 +4017,11 @@
             "fallback": "",
             "image_width": 123,
             "image_height": 123,
-            "image_bytes": 123
+            "image_bytes": 123,
+            "slack_file": {
+              "id": "",
+              "url": ""
+            }
           }
         ],
         "block_id": ""
@@ -1520,12 +4037,38 @@
         "image_width": 123,
         "image_height": 123,
         "image_bytes": 123,
+        "is_animated": false,
+        "slack_file": {
+          "id": "",
+          "url": ""
+        },
         "alt_text": "",
         "title": {
           "type": "plain_text",
           "text": "",
           "emoji": false
         },
+        "block_id": ""
+      },
+      {
+        "type": "video",
+        "title": {
+          "type": "plain_text",
+          "text": "",
+          "emoji": false
+        },
+        "title_url": "",
+        "description": {
+          "type": "plain_text",
+          "text": "",
+          "emoji": false
+        },
+        "video_url": "",
+        "alt_text": "",
+        "thumbnail_url": "",
+        "author_name": "",
+        "provider_name": "",
+        "provider_icon_url": "",
         "block_id": ""
       },
       {
@@ -1555,8 +4098,13 @@
           "fallback": "",
           "image_width": 123,
           "image_height": 123,
-          "image_bytes": 123
-        }
+          "image_bytes": 123,
+          "slack_file": {
+            "id": "",
+            "url": ""
+          }
+        },
+        "expand": false
       }
     ],
     "private_metadata": "",
@@ -1571,11 +4119,21 @@
     "previous_view_id": "",
     "app_id": "",
     "app_installed_team_id": "",
-    "bot_id": ""
+    "bot_id": "",
+    "entity_url": "",
+    "external_ref": {
+      "id": "",
+      "type": ""
+    },
+    "app_unfurl_url": "",
+    "message_ts": "",
+    "thread_ts": "",
+    "channel": ""
   },
   "response_metadata": {
     "messages": [
       ""
-    ]
+    ],
+    "warnings": []
   }
 }

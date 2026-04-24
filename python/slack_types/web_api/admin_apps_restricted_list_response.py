@@ -131,6 +131,7 @@ class App:
     app_directory_url: Optional[str] = None
     is_app_directory_approved: Optional[bool] = None
     is_internal: Optional[bool] = None
+    is_granular_bot_app: Optional[bool] = None
     additional_info: Optional[str] = None
     icons: Optional[Icons] = None
 
@@ -146,9 +147,10 @@ class App:
         app_directory_url = from_union([from_str, from_none], obj.get("app_directory_url"))
         is_app_directory_approved = from_union([from_bool, from_none], obj.get("is_app_directory_approved"))
         is_internal = from_union([from_bool, from_none], obj.get("is_internal"))
+        is_granular_bot_app = from_union([from_bool, from_none], obj.get("is_granular_bot_app"))
         additional_info = from_union([from_str, from_none], obj.get("additional_info"))
         icons = from_union([Icons.from_dict, from_none], obj.get("icons"))
-        return App(id, name, description, help_url, privacy_policy_url, app_homepage_url, app_directory_url, is_app_directory_approved, is_internal, additional_info, icons)
+        return App(id, name, description, help_url, privacy_policy_url, app_homepage_url, app_directory_url, is_app_directory_approved, is_internal, is_granular_bot_app, additional_info, icons)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -161,6 +163,7 @@ class App:
         result["app_directory_url"] = from_union([from_str, from_none], self.app_directory_url)
         result["is_app_directory_approved"] = from_union([from_bool, from_none], self.is_app_directory_approved)
         result["is_internal"] = from_union([from_bool, from_none], self.is_internal)
+        result["is_granular_bot_app"] = from_union([from_bool, from_none], self.is_granular_bot_app)
         result["additional_info"] = from_union([from_str, from_none], self.additional_info)
         result["icons"] = from_union([lambda x: to_class(Icons, x), from_none], self.icons)
         return result

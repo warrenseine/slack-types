@@ -38,11 +38,15 @@
       "team": "T00000000",
       "status_emoji_url": "",
       "pronouns": "",
+      "huddle_state": "",
+      "huddle_state_expiration_ts": 12345,
+      "guest_invited_by": "U00000000",
       "status_emoji_display_info": [
         {
           "emoji_name": "",
           "display_alias": "",
-          "display_url": ""
+          "display_url": "",
+          "unicode": ""
         }
       ]
     },
@@ -56,9 +60,16 @@
     "updated": 12345,
     "has_2fa": false,
     "is_email_confirmed": false,
-    "who_can_share_contact_card": ""
+    "who_can_share_contact_card": "",
+    "is_invited_user": false
   },
   "error": "",
   "needed": "",
-  "provided": ""
+  "provided": "",
+  "response_metadata": {
+    "messages": [
+      ""
+    ]
+  },
+  "warning": ""
 }

@@ -2,5 +2,7 @@
   "ok": false,
   "error": "",
   "needed": "",
-  "provided": ""
+  "provided": "",
+  "errors": {},
+  "warning": ""
 }

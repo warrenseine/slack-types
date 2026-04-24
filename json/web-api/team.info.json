@@ -13,7 +13,8 @@
       "image_102": "https://www.example.com/",
       "image_132": "https://www.example.com/",
       "image_230": "https://www.example.com/",
-      "image_original": "https://www.example.com/"
+      "image_original": "https://www.example.com/",
+      "image_default": false
     },
     "is_verified": false,
     "url": "https://www.example.com/",
@@ -21,9 +22,19 @@
     "enterprise_name": "",
     "enterprise_domain": "",
     "discoverable": "",
-    "avatar_base_url": "https://www.example.com/"
+    "avatar_base_url": "https://www.example.com/",
+    "lob_sales_home_enabled": false,
+    "is_sfdc_auto_slack": false,
+    "sso_provider": {
+      "type": "",
+      "name": "",
+      "label": ""
+    },
+    "pay_prod_cur": "",
+    "locale": ""
   },
   "error": "",
   "needed": "",
-  "provided": ""
+  "provided": "",
+  "warning": ""
 }

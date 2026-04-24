@@ -46,9 +46,19 @@
     "internal_team_ids": [
       "T00000000"
     ],
-    "is_open": false
+    "is_open": false,
+    "context_team_id": "T00000000",
+    "updated": 12345
   },
   "error": "",
   "needed": "",
-  "provided": ""
+  "provided": "",
+  "errors": [
+    {
+      "ok": false,
+      "error": "",
+      "user": "U00000000"
+    }
+  ],
+  "warning": ""
 }

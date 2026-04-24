@@ -32,14 +32,14 @@ def from_union(fs, x):
     assert False
 
 
-def from_bool(x: Any) -> bool:
-    assert isinstance(x, bool)
-    return x
-
-
 def to_class(c: Type[T], x: Any) -> dict:
     assert isinstance(x, c)
     return cast(Any, x).to_dict()
+
+
+def from_bool(x: Any) -> bool:
+    assert isinstance(x, bool)
+    return x
 
 
 @dataclass
@@ -58,6 +58,79 @@ class Enterprise:
         result: dict = {}
         result["id"] = from_union([from_str, from_none], self.id)
         result["name"] = from_union([from_str, from_none], self.name)
+        return result
+
+
+@dataclass
+class Function:
+    callback_id: Optional[str] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Function':
+        assert isinstance(obj, dict)
+        callback_id = from_union([from_str, from_none], obj.get("callback_id"))
+        return Function(callback_id)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["callback_id"] = from_union([from_str, from_none], self.callback_id)
+        return result
+
+
+@dataclass
+class FunctionData:
+    execution_id: Optional[str] = None
+    function: Optional[Function] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'FunctionData':
+        assert isinstance(obj, dict)
+        execution_id = from_union([from_str, from_none], obj.get("execution_id"))
+        function = from_union([Function.from_dict, from_none], obj.get("function"))
+        return FunctionData(execution_id, function)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["execution_id"] = from_union([from_str, from_none], self.execution_id)
+        result["function"] = from_union([lambda x: to_class(Function, x), from_none], self.function)
+        return result
+
+
+@dataclass
+class Interactor:
+    id: Optional[str] = None
+    secret: Optional[str] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Interactor':
+        assert isinstance(obj, dict)
+        id = from_union([from_str, from_none], obj.get("id"))
+        secret = from_union([from_str, from_none], obj.get("secret"))
+        return Interactor(id, secret)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["id"] = from_union([from_str, from_none], self.id)
+        result["secret"] = from_union([from_str, from_none], self.secret)
+        return result
+
+
+@dataclass
+class Interactivity:
+    interactivity_pointer: Optional[str] = None
+    interactor: Optional[Interactor] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Interactivity':
+        assert isinstance(obj, dict)
+        interactivity_pointer = from_union([from_str, from_none], obj.get("interactivity_pointer"))
+        interactor = from_union([Interactor.from_dict, from_none], obj.get("interactor"))
+        return Interactivity(interactivity_pointer, interactor)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["interactivity_pointer"] = from_union([from_str, from_none], self.interactivity_pointer)
+        result["interactor"] = from_union([lambda x: to_class(Interactor, x), from_none], self.interactor)
         return result
 
 
@@ -229,6 +302,9 @@ class ViewSubmissionPayload:
     view: Optional[View] = None
     is_enterprise_install: Optional[bool] = None
     is_cleared: Optional[bool] = None
+    bot_access_token: Optional[str] = None
+    function_data: Optional[FunctionData] = None
+    interactivity: Optional[Interactivity] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'ViewSubmissionPayload':
@@ -243,7 +319,10 @@ class ViewSubmissionPayload:
         view = from_union([View.from_dict, from_none], obj.get("view"))
         is_enterprise_install = from_union([from_bool, from_none], obj.get("is_enterprise_install"))
         is_cleared = from_union([from_bool, from_none], obj.get("is_cleared"))
-        return ViewSubmissionPayload(type, enterprise, team, user, api_app_id, token, trigger_id, view, is_enterprise_install, is_cleared)
+        bot_access_token = from_union([from_str, from_none], obj.get("bot_access_token"))
+        function_data = from_union([FunctionData.from_dict, from_none], obj.get("function_data"))
+        interactivity = from_union([Interactivity.from_dict, from_none], obj.get("interactivity"))
+        return ViewSubmissionPayload(type, enterprise, team, user, api_app_id, token, trigger_id, view, is_enterprise_install, is_cleared, bot_access_token, function_data, interactivity)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -257,6 +336,9 @@ class ViewSubmissionPayload:
         result["view"] = from_union([lambda x: to_class(View, x), from_none], self.view)
         result["is_enterprise_install"] = from_union([from_bool, from_none], self.is_enterprise_install)
         result["is_cleared"] = from_union([from_bool, from_none], self.is_cleared)
+        result["bot_access_token"] = from_union([from_str, from_none], self.bot_access_token)
+        result["function_data"] = from_union([lambda x: to_class(FunctionData, x), from_none], self.function_data)
+        result["interactivity"] = from_union([lambda x: to_class(Interactivity, x), from_none], self.interactivity)
         return result
 
 

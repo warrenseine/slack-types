@@ -5,6 +5,8 @@ export interface UsersConversationsResponse {
     error?:             string;
     needed?:            string;
     provided?:          string;
+    arg?:               string;
+    warning?:           string;
 }
 
 export interface Channel {
@@ -44,6 +46,54 @@ export interface Channel {
     user?:                       string;
     is_user_deleted?:            boolean;
     parent_conversation?:        string;
+    context_team_id?:            string;
+    updated?:                    number;
+    properties?:                 Properties;
+}
+
+export interface Properties {
+    posting_restricted_to?: PostingRestrictedTo;
+    huddles_restricted?:    boolean;
+    canvas?:                Canvas;
+    threads_restricted_to?: ThreadsRestrictedTo;
+    tabs?:                  Tab[];
+    tabz?:                  Tab[];
+    meeting_notes?:         MeetingNotes;
+    is_dormant?:            boolean;
+    use_case?:              string;
+}
+
+export interface Canvas {
+    file_id?:        string;
+    is_empty?:       boolean;
+    quip_thread_id?: string;
+    is_migrated?:    boolean;
+}
+
+export interface MeetingNotes {
+    file_id?: string;
+}
+
+export interface PostingRestrictedTo {
+    type?: string[];
+    user?: string[];
+}
+
+export interface Tab {
+    id?:          string;
+    label?:       string;
+    type?:        string;
+    data?:        Data;
+    is_disabled?: boolean;
+}
+
+export interface Data {
+    file_id?:   string;
+    shared_ts?: string;
+}
+
+export interface ThreadsRestrictedTo {
+    type?: string[];
 }
 
 export interface Purpose {

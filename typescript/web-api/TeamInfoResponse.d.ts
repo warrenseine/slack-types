@@ -4,21 +4,27 @@ export interface TeamInfoResponse {
     error?:    string;
     needed?:   string;
     provided?: string;
+    warning?:  string;
 }
 
 export interface Team {
-    id?:                string;
-    name?:              string;
-    domain?:            string;
-    email_domain?:      string;
-    icon?:              Icon;
-    is_verified?:       boolean;
-    url?:               string;
-    enterprise_id?:     string;
-    enterprise_name?:   string;
-    enterprise_domain?: string;
-    discoverable?:      string;
-    avatar_base_url?:   string;
+    id?:                     string;
+    name?:                   string;
+    domain?:                 string;
+    email_domain?:           string;
+    icon?:                   Icon;
+    is_verified?:            boolean;
+    url?:                    string;
+    enterprise_id?:          string;
+    enterprise_name?:        string;
+    enterprise_domain?:      string;
+    discoverable?:           string;
+    avatar_base_url?:        string;
+    lob_sales_home_enabled?: boolean;
+    is_sfdc_auto_slack?:     boolean;
+    sso_provider?:           SsoProvider;
+    pay_prod_cur?:           string;
+    locale?:                 string;
 }
 
 export interface Icon {
@@ -30,4 +36,11 @@ export interface Icon {
     image_132?:      string;
     image_230?:      string;
     image_original?: string;
+    image_default?:  boolean;
+}
+
+export interface SsoProvider {
+    type?:  string;
+    name?:  string;
+    label?: string;
 }

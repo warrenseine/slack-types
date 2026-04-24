@@ -10,7 +10,8 @@
     "channel_type": "",
     "team": "",
     "event_ts": "0000000000.000000",
-    "inviter": ""
+    "inviter": "",
+    "enterprise": ""
   },
   "type": "event_callback",
   "event_id": "",
@@ -25,5 +26,7 @@
     }
   ],
   "is_ext_shared_channel": false,
-  "event_context": ""
+  "event_context": "",
+  "context_team_id": "",
+  "context_enterprise_id": ""
 }

@@ -31,6 +31,7 @@ export interface App {
     app_directory_url?:         string;
     is_app_directory_approved?: boolean;
     is_internal?:               boolean;
+    is_granular_bot_app?:       boolean;
     additional_info?:           string;
     icons?:                     Icons;
 }

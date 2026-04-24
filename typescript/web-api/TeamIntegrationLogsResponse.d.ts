@@ -5,6 +5,7 @@ export interface TeamIntegrationLogsResponse {
     error?:    string;
     needed?:   string;
     provided?: string;
+    warning?:  string;
 }
 
 export interface Log {

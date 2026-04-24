@@ -37,6 +37,11 @@ def from_str(x: Any) -> str:
     return x
 
 
+def from_int(x: Any) -> int:
+    assert isinstance(x, int) and not isinstance(x, bool)
+    return x
+
+
 def to_class(c: Type[T], x: Any) -> dict:
     assert isinstance(x, c)
     return cast(Any, x).to_dict()
@@ -58,6 +63,9 @@ class AuthTestResponse:
     error: Optional[str] = None
     needed: Optional[str] = None
     provided: Optional[str] = None
+    expires_in: Optional[int] = None
+    context: Optional[str] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'AuthTestResponse':
@@ -76,7 +84,10 @@ class AuthTestResponse:
         error = from_union([from_str, from_none], obj.get("error"))
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
-        return AuthTestResponse(ok, url, team, user, team_id, user_id, bot_id, is_enterprise_install, app_name, app_id, enterprise_id, error, needed, provided)
+        expires_in = from_union([from_int, from_none], obj.get("expires_in"))
+        context = from_union([from_str, from_none], obj.get("context"))
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return AuthTestResponse(ok, url, team, user, team_id, user_id, bot_id, is_enterprise_install, app_name, app_id, enterprise_id, error, needed, provided, expires_in, context, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -94,6 +105,9 @@ class AuthTestResponse:
         result["error"] = from_union([from_str, from_none], self.error)
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
+        result["expires_in"] = from_union([from_int, from_none], self.expires_in)
+        result["context"] = from_union([from_str, from_none], self.context)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

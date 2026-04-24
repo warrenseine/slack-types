@@ -82,6 +82,15 @@ class User:
     is_ultra_restricted: Optional[bool] = None
     is_bot: Optional[bool] = None
     expiration_ts: Optional[int] = None
+    username: Optional[str] = None
+    full_name: Optional[str] = None
+    is_active: Optional[bool] = None
+    date_created: Optional[int] = None
+    roles: Optional[List[str]] = None
+    workspaces: Optional[List[str]] = None
+    has_2_fa: Optional[bool] = None
+    has_sso: Optional[bool] = None
+    last_active_ts: Optional[int] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'User':
@@ -95,7 +104,16 @@ class User:
         is_ultra_restricted = from_union([from_bool, from_none], obj.get("is_ultra_restricted"))
         is_bot = from_union([from_bool, from_none], obj.get("is_bot"))
         expiration_ts = from_union([from_int, from_none], obj.get("expiration_ts"))
-        return User(id, email, is_admin, is_owner, is_primary_owner, is_restricted, is_ultra_restricted, is_bot, expiration_ts)
+        username = from_union([from_str, from_none], obj.get("username"))
+        full_name = from_union([from_str, from_none], obj.get("full_name"))
+        is_active = from_union([from_bool, from_none], obj.get("is_active"))
+        date_created = from_union([from_int, from_none], obj.get("date_created"))
+        roles = from_union([lambda x: from_list(from_str, x), from_none], obj.get("roles"))
+        workspaces = from_union([lambda x: from_list(from_str, x), from_none], obj.get("workspaces"))
+        has_2_fa = from_union([from_bool, from_none], obj.get("has_2fa"))
+        has_sso = from_union([from_bool, from_none], obj.get("has_sso"))
+        last_active_ts = from_union([from_int, from_none], obj.get("last_active_ts"))
+        return User(id, email, is_admin, is_owner, is_primary_owner, is_restricted, is_ultra_restricted, is_bot, expiration_ts, username, full_name, is_active, date_created, roles, workspaces, has_2_fa, has_sso, last_active_ts)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -108,6 +126,15 @@ class User:
         result["is_ultra_restricted"] = from_union([from_bool, from_none], self.is_ultra_restricted)
         result["is_bot"] = from_union([from_bool, from_none], self.is_bot)
         result["expiration_ts"] = from_union([from_int, from_none], self.expiration_ts)
+        result["username"] = from_union([from_str, from_none], self.username)
+        result["full_name"] = from_union([from_str, from_none], self.full_name)
+        result["is_active"] = from_union([from_bool, from_none], self.is_active)
+        result["date_created"] = from_union([from_int, from_none], self.date_created)
+        result["roles"] = from_union([lambda x: from_list(from_str, x), from_none], self.roles)
+        result["workspaces"] = from_union([lambda x: from_list(from_str, x), from_none], self.workspaces)
+        result["has_2fa"] = from_union([from_bool, from_none], self.has_2_fa)
+        result["has_sso"] = from_union([from_bool, from_none], self.has_sso)
+        result["last_active_ts"] = from_union([from_int, from_none], self.last_active_ts)
         return result
 
 
@@ -119,6 +146,7 @@ class AdminUsersListResponse:
     error: Optional[str] = None
     needed: Optional[str] = None
     provided: Optional[str] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'AdminUsersListResponse':
@@ -129,7 +157,8 @@ class AdminUsersListResponse:
         error = from_union([from_str, from_none], obj.get("error"))
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
-        return AdminUsersListResponse(ok, users, response_metadata, error, needed, provided)
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return AdminUsersListResponse(ok, users, response_metadata, error, needed, provided, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -139,6 +168,7 @@ class AdminUsersListResponse:
         result["error"] = from_union([from_str, from_none], self.error)
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

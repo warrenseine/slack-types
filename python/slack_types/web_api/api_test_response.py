@@ -68,6 +68,7 @@ class APITestResponse:
     args: Optional[Args] = None
     needed: Optional[str] = None
     provided: Optional[str] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'APITestResponse':
@@ -77,7 +78,8 @@ class APITestResponse:
         args = from_union([Args.from_dict, from_none], obj.get("args"))
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
-        return APITestResponse(ok, error, args, needed, provided)
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return APITestResponse(ok, error, args, needed, provided, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -86,6 +88,7 @@ class APITestResponse:
         result["args"] = from_union([lambda x: to_class(Args, x), from_none], self.args)
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

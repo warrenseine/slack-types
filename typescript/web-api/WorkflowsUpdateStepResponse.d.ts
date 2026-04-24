@@ -3,4 +3,5 @@ export interface WorkflowsUpdateStepResponse {
     error?:    string;
     needed?:   string;
     provided?: string;
+    warning?:  string;
 }

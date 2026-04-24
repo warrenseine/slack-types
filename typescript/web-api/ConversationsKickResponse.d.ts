@@ -3,4 +3,9 @@ export interface ConversationsKickResponse {
     error?:    string;
     needed?:   string;
     provided?: string;
+    errors?:   Errors;
+    warning?:  string;
+}
+
+export interface Errors {
 }

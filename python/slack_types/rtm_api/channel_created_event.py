@@ -57,6 +57,7 @@ class Channel:
     is_org_shared: Optional[bool] = None
     created: Optional[int] = None
     creator: Optional[str] = None
+    context_team_id: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Channel':
@@ -69,7 +70,8 @@ class Channel:
         is_org_shared = from_union([from_bool, from_none], obj.get("is_org_shared"))
         created = from_union([from_int, from_none], obj.get("created"))
         creator = from_union([from_str, from_none], obj.get("creator"))
-        return Channel(id, name, name_normalized, is_channel, is_shared, is_org_shared, created, creator)
+        context_team_id = from_union([from_str, from_none], obj.get("context_team_id"))
+        return Channel(id, name, name_normalized, is_channel, is_shared, is_org_shared, created, creator, context_team_id)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -81,6 +83,7 @@ class Channel:
         result["is_org_shared"] = from_union([from_bool, from_none], self.is_org_shared)
         result["created"] = from_union([from_int, from_none], self.created)
         result["creator"] = from_union([from_str, from_none], self.creator)
+        result["context_team_id"] = from_union([from_str, from_none], self.context_team_id)
         return result
 
 

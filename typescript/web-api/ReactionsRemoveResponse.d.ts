@@ -3,4 +3,5 @@ export interface ReactionsRemoveResponse {
     error?:    string;
     needed?:   string;
     provided?: string;
+    warning?:  string;
 }

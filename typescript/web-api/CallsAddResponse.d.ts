@@ -5,6 +5,7 @@ export interface CallsAddResponse {
     response_metadata?: ResponseMetadata;
     needed?:            string;
     provided?:          string;
+    warning?:           string;
 }
 
 export interface Call {

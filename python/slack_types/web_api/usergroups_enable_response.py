@@ -91,6 +91,12 @@ class Usergroup:
     prefs: Optional[Prefs] = None
     channel_count: Optional[int] = None
     users: Optional[List[str]] = None
+    is_section: Optional[bool] = None
+    is_idp_group: Optional[bool] = None
+    is_visible: Optional[bool] = None
+    is_editing_restricted: Optional[bool] = None
+    is_membership_locked: Optional[bool] = None
+    is_org_level: Optional[bool] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Usergroup':
@@ -113,7 +119,13 @@ class Usergroup:
         prefs = from_union([Prefs.from_dict, from_none], obj.get("prefs"))
         channel_count = from_union([from_int, from_none], obj.get("channel_count"))
         users = from_union([lambda x: from_list(from_str, x), from_none], obj.get("users"))
-        return Usergroup(id, team_id, is_usergroup, is_subteam, name, description, handle, is_external, date_create, date_update, date_delete, auto_provision, enterprise_subteam_id, created_by, updated_by, prefs, channel_count, users)
+        is_section = from_union([from_bool, from_none], obj.get("is_section"))
+        is_idp_group = from_union([from_bool, from_none], obj.get("is_idp_group"))
+        is_visible = from_union([from_bool, from_none], obj.get("is_visible"))
+        is_editing_restricted = from_union([from_bool, from_none], obj.get("is_editing_restricted"))
+        is_membership_locked = from_union([from_bool, from_none], obj.get("is_membership_locked"))
+        is_org_level = from_union([from_bool, from_none], obj.get("is_org_level"))
+        return Usergroup(id, team_id, is_usergroup, is_subteam, name, description, handle, is_external, date_create, date_update, date_delete, auto_provision, enterprise_subteam_id, created_by, updated_by, prefs, channel_count, users, is_section, is_idp_group, is_visible, is_editing_restricted, is_membership_locked, is_org_level)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -135,6 +147,12 @@ class Usergroup:
         result["prefs"] = from_union([lambda x: to_class(Prefs, x), from_none], self.prefs)
         result["channel_count"] = from_union([from_int, from_none], self.channel_count)
         result["users"] = from_union([lambda x: from_list(from_str, x), from_none], self.users)
+        result["is_section"] = from_union([from_bool, from_none], self.is_section)
+        result["is_idp_group"] = from_union([from_bool, from_none], self.is_idp_group)
+        result["is_visible"] = from_union([from_bool, from_none], self.is_visible)
+        result["is_editing_restricted"] = from_union([from_bool, from_none], self.is_editing_restricted)
+        result["is_membership_locked"] = from_union([from_bool, from_none], self.is_membership_locked)
+        result["is_org_level"] = from_union([from_bool, from_none], self.is_org_level)
         return result
 
 
@@ -145,6 +163,7 @@ class UsergroupsEnableResponse:
     error: Optional[str] = None
     needed: Optional[str] = None
     provided: Optional[str] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'UsergroupsEnableResponse':
@@ -154,7 +173,8 @@ class UsergroupsEnableResponse:
         error = from_union([from_str, from_none], obj.get("error"))
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
-        return UsergroupsEnableResponse(ok, usergroup, error, needed, provided)
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return UsergroupsEnableResponse(ok, usergroup, error, needed, provided, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -163,6 +183,7 @@ class UsergroupsEnableResponse:
         result["error"] = from_union([from_str, from_none], self.error)
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

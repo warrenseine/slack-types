@@ -2,6 +2,8 @@ export interface GroupClosePayload {
     token?:                 string;
     enterprise_id?:         string;
     team_id?:               string;
+    context_team_id?:       string;
+    context_enterprise_id?: string;
     api_app_id?:            string;
     type?:                  string;
     authed_users?:          string[];

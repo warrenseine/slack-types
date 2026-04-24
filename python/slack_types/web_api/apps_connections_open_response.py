@@ -7,14 +7,19 @@
 #     result = apps_connections_open_response_from_dict(json.loads(json_string))
 
 from dataclasses import dataclass
-from typing import Optional, Any, TypeVar, Type, cast
+from typing import Optional, List, Any, TypeVar, Callable, Type, cast
 
 
 T = TypeVar("T")
 
 
-def from_bool(x: Any) -> bool:
-    assert isinstance(x, bool)
+def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
+    assert isinstance(x, list)
+    return [f(y) for y in x]
+
+
+def from_str(x: Any) -> str:
+    assert isinstance(x, str)
     return x
 
 
@@ -32,8 +37,8 @@ def from_union(fs, x):
     assert False
 
 
-def from_str(x: Any) -> str:
-    assert isinstance(x, str)
+def from_bool(x: Any) -> bool:
+    assert isinstance(x, bool)
     return x
 
 
@@ -43,12 +48,30 @@ def to_class(c: Type[T], x: Any) -> dict:
 
 
 @dataclass
+class ResponseMetadata:
+    messages: Optional[List[str]] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'ResponseMetadata':
+        assert isinstance(obj, dict)
+        messages = from_union([lambda x: from_list(from_str, x), from_none], obj.get("messages"))
+        return ResponseMetadata(messages)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["messages"] = from_union([lambda x: from_list(from_str, x), from_none], self.messages)
+        return result
+
+
+@dataclass
 class AppsConnectionsOpenResponse:
     ok: Optional[bool] = None
     error: Optional[str] = None
     needed: Optional[str] = None
     provided: Optional[str] = None
     url: Optional[str] = None
+    warning: Optional[str] = None
+    response_metadata: Optional[ResponseMetadata] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'AppsConnectionsOpenResponse':
@@ -58,7 +81,9 @@ class AppsConnectionsOpenResponse:
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
         url = from_union([from_str, from_none], obj.get("url"))
-        return AppsConnectionsOpenResponse(ok, error, needed, provided, url)
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        response_metadata = from_union([ResponseMetadata.from_dict, from_none], obj.get("response_metadata"))
+        return AppsConnectionsOpenResponse(ok, error, needed, provided, url, warning, response_metadata)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -67,6 +92,8 @@ class AppsConnectionsOpenResponse:
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
         result["url"] = from_union([from_str, from_none], self.url)
+        result["warning"] = from_union([from_str, from_none], self.warning)
+        result["response_metadata"] = from_union([lambda x: to_class(ResponseMetadata, x), from_none], self.response_metadata)
         return result
 
 

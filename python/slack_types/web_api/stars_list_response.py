@@ -8,11 +8,9 @@
 
 from dataclasses import dataclass
 from typing import Optional, Any, List, Dict, TypeVar, Callable, Type, cast
-from enum import Enum
 
 
 T = TypeVar("T")
-EnumT = TypeVar("EnumT", bound=Enum)
 
 
 def from_str(x: Any) -> str:
@@ -49,19 +47,14 @@ def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
     return [f(y) for y in x]
 
 
-def to_class(c: Type[T], x: Any) -> dict:
-    assert isinstance(x, c)
-    return cast(Any, x).to_dict()
-
-
-def to_enum(c: Type[EnumT], x: Any) -> EnumT:
-    assert isinstance(x, c)
-    return x.value
-
-
 def from_dict(f: Callable[[Any], T], x: Any) -> Dict[str, T]:
     assert isinstance(x, dict)
     return { k: f(v) for (k, v) in x.items() }
+
+
+def to_class(c: Type[T], x: Any) -> dict:
+    assert isinstance(x, c)
+    return cast(Any, x).to_dict()
 
 
 @dataclass
@@ -101,6 +94,600 @@ class Comment:
         result["num_stars"] = from_union([from_int, from_none], self.num_stars)
         result["is_starred"] = from_union([from_bool, from_none], self.is_starred)
         result["channel"] = from_union([from_str, from_none], self.channel)
+        return result
+
+
+@dataclass
+class Cc:
+    address: Optional[str] = None
+    name: Optional[str] = None
+    original: Optional[str] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Cc':
+        assert isinstance(obj, dict)
+        address = from_union([from_str, from_none], obj.get("address"))
+        name = from_union([from_str, from_none], obj.get("name"))
+        original = from_union([from_str, from_none], obj.get("original"))
+        return Cc(address, name, original)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["address"] = from_union([from_str, from_none], self.address)
+        result["name"] = from_union([from_str, from_none], self.name)
+        result["original"] = from_union([from_str, from_none], self.original)
+        return result
+
+
+@dataclass
+class Headers:
+    date: Optional[str] = None
+    in_reply_to: Optional[str] = None
+    reply_to: Optional[str] = None
+    message_id: Optional[str] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Headers':
+        assert isinstance(obj, dict)
+        date = from_union([from_str, from_none], obj.get("date"))
+        in_reply_to = from_union([from_str, from_none], obj.get("in_reply_to"))
+        reply_to = from_union([from_str, from_none], obj.get("reply_to"))
+        message_id = from_union([from_str, from_none], obj.get("message_id"))
+        return Headers(date, in_reply_to, reply_to, message_id)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["date"] = from_union([from_str, from_none], self.date)
+        result["in_reply_to"] = from_union([from_str, from_none], self.in_reply_to)
+        result["reply_to"] = from_union([from_str, from_none], self.reply_to)
+        result["message_id"] = from_union([from_str, from_none], self.message_id)
+        return result
+
+
+@dataclass
+class MediaProgress:
+    offset_ms: Optional[int] = None
+    max_offset_ms: Optional[int] = None
+    duration_ms: Optional[int] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'MediaProgress':
+        assert isinstance(obj, dict)
+        offset_ms = from_union([from_int, from_none], obj.get("offset_ms"))
+        max_offset_ms = from_union([from_int, from_none], obj.get("max_offset_ms"))
+        duration_ms = from_union([from_int, from_none], obj.get("duration_ms"))
+        return MediaProgress(offset_ms, max_offset_ms, duration_ms)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["offset_ms"] = from_union([from_int, from_none], self.offset_ms)
+        result["max_offset_ms"] = from_union([from_int, from_none], self.max_offset_ms)
+        result["duration_ms"] = from_union([from_int, from_none], self.duration_ms)
+        return result
+
+
+@dataclass
+class Reaction:
+    name: Optional[str] = None
+    count: Optional[int] = None
+    users: Optional[List[str]] = None
+    url: Optional[str] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Reaction':
+        assert isinstance(obj, dict)
+        name = from_union([from_str, from_none], obj.get("name"))
+        count = from_union([from_int, from_none], obj.get("count"))
+        users = from_union([lambda x: from_list(from_str, x), from_none], obj.get("users"))
+        url = from_union([from_str, from_none], obj.get("url"))
+        return Reaction(name, count, users, url)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["name"] = from_union([from_str, from_none], self.name)
+        result["count"] = from_union([from_int, from_none], self.count)
+        result["users"] = from_union([lambda x: from_list(from_str, x), from_none], self.users)
+        result["url"] = from_union([from_str, from_none], self.url)
+        return result
+
+
+@dataclass
+class Saved:
+    is_archived: Optional[bool] = None
+    date_completed: Optional[int] = None
+    date_due: Optional[int] = None
+    state: Optional[str] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Saved':
+        assert isinstance(obj, dict)
+        is_archived = from_union([from_bool, from_none], obj.get("is_archived"))
+        date_completed = from_union([from_int, from_none], obj.get("date_completed"))
+        date_due = from_union([from_int, from_none], obj.get("date_due"))
+        state = from_union([from_str, from_none], obj.get("state"))
+        return Saved(is_archived, date_completed, date_due, state)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["is_archived"] = from_union([from_bool, from_none], self.is_archived)
+        result["date_completed"] = from_union([from_int, from_none], self.date_completed)
+        result["date_due"] = from_union([from_int, from_none], self.date_due)
+        result["state"] = from_union([from_str, from_none], self.state)
+        return result
+
+
+@dataclass
+class Private:
+    share_user_id: Optional[str] = None
+    reply_users: Optional[List[str]] = None
+    reply_users_count: Optional[int] = None
+    reply_count: Optional[int] = None
+    ts: Optional[str] = None
+    thread_ts: Optional[str] = None
+    latest_reply: Optional[str] = None
+    channel_name: Optional[str] = None
+    team_id: Optional[str] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Private':
+        assert isinstance(obj, dict)
+        share_user_id = from_union([from_str, from_none], obj.get("share_user_id"))
+        reply_users = from_union([lambda x: from_list(from_str, x), from_none], obj.get("reply_users"))
+        reply_users_count = from_union([from_int, from_none], obj.get("reply_users_count"))
+        reply_count = from_union([from_int, from_none], obj.get("reply_count"))
+        ts = from_union([from_str, from_none], obj.get("ts"))
+        thread_ts = from_union([from_str, from_none], obj.get("thread_ts"))
+        latest_reply = from_union([from_str, from_none], obj.get("latest_reply"))
+        channel_name = from_union([from_str, from_none], obj.get("channel_name"))
+        team_id = from_union([from_str, from_none], obj.get("team_id"))
+        return Private(share_user_id, reply_users, reply_users_count, reply_count, ts, thread_ts, latest_reply, channel_name, team_id)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["share_user_id"] = from_union([from_str, from_none], self.share_user_id)
+        result["reply_users"] = from_union([lambda x: from_list(from_str, x), from_none], self.reply_users)
+        result["reply_users_count"] = from_union([from_int, from_none], self.reply_users_count)
+        result["reply_count"] = from_union([from_int, from_none], self.reply_count)
+        result["ts"] = from_union([from_str, from_none], self.ts)
+        result["thread_ts"] = from_union([from_str, from_none], self.thread_ts)
+        result["latest_reply"] = from_union([from_str, from_none], self.latest_reply)
+        result["channel_name"] = from_union([from_str, from_none], self.channel_name)
+        result["team_id"] = from_union([from_str, from_none], self.team_id)
+        return result
+
+
+@dataclass
+class Shares:
+    public: Optional[Dict[str, List[Private]]] = None
+    private: Optional[Dict[str, List[Private]]] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Shares':
+        assert isinstance(obj, dict)
+        public = from_union([lambda x: from_dict(lambda x: from_list(Private.from_dict, x), x), from_none], obj.get("public"))
+        private = from_union([lambda x: from_dict(lambda x: from_list(Private.from_dict, x), x), from_none], obj.get("private"))
+        return Shares(public, private)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["public"] = from_union([lambda x: from_dict(lambda x: from_list(lambda x: to_class(Private, x), x), x), from_none], self.public)
+        result["private"] = from_union([lambda x: from_dict(lambda x: from_list(lambda x: to_class(Private, x), x), x), from_none], self.private)
+        return result
+
+
+@dataclass
+class Transcription:
+    status: Optional[str] = None
+    locale: Optional[str] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Transcription':
+        assert isinstance(obj, dict)
+        status = from_union([from_str, from_none], obj.get("status"))
+        locale = from_union([from_str, from_none], obj.get("locale"))
+        return Transcription(status, locale)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["status"] = from_union([from_str, from_none], self.status)
+        result["locale"] = from_union([from_str, from_none], self.locale)
+        return result
+
+
+@dataclass
+class File:
+    id: Optional[str] = None
+    created: Optional[int] = None
+    timestamp: Optional[int] = None
+    name: Optional[str] = None
+    title: Optional[str] = None
+    subject: Optional[str] = None
+    mimetype: Optional[str] = None
+    filetype: Optional[str] = None
+    pretty_type: Optional[str] = None
+    user: Optional[str] = None
+    user_team: Optional[str] = None
+    source_team: Optional[str] = None
+    mode: Optional[str] = None
+    editable: Optional[bool] = None
+    non_owner_editable: Optional[bool] = None
+    editor: Optional[str] = None
+    last_editor: Optional[str] = None
+    updated: Optional[int] = None
+    file_access: Optional[str] = None
+    alt_txt: Optional[str] = None
+    subtype: Optional[str] = None
+    transcription: Optional[Transcription] = None
+    mp4: Optional[str] = None
+    mp4_low: Optional[str] = None
+    vtt: Optional[str] = None
+    hls: Optional[str] = None
+    hls_embed: Optional[str] = None
+    duration_ms: Optional[int] = None
+    thumb_video_w: Optional[int] = None
+    thumb_video_h: Optional[int] = None
+    original_attachment_count: Optional[int] = None
+    is_external: Optional[bool] = None
+    external_type: Optional[str] = None
+    external_id: Optional[str] = None
+    external_url: Optional[str] = None
+    username: Optional[str] = None
+    size: Optional[int] = None
+    url_private: Optional[str] = None
+    url_private_download: Optional[str] = None
+    app_id: Optional[str] = None
+    app_name: Optional[str] = None
+    thumb_64: Optional[str] = None
+    thumb_64__gif: Optional[str] = None
+    thumb_64__w: Optional[str] = None
+    thumb_64__h: Optional[str] = None
+    thumb_80: Optional[str] = None
+    thumb_80__gif: Optional[str] = None
+    thumb_80__w: Optional[str] = None
+    thumb_80__h: Optional[str] = None
+    thumb_160: Optional[str] = None
+    thumb_160__gif: Optional[str] = None
+    thumb_160__w: Optional[str] = None
+    thumb_160__h: Optional[str] = None
+    thumb_360: Optional[str] = None
+    thumb_360__gif: Optional[str] = None
+    thumb_360__w: Optional[str] = None
+    thumb_360__h: Optional[str] = None
+    thumb_480: Optional[str] = None
+    thumb_480__gif: Optional[str] = None
+    thumb_480__w: Optional[str] = None
+    thumb_480__h: Optional[str] = None
+    thumb_720: Optional[str] = None
+    thumb_720__gif: Optional[str] = None
+    thumb_720__w: Optional[str] = None
+    thumb_720__h: Optional[str] = None
+    thumb_800: Optional[str] = None
+    thumb_800__gif: Optional[str] = None
+    thumb_800__w: Optional[str] = None
+    thumb_800__h: Optional[str] = None
+    thumb_960: Optional[str] = None
+    thumb_960__gif: Optional[str] = None
+    thumb_960__w: Optional[str] = None
+    thumb_960__h: Optional[str] = None
+    thumb_1024: Optional[str] = None
+    thumb_1024__gif: Optional[str] = None
+    thumb_1024__w: Optional[str] = None
+    thumb_1024__h: Optional[str] = None
+    thumb_video: Optional[str] = None
+    thumb_gif: Optional[str] = None
+    thumb_pdf: Optional[str] = None
+    thumb_pdf_w: Optional[str] = None
+    thumb_pdf_h: Optional[str] = None
+    thumb_tiny: Optional[str] = None
+    converted_pdf: Optional[str] = None
+    image_exif_rotation: Optional[int] = None
+    original_w: Optional[str] = None
+    original_h: Optional[str] = None
+    deanimate: Optional[str] = None
+    deanimate_gif: Optional[str] = None
+    pjpeg: Optional[str] = None
+    permalink: Optional[str] = None
+    permalink_public: Optional[str] = None
+    edit_link: Optional[str] = None
+    has_rich_preview: Optional[bool] = None
+    media_display_type: Optional[str] = None
+    preview_is_truncated: Optional[bool] = None
+    preview: Optional[str] = None
+    preview_highlight: Optional[str] = None
+    plain_text: Optional[str] = None
+    preview_plain_text: Optional[str] = None
+    has_more: Optional[bool] = None
+    sent_to_self: Optional[bool] = None
+    lines: Optional[int] = None
+    lines_more: Optional[int] = None
+    is_public: Optional[bool] = None
+    public_url_shared: Optional[bool] = None
+    display_as_bot: Optional[bool] = None
+    channels: Optional[List[str]] = None
+    groups: Optional[List[str]] = None
+    ims: Optional[List[str]] = None
+    shares: Optional[Shares] = None
+    has_more_shares: Optional[bool] = None
+    to: Optional[List[Cc]] = None
+    file_from: Optional[List[Cc]] = None
+    cc: Optional[List[Cc]] = None
+    channel_actions_ts: Optional[str] = None
+    channel_actions_count: Optional[int] = None
+    headers: Optional[Headers] = None
+    simplified_html: Optional[str] = None
+    media_progress: Optional[MediaProgress] = None
+    saved: Optional[Saved] = None
+    bot_id: Optional[str] = None
+    initial_comment: Optional[Comment] = None
+    num_stars: Optional[int] = None
+    is_starred: Optional[bool] = None
+    pinned_to: Optional[List[str]] = None
+    reactions: Optional[List[Reaction]] = None
+    comments_count: Optional[int] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'File':
+        assert isinstance(obj, dict)
+        id = from_union([from_str, from_none], obj.get("id"))
+        created = from_union([from_int, from_none], obj.get("created"))
+        timestamp = from_union([from_int, from_none], obj.get("timestamp"))
+        name = from_union([from_str, from_none], obj.get("name"))
+        title = from_union([from_str, from_none], obj.get("title"))
+        subject = from_union([from_str, from_none], obj.get("subject"))
+        mimetype = from_union([from_str, from_none], obj.get("mimetype"))
+        filetype = from_union([from_str, from_none], obj.get("filetype"))
+        pretty_type = from_union([from_str, from_none], obj.get("pretty_type"))
+        user = from_union([from_str, from_none], obj.get("user"))
+        user_team = from_union([from_str, from_none], obj.get("user_team"))
+        source_team = from_union([from_str, from_none], obj.get("source_team"))
+        mode = from_union([from_str, from_none], obj.get("mode"))
+        editable = from_union([from_bool, from_none], obj.get("editable"))
+        non_owner_editable = from_union([from_bool, from_none], obj.get("non_owner_editable"))
+        editor = from_union([from_str, from_none], obj.get("editor"))
+        last_editor = from_union([from_str, from_none], obj.get("last_editor"))
+        updated = from_union([from_int, from_none], obj.get("updated"))
+        file_access = from_union([from_str, from_none], obj.get("file_access"))
+        alt_txt = from_union([from_str, from_none], obj.get("alt_txt"))
+        subtype = from_union([from_str, from_none], obj.get("subtype"))
+        transcription = from_union([Transcription.from_dict, from_none], obj.get("transcription"))
+        mp4 = from_union([from_str, from_none], obj.get("mp4"))
+        mp4_low = from_union([from_str, from_none], obj.get("mp4_low"))
+        vtt = from_union([from_str, from_none], obj.get("vtt"))
+        hls = from_union([from_str, from_none], obj.get("hls"))
+        hls_embed = from_union([from_str, from_none], obj.get("hls_embed"))
+        duration_ms = from_union([from_int, from_none], obj.get("duration_ms"))
+        thumb_video_w = from_union([from_int, from_none], obj.get("thumb_video_w"))
+        thumb_video_h = from_union([from_int, from_none], obj.get("thumb_video_h"))
+        original_attachment_count = from_union([from_int, from_none], obj.get("original_attachment_count"))
+        is_external = from_union([from_bool, from_none], obj.get("is_external"))
+        external_type = from_union([from_str, from_none], obj.get("external_type"))
+        external_id = from_union([from_str, from_none], obj.get("external_id"))
+        external_url = from_union([from_str, from_none], obj.get("external_url"))
+        username = from_union([from_str, from_none], obj.get("username"))
+        size = from_union([from_int, from_none], obj.get("size"))
+        url_private = from_union([from_str, from_none], obj.get("url_private"))
+        url_private_download = from_union([from_str, from_none], obj.get("url_private_download"))
+        app_id = from_union([from_str, from_none], obj.get("app_id"))
+        app_name = from_union([from_str, from_none], obj.get("app_name"))
+        thumb_64 = from_union([from_str, from_none], obj.get("thumb_64"))
+        thumb_64__gif = from_union([from_str, from_none], obj.get("thumb_64_gif"))
+        thumb_64__w = from_union([from_str, from_none], obj.get("thumb_64_w"))
+        thumb_64__h = from_union([from_str, from_none], obj.get("thumb_64_h"))
+        thumb_80 = from_union([from_str, from_none], obj.get("thumb_80"))
+        thumb_80__gif = from_union([from_str, from_none], obj.get("thumb_80_gif"))
+        thumb_80__w = from_union([from_str, from_none], obj.get("thumb_80_w"))
+        thumb_80__h = from_union([from_str, from_none], obj.get("thumb_80_h"))
+        thumb_160 = from_union([from_str, from_none], obj.get("thumb_160"))
+        thumb_160__gif = from_union([from_str, from_none], obj.get("thumb_160_gif"))
+        thumb_160__w = from_union([from_str, from_none], obj.get("thumb_160_w"))
+        thumb_160__h = from_union([from_str, from_none], obj.get("thumb_160_h"))
+        thumb_360 = from_union([from_str, from_none], obj.get("thumb_360"))
+        thumb_360__gif = from_union([from_str, from_none], obj.get("thumb_360_gif"))
+        thumb_360__w = from_union([from_str, from_none], obj.get("thumb_360_w"))
+        thumb_360__h = from_union([from_str, from_none], obj.get("thumb_360_h"))
+        thumb_480 = from_union([from_str, from_none], obj.get("thumb_480"))
+        thumb_480__gif = from_union([from_str, from_none], obj.get("thumb_480_gif"))
+        thumb_480__w = from_union([from_str, from_none], obj.get("thumb_480_w"))
+        thumb_480__h = from_union([from_str, from_none], obj.get("thumb_480_h"))
+        thumb_720 = from_union([from_str, from_none], obj.get("thumb_720"))
+        thumb_720__gif = from_union([from_str, from_none], obj.get("thumb_720_gif"))
+        thumb_720__w = from_union([from_str, from_none], obj.get("thumb_720_w"))
+        thumb_720__h = from_union([from_str, from_none], obj.get("thumb_720_h"))
+        thumb_800 = from_union([from_str, from_none], obj.get("thumb_800"))
+        thumb_800__gif = from_union([from_str, from_none], obj.get("thumb_800_gif"))
+        thumb_800__w = from_union([from_str, from_none], obj.get("thumb_800_w"))
+        thumb_800__h = from_union([from_str, from_none], obj.get("thumb_800_h"))
+        thumb_960 = from_union([from_str, from_none], obj.get("thumb_960"))
+        thumb_960__gif = from_union([from_str, from_none], obj.get("thumb_960_gif"))
+        thumb_960__w = from_union([from_str, from_none], obj.get("thumb_960_w"))
+        thumb_960__h = from_union([from_str, from_none], obj.get("thumb_960_h"))
+        thumb_1024 = from_union([from_str, from_none], obj.get("thumb_1024"))
+        thumb_1024__gif = from_union([from_str, from_none], obj.get("thumb_1024_gif"))
+        thumb_1024__w = from_union([from_str, from_none], obj.get("thumb_1024_w"))
+        thumb_1024__h = from_union([from_str, from_none], obj.get("thumb_1024_h"))
+        thumb_video = from_union([from_str, from_none], obj.get("thumb_video"))
+        thumb_gif = from_union([from_str, from_none], obj.get("thumb_gif"))
+        thumb_pdf = from_union([from_str, from_none], obj.get("thumb_pdf"))
+        thumb_pdf_w = from_union([from_str, from_none], obj.get("thumb_pdf_w"))
+        thumb_pdf_h = from_union([from_str, from_none], obj.get("thumb_pdf_h"))
+        thumb_tiny = from_union([from_str, from_none], obj.get("thumb_tiny"))
+        converted_pdf = from_union([from_str, from_none], obj.get("converted_pdf"))
+        image_exif_rotation = from_union([from_int, from_none], obj.get("image_exif_rotation"))
+        original_w = from_union([from_str, from_none], obj.get("original_w"))
+        original_h = from_union([from_str, from_none], obj.get("original_h"))
+        deanimate = from_union([from_str, from_none], obj.get("deanimate"))
+        deanimate_gif = from_union([from_str, from_none], obj.get("deanimate_gif"))
+        pjpeg = from_union([from_str, from_none], obj.get("pjpeg"))
+        permalink = from_union([from_str, from_none], obj.get("permalink"))
+        permalink_public = from_union([from_str, from_none], obj.get("permalink_public"))
+        edit_link = from_union([from_str, from_none], obj.get("edit_link"))
+        has_rich_preview = from_union([from_bool, from_none], obj.get("has_rich_preview"))
+        media_display_type = from_union([from_str, from_none], obj.get("media_display_type"))
+        preview_is_truncated = from_union([from_bool, from_none], obj.get("preview_is_truncated"))
+        preview = from_union([from_str, from_none], obj.get("preview"))
+        preview_highlight = from_union([from_str, from_none], obj.get("preview_highlight"))
+        plain_text = from_union([from_str, from_none], obj.get("plain_text"))
+        preview_plain_text = from_union([from_str, from_none], obj.get("preview_plain_text"))
+        has_more = from_union([from_bool, from_none], obj.get("has_more"))
+        sent_to_self = from_union([from_bool, from_none], obj.get("sent_to_self"))
+        lines = from_union([from_int, from_none], obj.get("lines"))
+        lines_more = from_union([from_int, from_none], obj.get("lines_more"))
+        is_public = from_union([from_bool, from_none], obj.get("is_public"))
+        public_url_shared = from_union([from_bool, from_none], obj.get("public_url_shared"))
+        display_as_bot = from_union([from_bool, from_none], obj.get("display_as_bot"))
+        channels = from_union([lambda x: from_list(from_str, x), from_none], obj.get("channels"))
+        groups = from_union([lambda x: from_list(from_str, x), from_none], obj.get("groups"))
+        ims = from_union([lambda x: from_list(from_str, x), from_none], obj.get("ims"))
+        shares = from_union([Shares.from_dict, from_none], obj.get("shares"))
+        has_more_shares = from_union([from_bool, from_none], obj.get("has_more_shares"))
+        to = from_union([lambda x: from_list(Cc.from_dict, x), from_none], obj.get("to"))
+        file_from = from_union([lambda x: from_list(Cc.from_dict, x), from_none], obj.get("from"))
+        cc = from_union([lambda x: from_list(Cc.from_dict, x), from_none], obj.get("cc"))
+        channel_actions_ts = from_union([from_str, from_none], obj.get("channel_actions_ts"))
+        channel_actions_count = from_union([from_int, from_none], obj.get("channel_actions_count"))
+        headers = from_union([Headers.from_dict, from_none], obj.get("headers"))
+        simplified_html = from_union([from_str, from_none], obj.get("simplified_html"))
+        media_progress = from_union([MediaProgress.from_dict, from_none], obj.get("media_progress"))
+        saved = from_union([Saved.from_dict, from_none], obj.get("saved"))
+        bot_id = from_union([from_str, from_none], obj.get("bot_id"))
+        initial_comment = from_union([Comment.from_dict, from_none], obj.get("initial_comment"))
+        num_stars = from_union([from_int, from_none], obj.get("num_stars"))
+        is_starred = from_union([from_bool, from_none], obj.get("is_starred"))
+        pinned_to = from_union([lambda x: from_list(from_str, x), from_none], obj.get("pinned_to"))
+        reactions = from_union([lambda x: from_list(Reaction.from_dict, x), from_none], obj.get("reactions"))
+        comments_count = from_union([from_int, from_none], obj.get("comments_count"))
+        return File(id, created, timestamp, name, title, subject, mimetype, filetype, pretty_type, user, user_team, source_team, mode, editable, non_owner_editable, editor, last_editor, updated, file_access, alt_txt, subtype, transcription, mp4, mp4_low, vtt, hls, hls_embed, duration_ms, thumb_video_w, thumb_video_h, original_attachment_count, is_external, external_type, external_id, external_url, username, size, url_private, url_private_download, app_id, app_name, thumb_64, thumb_64__gif, thumb_64__w, thumb_64__h, thumb_80, thumb_80__gif, thumb_80__w, thumb_80__h, thumb_160, thumb_160__gif, thumb_160__w, thumb_160__h, thumb_360, thumb_360__gif, thumb_360__w, thumb_360__h, thumb_480, thumb_480__gif, thumb_480__w, thumb_480__h, thumb_720, thumb_720__gif, thumb_720__w, thumb_720__h, thumb_800, thumb_800__gif, thumb_800__w, thumb_800__h, thumb_960, thumb_960__gif, thumb_960__w, thumb_960__h, thumb_1024, thumb_1024__gif, thumb_1024__w, thumb_1024__h, thumb_video, thumb_gif, thumb_pdf, thumb_pdf_w, thumb_pdf_h, thumb_tiny, converted_pdf, image_exif_rotation, original_w, original_h, deanimate, deanimate_gif, pjpeg, permalink, permalink_public, edit_link, has_rich_preview, media_display_type, preview_is_truncated, preview, preview_highlight, plain_text, preview_plain_text, has_more, sent_to_self, lines, lines_more, is_public, public_url_shared, display_as_bot, channels, groups, ims, shares, has_more_shares, to, file_from, cc, channel_actions_ts, channel_actions_count, headers, simplified_html, media_progress, saved, bot_id, initial_comment, num_stars, is_starred, pinned_to, reactions, comments_count)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["id"] = from_union([from_str, from_none], self.id)
+        result["created"] = from_union([from_int, from_none], self.created)
+        result["timestamp"] = from_union([from_int, from_none], self.timestamp)
+        result["name"] = from_union([from_str, from_none], self.name)
+        result["title"] = from_union([from_str, from_none], self.title)
+        result["subject"] = from_union([from_str, from_none], self.subject)
+        result["mimetype"] = from_union([from_str, from_none], self.mimetype)
+        result["filetype"] = from_union([from_str, from_none], self.filetype)
+        result["pretty_type"] = from_union([from_str, from_none], self.pretty_type)
+        result["user"] = from_union([from_str, from_none], self.user)
+        result["user_team"] = from_union([from_str, from_none], self.user_team)
+        result["source_team"] = from_union([from_str, from_none], self.source_team)
+        result["mode"] = from_union([from_str, from_none], self.mode)
+        result["editable"] = from_union([from_bool, from_none], self.editable)
+        result["non_owner_editable"] = from_union([from_bool, from_none], self.non_owner_editable)
+        result["editor"] = from_union([from_str, from_none], self.editor)
+        result["last_editor"] = from_union([from_str, from_none], self.last_editor)
+        result["updated"] = from_union([from_int, from_none], self.updated)
+        result["file_access"] = from_union([from_str, from_none], self.file_access)
+        result["alt_txt"] = from_union([from_str, from_none], self.alt_txt)
+        result["subtype"] = from_union([from_str, from_none], self.subtype)
+        result["transcription"] = from_union([lambda x: to_class(Transcription, x), from_none], self.transcription)
+        result["mp4"] = from_union([from_str, from_none], self.mp4)
+        result["mp4_low"] = from_union([from_str, from_none], self.mp4_low)
+        result["vtt"] = from_union([from_str, from_none], self.vtt)
+        result["hls"] = from_union([from_str, from_none], self.hls)
+        result["hls_embed"] = from_union([from_str, from_none], self.hls_embed)
+        result["duration_ms"] = from_union([from_int, from_none], self.duration_ms)
+        result["thumb_video_w"] = from_union([from_int, from_none], self.thumb_video_w)
+        result["thumb_video_h"] = from_union([from_int, from_none], self.thumb_video_h)
+        result["original_attachment_count"] = from_union([from_int, from_none], self.original_attachment_count)
+        result["is_external"] = from_union([from_bool, from_none], self.is_external)
+        result["external_type"] = from_union([from_str, from_none], self.external_type)
+        result["external_id"] = from_union([from_str, from_none], self.external_id)
+        result["external_url"] = from_union([from_str, from_none], self.external_url)
+        result["username"] = from_union([from_str, from_none], self.username)
+        result["size"] = from_union([from_int, from_none], self.size)
+        result["url_private"] = from_union([from_str, from_none], self.url_private)
+        result["url_private_download"] = from_union([from_str, from_none], self.url_private_download)
+        result["app_id"] = from_union([from_str, from_none], self.app_id)
+        result["app_name"] = from_union([from_str, from_none], self.app_name)
+        result["thumb_64"] = from_union([from_str, from_none], self.thumb_64)
+        result["thumb_64_gif"] = from_union([from_str, from_none], self.thumb_64__gif)
+        result["thumb_64_w"] = from_union([from_str, from_none], self.thumb_64__w)
+        result["thumb_64_h"] = from_union([from_str, from_none], self.thumb_64__h)
+        result["thumb_80"] = from_union([from_str, from_none], self.thumb_80)
+        result["thumb_80_gif"] = from_union([from_str, from_none], self.thumb_80__gif)
+        result["thumb_80_w"] = from_union([from_str, from_none], self.thumb_80__w)
+        result["thumb_80_h"] = from_union([from_str, from_none], self.thumb_80__h)
+        result["thumb_160"] = from_union([from_str, from_none], self.thumb_160)
+        result["thumb_160_gif"] = from_union([from_str, from_none], self.thumb_160__gif)
+        result["thumb_160_w"] = from_union([from_str, from_none], self.thumb_160__w)
+        result["thumb_160_h"] = from_union([from_str, from_none], self.thumb_160__h)
+        result["thumb_360"] = from_union([from_str, from_none], self.thumb_360)
+        result["thumb_360_gif"] = from_union([from_str, from_none], self.thumb_360__gif)
+        result["thumb_360_w"] = from_union([from_str, from_none], self.thumb_360__w)
+        result["thumb_360_h"] = from_union([from_str, from_none], self.thumb_360__h)
+        result["thumb_480"] = from_union([from_str, from_none], self.thumb_480)
+        result["thumb_480_gif"] = from_union([from_str, from_none], self.thumb_480__gif)
+        result["thumb_480_w"] = from_union([from_str, from_none], self.thumb_480__w)
+        result["thumb_480_h"] = from_union([from_str, from_none], self.thumb_480__h)
+        result["thumb_720"] = from_union([from_str, from_none], self.thumb_720)
+        result["thumb_720_gif"] = from_union([from_str, from_none], self.thumb_720__gif)
+        result["thumb_720_w"] = from_union([from_str, from_none], self.thumb_720__w)
+        result["thumb_720_h"] = from_union([from_str, from_none], self.thumb_720__h)
+        result["thumb_800"] = from_union([from_str, from_none], self.thumb_800)
+        result["thumb_800_gif"] = from_union([from_str, from_none], self.thumb_800__gif)
+        result["thumb_800_w"] = from_union([from_str, from_none], self.thumb_800__w)
+        result["thumb_800_h"] = from_union([from_str, from_none], self.thumb_800__h)
+        result["thumb_960"] = from_union([from_str, from_none], self.thumb_960)
+        result["thumb_960_gif"] = from_union([from_str, from_none], self.thumb_960__gif)
+        result["thumb_960_w"] = from_union([from_str, from_none], self.thumb_960__w)
+        result["thumb_960_h"] = from_union([from_str, from_none], self.thumb_960__h)
+        result["thumb_1024"] = from_union([from_str, from_none], self.thumb_1024)
+        result["thumb_1024_gif"] = from_union([from_str, from_none], self.thumb_1024__gif)
+        result["thumb_1024_w"] = from_union([from_str, from_none], self.thumb_1024__w)
+        result["thumb_1024_h"] = from_union([from_str, from_none], self.thumb_1024__h)
+        result["thumb_video"] = from_union([from_str, from_none], self.thumb_video)
+        result["thumb_gif"] = from_union([from_str, from_none], self.thumb_gif)
+        result["thumb_pdf"] = from_union([from_str, from_none], self.thumb_pdf)
+        result["thumb_pdf_w"] = from_union([from_str, from_none], self.thumb_pdf_w)
+        result["thumb_pdf_h"] = from_union([from_str, from_none], self.thumb_pdf_h)
+        result["thumb_tiny"] = from_union([from_str, from_none], self.thumb_tiny)
+        result["converted_pdf"] = from_union([from_str, from_none], self.converted_pdf)
+        result["image_exif_rotation"] = from_union([from_int, from_none], self.image_exif_rotation)
+        result["original_w"] = from_union([from_str, from_none], self.original_w)
+        result["original_h"] = from_union([from_str, from_none], self.original_h)
+        result["deanimate"] = from_union([from_str, from_none], self.deanimate)
+        result["deanimate_gif"] = from_union([from_str, from_none], self.deanimate_gif)
+        result["pjpeg"] = from_union([from_str, from_none], self.pjpeg)
+        result["permalink"] = from_union([from_str, from_none], self.permalink)
+        result["permalink_public"] = from_union([from_str, from_none], self.permalink_public)
+        result["edit_link"] = from_union([from_str, from_none], self.edit_link)
+        result["has_rich_preview"] = from_union([from_bool, from_none], self.has_rich_preview)
+        result["media_display_type"] = from_union([from_str, from_none], self.media_display_type)
+        result["preview_is_truncated"] = from_union([from_bool, from_none], self.preview_is_truncated)
+        result["preview"] = from_union([from_str, from_none], self.preview)
+        result["preview_highlight"] = from_union([from_str, from_none], self.preview_highlight)
+        result["plain_text"] = from_union([from_str, from_none], self.plain_text)
+        result["preview_plain_text"] = from_union([from_str, from_none], self.preview_plain_text)
+        result["has_more"] = from_union([from_bool, from_none], self.has_more)
+        result["sent_to_self"] = from_union([from_bool, from_none], self.sent_to_self)
+        result["lines"] = from_union([from_int, from_none], self.lines)
+        result["lines_more"] = from_union([from_int, from_none], self.lines_more)
+        result["is_public"] = from_union([from_bool, from_none], self.is_public)
+        result["public_url_shared"] = from_union([from_bool, from_none], self.public_url_shared)
+        result["display_as_bot"] = from_union([from_bool, from_none], self.display_as_bot)
+        result["channels"] = from_union([lambda x: from_list(from_str, x), from_none], self.channels)
+        result["groups"] = from_union([lambda x: from_list(from_str, x), from_none], self.groups)
+        result["ims"] = from_union([lambda x: from_list(from_str, x), from_none], self.ims)
+        result["shares"] = from_union([lambda x: to_class(Shares, x), from_none], self.shares)
+        result["has_more_shares"] = from_union([from_bool, from_none], self.has_more_shares)
+        result["to"] = from_union([lambda x: from_list(lambda x: to_class(Cc, x), x), from_none], self.to)
+        result["from"] = from_union([lambda x: from_list(lambda x: to_class(Cc, x), x), from_none], self.file_from)
+        result["cc"] = from_union([lambda x: from_list(lambda x: to_class(Cc, x), x), from_none], self.cc)
+        result["channel_actions_ts"] = from_union([from_str, from_none], self.channel_actions_ts)
+        result["channel_actions_count"] = from_union([from_int, from_none], self.channel_actions_count)
+        result["headers"] = from_union([lambda x: to_class(Headers, x), from_none], self.headers)
+        result["simplified_html"] = from_union([from_str, from_none], self.simplified_html)
+        result["media_progress"] = from_union([lambda x: to_class(MediaProgress, x), from_none], self.media_progress)
+        result["saved"] = from_union([lambda x: to_class(Saved, x), from_none], self.saved)
+        result["bot_id"] = from_union([from_str, from_none], self.bot_id)
+        result["initial_comment"] = from_union([lambda x: to_class(Comment, x), from_none], self.initial_comment)
+        result["num_stars"] = from_union([from_int, from_none], self.num_stars)
+        result["is_starred"] = from_union([from_bool, from_none], self.is_starred)
+        result["pinned_to"] = from_union([lambda x: from_list(from_str, x), from_none], self.pinned_to)
+        result["reactions"] = from_union([lambda x: from_list(lambda x: to_class(Reaction, x), x), from_none], self.reactions)
+        result["comments_count"] = from_union([from_int, from_none], self.comments_count)
         return result
 
 
@@ -219,31 +806,25 @@ class Action:
         return result
 
 
-class TypeEnum(Enum):
-    EMPTY = ""
-    MRKDWN = "mrkdwn"
-    PLAIN_TEXT = "plain_text"
-
-
 @dataclass
-class Text:
-    type: Optional[TypeEnum] = None
+class Description:
+    type: Optional[str] = None
     text: Optional[str] = None
     emoji: Optional[bool] = None
     verbatim: Optional[bool] = None
 
     @staticmethod
-    def from_dict(obj: Any) -> 'Text':
+    def from_dict(obj: Any) -> 'Description':
         assert isinstance(obj, dict)
-        type = from_union([TypeEnum, from_none], obj.get("type"))
+        type = from_union([from_str, from_none], obj.get("type"))
         text = from_union([from_str, from_none], obj.get("text"))
         emoji = from_union([from_bool, from_none], obj.get("emoji"))
         verbatim = from_union([from_bool, from_none], obj.get("verbatim"))
-        return Text(type, text, emoji, verbatim)
+        return Description(type, text, emoji, verbatim)
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["type"] = from_union([lambda x: to_enum(TypeEnum, x), from_none], self.type)
+        result["type"] = from_union([from_str, from_none], self.type)
         result["text"] = from_union([from_str, from_none], self.text)
         result["emoji"] = from_union([from_bool, from_none], self.emoji)
         result["verbatim"] = from_union([from_bool, from_none], self.verbatim)
@@ -252,29 +833,140 @@ class Text:
 
 @dataclass
 class AccessoryConfirm:
-    title: Optional[Text] = None
-    text: Optional[Text] = None
-    confirm: Optional[Text] = None
-    deny: Optional[Text] = None
+    title: Optional[Description] = None
+    text: Optional[Description] = None
+    confirm: Optional[Description] = None
+    deny: Optional[Description] = None
     style: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'AccessoryConfirm':
         assert isinstance(obj, dict)
-        title = from_union([Text.from_dict, from_none], obj.get("title"))
-        text = from_union([Text.from_dict, from_none], obj.get("text"))
-        confirm = from_union([Text.from_dict, from_none], obj.get("confirm"))
-        deny = from_union([Text.from_dict, from_none], obj.get("deny"))
+        title = from_union([Description.from_dict, from_none], obj.get("title"))
+        text = from_union([Description.from_dict, from_none], obj.get("text"))
+        confirm = from_union([Description.from_dict, from_none], obj.get("confirm"))
+        deny = from_union([Description.from_dict, from_none], obj.get("deny"))
         style = from_union([from_str, from_none], obj.get("style"))
         return AccessoryConfirm(title, text, confirm, deny, style)
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["title"] = from_union([lambda x: to_class(Text, x), from_none], self.title)
-        result["text"] = from_union([lambda x: to_class(Text, x), from_none], self.text)
-        result["confirm"] = from_union([lambda x: to_class(Text, x), from_none], self.confirm)
-        result["deny"] = from_union([lambda x: to_class(Text, x), from_none], self.deny)
+        result["title"] = from_union([lambda x: to_class(Description, x), from_none], self.title)
+        result["text"] = from_union([lambda x: to_class(Description, x), from_none], self.text)
+        result["confirm"] = from_union([lambda x: to_class(Description, x), from_none], self.confirm)
+        result["deny"] = from_union([lambda x: to_class(Description, x), from_none], self.deny)
         result["style"] = from_union([from_str, from_none], self.style)
+        return result
+
+
+@dataclass
+class Style:
+    bold: Optional[bool] = None
+    italic: Optional[bool] = None
+    strike: Optional[bool] = None
+    code: Optional[bool] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Style':
+        assert isinstance(obj, dict)
+        bold = from_union([from_bool, from_none], obj.get("bold"))
+        italic = from_union([from_bool, from_none], obj.get("italic"))
+        strike = from_union([from_bool, from_none], obj.get("strike"))
+        code = from_union([from_bool, from_none], obj.get("code"))
+        return Style(bold, italic, strike, code)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["bold"] = from_union([from_bool, from_none], self.bold)
+        result["italic"] = from_union([from_bool, from_none], self.italic)
+        result["strike"] = from_union([from_bool, from_none], self.strike)
+        result["code"] = from_union([from_bool, from_none], self.code)
+        return result
+
+
+@dataclass
+class PurpleElement:
+    type: Optional[str] = None
+    range: Optional[str] = None
+    text: Optional[str] = None
+    style: Optional[Style] = None
+    channel_id: Optional[str] = None
+    value: Optional[str] = None
+    timestamp: Optional[int] = None
+    url: Optional[str] = None
+    team_id: Optional[str] = None
+    user_id: Optional[str] = None
+    usergroup_id: Optional[str] = None
+    name: Optional[str] = None
+    skin_tone: Optional[int] = None
+    unicode: Optional[str] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'PurpleElement':
+        assert isinstance(obj, dict)
+        type = from_union([from_str, from_none], obj.get("type"))
+        range = from_union([from_str, from_none], obj.get("range"))
+        text = from_union([from_str, from_none], obj.get("text"))
+        style = from_union([Style.from_dict, from_none], obj.get("style"))
+        channel_id = from_union([from_str, from_none], obj.get("channel_id"))
+        value = from_union([from_str, from_none], obj.get("value"))
+        timestamp = from_union([from_int, from_none], obj.get("timestamp"))
+        url = from_union([from_str, from_none], obj.get("url"))
+        team_id = from_union([from_str, from_none], obj.get("team_id"))
+        user_id = from_union([from_str, from_none], obj.get("user_id"))
+        usergroup_id = from_union([from_str, from_none], obj.get("usergroup_id"))
+        name = from_union([from_str, from_none], obj.get("name"))
+        skin_tone = from_union([from_int, from_none], obj.get("skin_tone"))
+        unicode = from_union([from_str, from_none], obj.get("unicode"))
+        return PurpleElement(type, range, text, style, channel_id, value, timestamp, url, team_id, user_id, usergroup_id, name, skin_tone, unicode)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["type"] = from_union([from_str, from_none], self.type)
+        result["range"] = from_union([from_str, from_none], self.range)
+        result["text"] = from_union([from_str, from_none], self.text)
+        result["style"] = from_union([lambda x: to_class(Style, x), from_none], self.style)
+        result["channel_id"] = from_union([from_str, from_none], self.channel_id)
+        result["value"] = from_union([from_str, from_none], self.value)
+        result["timestamp"] = from_union([from_int, from_none], self.timestamp)
+        result["url"] = from_union([from_str, from_none], self.url)
+        result["team_id"] = from_union([from_str, from_none], self.team_id)
+        result["user_id"] = from_union([from_str, from_none], self.user_id)
+        result["usergroup_id"] = from_union([from_str, from_none], self.usergroup_id)
+        result["name"] = from_union([from_str, from_none], self.name)
+        result["skin_tone"] = from_union([from_int, from_none], self.skin_tone)
+        result["unicode"] = from_union([from_str, from_none], self.unicode)
+        return result
+
+
+@dataclass
+class AccessoryElement:
+    type: Optional[str] = None
+    elements: Optional[List[PurpleElement]] = None
+    style: Optional[str] = None
+    indent: Optional[int] = None
+    offset: Optional[int] = None
+    border: Optional[int] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'AccessoryElement':
+        assert isinstance(obj, dict)
+        type = from_union([from_str, from_none], obj.get("type"))
+        elements = from_union([lambda x: from_list(PurpleElement.from_dict, x), from_none], obj.get("elements"))
+        style = from_union([from_str, from_none], obj.get("style"))
+        indent = from_union([from_int, from_none], obj.get("indent"))
+        offset = from_union([from_int, from_none], obj.get("offset"))
+        border = from_union([from_int, from_none], obj.get("border"))
+        return AccessoryElement(type, elements, style, indent, offset, border)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["type"] = from_union([from_str, from_none], self.type)
+        result["elements"] = from_union([lambda x: from_list(lambda x: to_class(PurpleElement, x), x), from_none], self.elements)
+        result["style"] = from_union([from_str, from_none], self.style)
+        result["indent"] = from_union([from_int, from_none], self.indent)
+        result["offset"] = from_union([from_int, from_none], self.offset)
+        result["border"] = from_union([from_int, from_none], self.border)
         return result
 
 
@@ -302,44 +994,44 @@ class Filter:
 
 @dataclass
 class InitialOptionElement:
-    text: Optional[Text] = None
+    text: Optional[Description] = None
     value: Optional[str] = None
-    description: Optional[Text] = None
+    description: Optional[Description] = None
     url: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'InitialOptionElement':
         assert isinstance(obj, dict)
-        text = from_union([Text.from_dict, from_none], obj.get("text"))
+        text = from_union([Description.from_dict, from_none], obj.get("text"))
         value = from_union([from_str, from_none], obj.get("value"))
-        description = from_union([Text.from_dict, from_none], obj.get("description"))
+        description = from_union([Description.from_dict, from_none], obj.get("description"))
         url = from_union([from_str, from_none], obj.get("url"))
         return InitialOptionElement(text, value, description, url)
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["text"] = from_union([lambda x: to_class(Text, x), from_none], self.text)
+        result["text"] = from_union([lambda x: to_class(Description, x), from_none], self.text)
         result["value"] = from_union([from_str, from_none], self.value)
-        result["description"] = from_union([lambda x: to_class(Text, x), from_none], self.description)
+        result["description"] = from_union([lambda x: to_class(Description, x), from_none], self.description)
         result["url"] = from_union([from_str, from_none], self.url)
         return result
 
 
 @dataclass
 class AccessoryOptionGroup:
-    label: Optional[Text] = None
+    label: Optional[Description] = None
     options: Optional[List[InitialOptionElement]] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'AccessoryOptionGroup':
         assert isinstance(obj, dict)
-        label = from_union([Text.from_dict, from_none], obj.get("label"))
+        label = from_union([Description.from_dict, from_none], obj.get("label"))
         options = from_union([lambda x: from_list(InitialOptionElement.from_dict, x), from_none], obj.get("options"))
         return AccessoryOptionGroup(label, options)
 
     def to_dict(self) -> dict:
         result: dict = {}
-        result["label"] = from_union([lambda x: to_class(Text, x), from_none], self.label)
+        result["label"] = from_union([lambda x: to_class(Description, x), from_none], self.label)
         result["options"] = from_union([lambda x: from_list(lambda x: to_class(InitialOptionElement, x), x), from_none], self.options)
         return result
 
@@ -347,13 +1039,7 @@ class AccessoryOptionGroup:
 @dataclass
 class Accessory:
     type: Optional[str] = None
-    image_url: Optional[str] = None
-    alt_text: Optional[str] = None
-    fallback: Optional[str] = None
-    image_width: Optional[int] = None
-    image_height: Optional[int] = None
-    image_bytes: Optional[int] = None
-    text: Optional[Text] = None
+    text: Optional[Description] = None
     action_id: Optional[str] = None
     url: Optional[str] = None
     value: Optional[str] = None
@@ -364,7 +1050,7 @@ class Accessory:
     initial_options: Optional[List[InitialOptionElement]] = None
     focus_on_load: Optional[bool] = None
     initial_option: Optional[InitialOptionElement] = None
-    placeholder: Optional[Text] = None
+    placeholder: Optional[Description] = None
     initial_channel: Optional[str] = None
     response_url_enabled: Optional[bool] = None
     initial_channels: Optional[List[str]] = None
@@ -375,22 +1061,28 @@ class Accessory:
     initial_conversations: Optional[List[str]] = None
     initial_date: Optional[str] = None
     initial_time: Optional[str] = None
+    timezone: Optional[str] = None
+    initial_date_time: Optional[int] = None
     min_query_length: Optional[int] = None
+    image_url: Optional[str] = None
+    alt_text: Optional[str] = None
+    fallback: Optional[str] = None
+    image_width: Optional[int] = None
+    image_height: Optional[int] = None
+    image_bytes: Optional[int] = None
     option_groups: Optional[List[AccessoryOptionGroup]] = None
     initial_user: Optional[str] = None
     initial_users: Optional[List[str]] = None
+    elements: Optional[List[AccessoryElement]] = None
+    indent: Optional[int] = None
+    offset: Optional[int] = None
+    border: Optional[int] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Accessory':
         assert isinstance(obj, dict)
         type = from_union([from_str, from_none], obj.get("type"))
-        image_url = from_union([from_str, from_none], obj.get("image_url"))
-        alt_text = from_union([from_str, from_none], obj.get("alt_text"))
-        fallback = from_union([from_str, from_none], obj.get("fallback"))
-        image_width = from_union([from_int, from_none], obj.get("image_width"))
-        image_height = from_union([from_int, from_none], obj.get("image_height"))
-        image_bytes = from_union([from_int, from_none], obj.get("image_bytes"))
-        text = from_union([Text.from_dict, from_none], obj.get("text"))
+        text = from_union([Description.from_dict, from_none], obj.get("text"))
         action_id = from_union([from_str, from_none], obj.get("action_id"))
         url = from_union([from_str, from_none], obj.get("url"))
         value = from_union([from_str, from_none], obj.get("value"))
@@ -401,7 +1093,7 @@ class Accessory:
         initial_options = from_union([lambda x: from_list(InitialOptionElement.from_dict, x), from_none], obj.get("initial_options"))
         focus_on_load = from_union([from_bool, from_none], obj.get("focus_on_load"))
         initial_option = from_union([InitialOptionElement.from_dict, from_none], obj.get("initial_option"))
-        placeholder = from_union([Text.from_dict, from_none], obj.get("placeholder"))
+        placeholder = from_union([Description.from_dict, from_none], obj.get("placeholder"))
         initial_channel = from_union([from_str, from_none], obj.get("initial_channel"))
         response_url_enabled = from_union([from_bool, from_none], obj.get("response_url_enabled"))
         initial_channels = from_union([lambda x: from_list(from_str, x), from_none], obj.get("initial_channels"))
@@ -412,22 +1104,28 @@ class Accessory:
         initial_conversations = from_union([lambda x: from_list(from_str, x), from_none], obj.get("initial_conversations"))
         initial_date = from_union([from_str, from_none], obj.get("initial_date"))
         initial_time = from_union([from_str, from_none], obj.get("initial_time"))
+        timezone = from_union([from_str, from_none], obj.get("timezone"))
+        initial_date_time = from_union([from_int, from_none], obj.get("initial_date_time"))
         min_query_length = from_union([from_int, from_none], obj.get("min_query_length"))
+        image_url = from_union([from_str, from_none], obj.get("image_url"))
+        alt_text = from_union([from_str, from_none], obj.get("alt_text"))
+        fallback = from_union([from_str, from_none], obj.get("fallback"))
+        image_width = from_union([from_int, from_none], obj.get("image_width"))
+        image_height = from_union([from_int, from_none], obj.get("image_height"))
+        image_bytes = from_union([from_int, from_none], obj.get("image_bytes"))
         option_groups = from_union([lambda x: from_list(AccessoryOptionGroup.from_dict, x), from_none], obj.get("option_groups"))
         initial_user = from_union([from_str, from_none], obj.get("initial_user"))
         initial_users = from_union([lambda x: from_list(from_str, x), from_none], obj.get("initial_users"))
-        return Accessory(type, image_url, alt_text, fallback, image_width, image_height, image_bytes, text, action_id, url, value, style, confirm, accessibility_label, options, initial_options, focus_on_load, initial_option, placeholder, initial_channel, response_url_enabled, initial_channels, max_selected_items, initial_conversation, default_to_current_conversation, filter, initial_conversations, initial_date, initial_time, min_query_length, option_groups, initial_user, initial_users)
+        elements = from_union([lambda x: from_list(AccessoryElement.from_dict, x), from_none], obj.get("elements"))
+        indent = from_union([from_int, from_none], obj.get("indent"))
+        offset = from_union([from_int, from_none], obj.get("offset"))
+        border = from_union([from_int, from_none], obj.get("border"))
+        return Accessory(type, text, action_id, url, value, style, confirm, accessibility_label, options, initial_options, focus_on_load, initial_option, placeholder, initial_channel, response_url_enabled, initial_channels, max_selected_items, initial_conversation, default_to_current_conversation, filter, initial_conversations, initial_date, initial_time, timezone, initial_date_time, min_query_length, image_url, alt_text, fallback, image_width, image_height, image_bytes, option_groups, initial_user, initial_users, elements, indent, offset, border)
 
     def to_dict(self) -> dict:
         result: dict = {}
         result["type"] = from_union([from_str, from_none], self.type)
-        result["image_url"] = from_union([from_str, from_none], self.image_url)
-        result["alt_text"] = from_union([from_str, from_none], self.alt_text)
-        result["fallback"] = from_union([from_str, from_none], self.fallback)
-        result["image_width"] = from_union([from_int, from_none], self.image_width)
-        result["image_height"] = from_union([from_int, from_none], self.image_height)
-        result["image_bytes"] = from_union([from_int, from_none], self.image_bytes)
-        result["text"] = from_union([lambda x: to_class(Text, x), from_none], self.text)
+        result["text"] = from_union([lambda x: to_class(Description, x), from_none], self.text)
         result["action_id"] = from_union([from_str, from_none], self.action_id)
         result["url"] = from_union([from_str, from_none], self.url)
         result["value"] = from_union([from_str, from_none], self.value)
@@ -438,7 +1136,7 @@ class Accessory:
         result["initial_options"] = from_union([lambda x: from_list(lambda x: to_class(InitialOptionElement, x), x), from_none], self.initial_options)
         result["focus_on_load"] = from_union([from_bool, from_none], self.focus_on_load)
         result["initial_option"] = from_union([lambda x: to_class(InitialOptionElement, x), from_none], self.initial_option)
-        result["placeholder"] = from_union([lambda x: to_class(Text, x), from_none], self.placeholder)
+        result["placeholder"] = from_union([lambda x: to_class(Description, x), from_none], self.placeholder)
         result["initial_channel"] = from_union([from_str, from_none], self.initial_channel)
         result["response_url_enabled"] = from_union([from_bool, from_none], self.response_url_enabled)
         result["initial_channels"] = from_union([lambda x: from_list(from_str, x), from_none], self.initial_channels)
@@ -449,10 +1147,22 @@ class Accessory:
         result["initial_conversations"] = from_union([lambda x: from_list(from_str, x), from_none], self.initial_conversations)
         result["initial_date"] = from_union([from_str, from_none], self.initial_date)
         result["initial_time"] = from_union([from_str, from_none], self.initial_time)
+        result["timezone"] = from_union([from_str, from_none], self.timezone)
+        result["initial_date_time"] = from_union([from_int, from_none], self.initial_date_time)
         result["min_query_length"] = from_union([from_int, from_none], self.min_query_length)
+        result["image_url"] = from_union([from_str, from_none], self.image_url)
+        result["alt_text"] = from_union([from_str, from_none], self.alt_text)
+        result["fallback"] = from_union([from_str, from_none], self.fallback)
+        result["image_width"] = from_union([from_int, from_none], self.image_width)
+        result["image_height"] = from_union([from_int, from_none], self.image_height)
+        result["image_bytes"] = from_union([from_int, from_none], self.image_bytes)
         result["option_groups"] = from_union([lambda x: from_list(lambda x: to_class(AccessoryOptionGroup, x), x), from_none], self.option_groups)
         result["initial_user"] = from_union([from_str, from_none], self.initial_user)
         result["initial_users"] = from_union([lambda x: from_list(from_str, x), from_none], self.initial_users)
+        result["elements"] = from_union([lambda x: from_list(lambda x: to_class(AccessoryElement, x), x), from_none], self.elements)
+        result["indent"] = from_union([from_int, from_none], self.indent)
+        result["offset"] = from_union([from_int, from_none], self.offset)
+        result["border"] = from_union([from_int, from_none], self.border)
         return result
 
 
@@ -614,7 +1324,7 @@ class Call:
 
 
 @dataclass
-class AttachmentBlock:
+class Block:
     type: Optional[str] = None
     elements: Optional[List[Accessory]] = None
     block_id: Optional[str] = None
@@ -623,24 +1333,40 @@ class AttachmentBlock:
     call: Optional[Call] = None
     external_id: Optional[str] = None
     source: Optional[str] = None
-    text: Optional[Text] = None
+    file_id: Optional[str] = None
+    file: Optional[File] = None
+    text: Optional[Description] = None
     fallback: Optional[str] = None
     image_url: Optional[str] = None
     image_width: Optional[int] = None
     image_height: Optional[int] = None
     image_bytes: Optional[int] = None
     alt_text: Optional[str] = None
-    title: Optional[Text] = None
-    fields: Optional[List[Text]] = None
+    title: Optional[Description] = None
+    title_url: Optional[str] = None
+    description: Optional[Description] = None
+    video_url: Optional[str] = None
+    thumbnail_url: Optional[str] = None
+    author_name: Optional[str] = None
+    provider_name: Optional[str] = None
+    provider_icon_url: Optional[str] = None
+    function_trigger_id: Optional[str] = None
+    app_id: Optional[str] = None
+    is_workflow_app: Optional[bool] = None
+    app_collaborators: Optional[List[str]] = None
+    button_label: Optional[str] = None
+    bot_user_id: Optional[str] = None
+    url: Optional[str] = None
+    fields: Optional[List[Description]] = None
     accessory: Optional[Accessory] = None
-    label: Optional[Text] = None
+    label: Optional[Description] = None
     element: Optional[Accessory] = None
     dispatch_action: Optional[bool] = None
-    hint: Optional[Text] = None
+    hint: Optional[Description] = None
     optional: Optional[bool] = None
 
     @staticmethod
-    def from_dict(obj: Any) -> 'AttachmentBlock':
+    def from_dict(obj: Any) -> 'Block':
         assert isinstance(obj, dict)
         type = from_union([from_str, from_none], obj.get("type"))
         elements = from_union([lambda x: from_list(Accessory.from_dict, x), from_none], obj.get("elements"))
@@ -650,22 +1376,38 @@ class AttachmentBlock:
         call = from_union([Call.from_dict, from_none], obj.get("call"))
         external_id = from_union([from_str, from_none], obj.get("external_id"))
         source = from_union([from_str, from_none], obj.get("source"))
-        text = from_union([Text.from_dict, from_none], obj.get("text"))
+        file_id = from_union([from_str, from_none], obj.get("file_id"))
+        file = from_union([File.from_dict, from_none], obj.get("file"))
+        text = from_union([Description.from_dict, from_none], obj.get("text"))
         fallback = from_union([from_str, from_none], obj.get("fallback"))
         image_url = from_union([from_str, from_none], obj.get("image_url"))
         image_width = from_union([from_int, from_none], obj.get("image_width"))
         image_height = from_union([from_int, from_none], obj.get("image_height"))
         image_bytes = from_union([from_int, from_none], obj.get("image_bytes"))
         alt_text = from_union([from_str, from_none], obj.get("alt_text"))
-        title = from_union([Text.from_dict, from_none], obj.get("title"))
-        fields = from_union([lambda x: from_list(Text.from_dict, x), from_none], obj.get("fields"))
+        title = from_union([Description.from_dict, from_none], obj.get("title"))
+        title_url = from_union([from_str, from_none], obj.get("title_url"))
+        description = from_union([Description.from_dict, from_none], obj.get("description"))
+        video_url = from_union([from_str, from_none], obj.get("video_url"))
+        thumbnail_url = from_union([from_str, from_none], obj.get("thumbnail_url"))
+        author_name = from_union([from_str, from_none], obj.get("author_name"))
+        provider_name = from_union([from_str, from_none], obj.get("provider_name"))
+        provider_icon_url = from_union([from_str, from_none], obj.get("provider_icon_url"))
+        function_trigger_id = from_union([from_str, from_none], obj.get("function_trigger_id"))
+        app_id = from_union([from_str, from_none], obj.get("app_id"))
+        is_workflow_app = from_union([from_bool, from_none], obj.get("is_workflow_app"))
+        app_collaborators = from_union([lambda x: from_list(from_str, x), from_none], obj.get("app_collaborators"))
+        button_label = from_union([from_str, from_none], obj.get("button_label"))
+        bot_user_id = from_union([from_str, from_none], obj.get("bot_user_id"))
+        url = from_union([from_str, from_none], obj.get("url"))
+        fields = from_union([lambda x: from_list(Description.from_dict, x), from_none], obj.get("fields"))
         accessory = from_union([Accessory.from_dict, from_none], obj.get("accessory"))
-        label = from_union([Text.from_dict, from_none], obj.get("label"))
+        label = from_union([Description.from_dict, from_none], obj.get("label"))
         element = from_union([Accessory.from_dict, from_none], obj.get("element"))
         dispatch_action = from_union([from_bool, from_none], obj.get("dispatch_action"))
-        hint = from_union([Text.from_dict, from_none], obj.get("hint"))
+        hint = from_union([Description.from_dict, from_none], obj.get("hint"))
         optional = from_union([from_bool, from_none], obj.get("optional"))
-        return AttachmentBlock(type, elements, block_id, call_id, api_decoration_available, call, external_id, source, text, fallback, image_url, image_width, image_height, image_bytes, alt_text, title, fields, accessory, label, element, dispatch_action, hint, optional)
+        return Block(type, elements, block_id, call_id, api_decoration_available, call, external_id, source, file_id, file, text, fallback, image_url, image_width, image_height, image_bytes, alt_text, title, title_url, description, video_url, thumbnail_url, author_name, provider_name, provider_icon_url, function_trigger_id, app_id, is_workflow_app, app_collaborators, button_label, bot_user_id, url, fields, accessory, label, element, dispatch_action, hint, optional)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -677,20 +1419,36 @@ class AttachmentBlock:
         result["call"] = from_union([lambda x: to_class(Call, x), from_none], self.call)
         result["external_id"] = from_union([from_str, from_none], self.external_id)
         result["source"] = from_union([from_str, from_none], self.source)
-        result["text"] = from_union([lambda x: to_class(Text, x), from_none], self.text)
+        result["file_id"] = from_union([from_str, from_none], self.file_id)
+        result["file"] = from_union([lambda x: to_class(File, x), from_none], self.file)
+        result["text"] = from_union([lambda x: to_class(Description, x), from_none], self.text)
         result["fallback"] = from_union([from_str, from_none], self.fallback)
         result["image_url"] = from_union([from_str, from_none], self.image_url)
         result["image_width"] = from_union([from_int, from_none], self.image_width)
         result["image_height"] = from_union([from_int, from_none], self.image_height)
         result["image_bytes"] = from_union([from_int, from_none], self.image_bytes)
         result["alt_text"] = from_union([from_str, from_none], self.alt_text)
-        result["title"] = from_union([lambda x: to_class(Text, x), from_none], self.title)
-        result["fields"] = from_union([lambda x: from_list(lambda x: to_class(Text, x), x), from_none], self.fields)
+        result["title"] = from_union([lambda x: to_class(Description, x), from_none], self.title)
+        result["title_url"] = from_union([from_str, from_none], self.title_url)
+        result["description"] = from_union([lambda x: to_class(Description, x), from_none], self.description)
+        result["video_url"] = from_union([from_str, from_none], self.video_url)
+        result["thumbnail_url"] = from_union([from_str, from_none], self.thumbnail_url)
+        result["author_name"] = from_union([from_str, from_none], self.author_name)
+        result["provider_name"] = from_union([from_str, from_none], self.provider_name)
+        result["provider_icon_url"] = from_union([from_str, from_none], self.provider_icon_url)
+        result["function_trigger_id"] = from_union([from_str, from_none], self.function_trigger_id)
+        result["app_id"] = from_union([from_str, from_none], self.app_id)
+        result["is_workflow_app"] = from_union([from_bool, from_none], self.is_workflow_app)
+        result["app_collaborators"] = from_union([lambda x: from_list(from_str, x), from_none], self.app_collaborators)
+        result["button_label"] = from_union([from_str, from_none], self.button_label)
+        result["bot_user_id"] = from_union([from_str, from_none], self.bot_user_id)
+        result["url"] = from_union([from_str, from_none], self.url)
+        result["fields"] = from_union([lambda x: from_list(lambda x: to_class(Description, x), x), from_none], self.fields)
         result["accessory"] = from_union([lambda x: to_class(Accessory, x), from_none], self.accessory)
-        result["label"] = from_union([lambda x: to_class(Text, x), from_none], self.label)
+        result["label"] = from_union([lambda x: to_class(Description, x), from_none], self.label)
         result["element"] = from_union([lambda x: to_class(Accessory, x), from_none], self.element)
         result["dispatch_action"] = from_union([from_bool, from_none], self.dispatch_action)
-        result["hint"] = from_union([lambda x: to_class(Text, x), from_none], self.hint)
+        result["hint"] = from_union([lambda x: to_class(Description, x), from_none], self.hint)
         result["optional"] = from_union([from_bool, from_none], self.optional)
         return result
 
@@ -714,486 +1472,6 @@ class Field:
         result["title"] = from_union([from_str, from_none], self.title)
         result["value"] = from_union([from_str, from_none], self.value)
         result["short"] = from_union([from_bool, from_none], self.short)
-        return result
-
-
-@dataclass
-class Cc:
-    address: Optional[str] = None
-    name: Optional[str] = None
-    original: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Cc':
-        assert isinstance(obj, dict)
-        address = from_union([from_str, from_none], obj.get("address"))
-        name = from_union([from_str, from_none], obj.get("name"))
-        original = from_union([from_str, from_none], obj.get("original"))
-        return Cc(address, name, original)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["address"] = from_union([from_str, from_none], self.address)
-        result["name"] = from_union([from_str, from_none], self.name)
-        result["original"] = from_union([from_str, from_none], self.original)
-        return result
-
-
-@dataclass
-class Headers:
-    date: Optional[str] = None
-    in_reply_to: Optional[str] = None
-    reply_to: Optional[str] = None
-    message_id: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Headers':
-        assert isinstance(obj, dict)
-        date = from_union([from_str, from_none], obj.get("date"))
-        in_reply_to = from_union([from_str, from_none], obj.get("in_reply_to"))
-        reply_to = from_union([from_str, from_none], obj.get("reply_to"))
-        message_id = from_union([from_str, from_none], obj.get("message_id"))
-        return Headers(date, in_reply_to, reply_to, message_id)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["date"] = from_union([from_str, from_none], self.date)
-        result["in_reply_to"] = from_union([from_str, from_none], self.in_reply_to)
-        result["reply_to"] = from_union([from_str, from_none], self.reply_to)
-        result["message_id"] = from_union([from_str, from_none], self.message_id)
-        return result
-
-
-@dataclass
-class Reaction:
-    name: Optional[str] = None
-    count: Optional[int] = None
-    users: Optional[List[str]] = None
-    url: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Reaction':
-        assert isinstance(obj, dict)
-        name = from_union([from_str, from_none], obj.get("name"))
-        count = from_union([from_int, from_none], obj.get("count"))
-        users = from_union([lambda x: from_list(from_str, x), from_none], obj.get("users"))
-        url = from_union([from_str, from_none], obj.get("url"))
-        return Reaction(name, count, users, url)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["name"] = from_union([from_str, from_none], self.name)
-        result["count"] = from_union([from_int, from_none], self.count)
-        result["users"] = from_union([lambda x: from_list(from_str, x), from_none], self.users)
-        result["url"] = from_union([from_str, from_none], self.url)
-        return result
-
-
-@dataclass
-class Private:
-    share_user_id: Optional[str] = None
-    reply_users: Optional[List[str]] = None
-    reply_users_count: Optional[int] = None
-    reply_count: Optional[int] = None
-    ts: Optional[str] = None
-    thread_ts: Optional[str] = None
-    latest_reply: Optional[str] = None
-    channel_name: Optional[str] = None
-    team_id: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Private':
-        assert isinstance(obj, dict)
-        share_user_id = from_union([from_str, from_none], obj.get("share_user_id"))
-        reply_users = from_union([lambda x: from_list(from_str, x), from_none], obj.get("reply_users"))
-        reply_users_count = from_union([from_int, from_none], obj.get("reply_users_count"))
-        reply_count = from_union([from_int, from_none], obj.get("reply_count"))
-        ts = from_union([from_str, from_none], obj.get("ts"))
-        thread_ts = from_union([from_str, from_none], obj.get("thread_ts"))
-        latest_reply = from_union([from_str, from_none], obj.get("latest_reply"))
-        channel_name = from_union([from_str, from_none], obj.get("channel_name"))
-        team_id = from_union([from_str, from_none], obj.get("team_id"))
-        return Private(share_user_id, reply_users, reply_users_count, reply_count, ts, thread_ts, latest_reply, channel_name, team_id)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["share_user_id"] = from_union([from_str, from_none], self.share_user_id)
-        result["reply_users"] = from_union([lambda x: from_list(from_str, x), from_none], self.reply_users)
-        result["reply_users_count"] = from_union([from_int, from_none], self.reply_users_count)
-        result["reply_count"] = from_union([from_int, from_none], self.reply_count)
-        result["ts"] = from_union([from_str, from_none], self.ts)
-        result["thread_ts"] = from_union([from_str, from_none], self.thread_ts)
-        result["latest_reply"] = from_union([from_str, from_none], self.latest_reply)
-        result["channel_name"] = from_union([from_str, from_none], self.channel_name)
-        result["team_id"] = from_union([from_str, from_none], self.team_id)
-        return result
-
-
-@dataclass
-class Shares:
-    public: Optional[Dict[str, List[Private]]] = None
-    private: Optional[Dict[str, List[Private]]] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Shares':
-        assert isinstance(obj, dict)
-        public = from_union([lambda x: from_dict(lambda x: from_list(Private.from_dict, x), x), from_none], obj.get("public"))
-        private = from_union([lambda x: from_dict(lambda x: from_list(Private.from_dict, x), x), from_none], obj.get("private"))
-        return Shares(public, private)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["public"] = from_union([lambda x: from_dict(lambda x: from_list(lambda x: to_class(Private, x), x), x), from_none], self.public)
-        result["private"] = from_union([lambda x: from_dict(lambda x: from_list(lambda x: to_class(Private, x), x), x), from_none], self.private)
-        return result
-
-
-@dataclass
-class FileElement:
-    id: Optional[str] = None
-    created: Optional[int] = None
-    timestamp: Optional[int] = None
-    name: Optional[str] = None
-    title: Optional[str] = None
-    subject: Optional[str] = None
-    mimetype: Optional[str] = None
-    filetype: Optional[str] = None
-    pretty_type: Optional[str] = None
-    user: Optional[str] = None
-    mode: Optional[str] = None
-    editable: Optional[bool] = None
-    non_owner_editable: Optional[bool] = None
-    editor: Optional[str] = None
-    last_editor: Optional[str] = None
-    updated: Optional[int] = None
-    original_attachment_count: Optional[int] = None
-    is_external: Optional[bool] = None
-    external_type: Optional[str] = None
-    external_id: Optional[str] = None
-    external_url: Optional[str] = None
-    username: Optional[str] = None
-    size: Optional[int] = None
-    url_private: Optional[str] = None
-    url_private_download: Optional[str] = None
-    app_id: Optional[str] = None
-    app_name: Optional[str] = None
-    thumb_64: Optional[str] = None
-    thumb_64__gif: Optional[str] = None
-    thumb_64__w: Optional[str] = None
-    thumb_64__h: Optional[str] = None
-    thumb_80: Optional[str] = None
-    thumb_80__gif: Optional[str] = None
-    thumb_80__w: Optional[str] = None
-    thumb_80__h: Optional[str] = None
-    thumb_160: Optional[str] = None
-    thumb_160__gif: Optional[str] = None
-    thumb_160__w: Optional[str] = None
-    thumb_160__h: Optional[str] = None
-    thumb_360: Optional[str] = None
-    thumb_360__gif: Optional[str] = None
-    thumb_360__w: Optional[str] = None
-    thumb_360__h: Optional[str] = None
-    thumb_480: Optional[str] = None
-    thumb_480__gif: Optional[str] = None
-    thumb_480__w: Optional[str] = None
-    thumb_480__h: Optional[str] = None
-    thumb_720: Optional[str] = None
-    thumb_720__gif: Optional[str] = None
-    thumb_720__w: Optional[str] = None
-    thumb_720__h: Optional[str] = None
-    thumb_800: Optional[str] = None
-    thumb_800__gif: Optional[str] = None
-    thumb_800__w: Optional[str] = None
-    thumb_800__h: Optional[str] = None
-    thumb_960: Optional[str] = None
-    thumb_960__gif: Optional[str] = None
-    thumb_960__w: Optional[str] = None
-    thumb_960__h: Optional[str] = None
-    thumb_1024: Optional[str] = None
-    thumb_1024__gif: Optional[str] = None
-    thumb_1024__w: Optional[str] = None
-    thumb_1024__h: Optional[str] = None
-    thumb_video: Optional[str] = None
-    thumb_gif: Optional[str] = None
-    thumb_pdf: Optional[str] = None
-    thumb_pdf_w: Optional[str] = None
-    thumb_pdf_h: Optional[str] = None
-    thumb_tiny: Optional[str] = None
-    converted_pdf: Optional[str] = None
-    image_exif_rotation: Optional[int] = None
-    original_w: Optional[str] = None
-    original_h: Optional[str] = None
-    deanimate: Optional[str] = None
-    deanimate_gif: Optional[str] = None
-    pjpeg: Optional[str] = None
-    permalink: Optional[str] = None
-    permalink_public: Optional[str] = None
-    edit_link: Optional[str] = None
-    has_rich_preview: Optional[bool] = None
-    media_display_type: Optional[str] = None
-    preview_is_truncated: Optional[bool] = None
-    preview: Optional[str] = None
-    preview_highlight: Optional[str] = None
-    plain_text: Optional[str] = None
-    preview_plain_text: Optional[str] = None
-    has_more: Optional[bool] = None
-    sent_to_self: Optional[bool] = None
-    lines: Optional[int] = None
-    lines_more: Optional[int] = None
-    is_public: Optional[bool] = None
-    public_url_shared: Optional[bool] = None
-    display_as_bot: Optional[bool] = None
-    channels: Optional[List[str]] = None
-    groups: Optional[List[str]] = None
-    ims: Optional[List[str]] = None
-    shares: Optional[Shares] = None
-    to: Optional[List[Cc]] = None
-    file_from: Optional[List[Cc]] = None
-    cc: Optional[List[Cc]] = None
-    channel_actions_ts: Optional[str] = None
-    channel_actions_count: Optional[int] = None
-    headers: Optional[Headers] = None
-    simplified_html: Optional[str] = None
-    bot_id: Optional[str] = None
-    initial_comment: Optional[Comment] = None
-    num_stars: Optional[int] = None
-    is_starred: Optional[bool] = None
-    pinned_to: Optional[List[str]] = None
-    reactions: Optional[List[Reaction]] = None
-    comments_count: Optional[int] = None
-    blocks: Optional[List[AttachmentBlock]] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'FileElement':
-        assert isinstance(obj, dict)
-        id = from_union([from_str, from_none], obj.get("id"))
-        created = from_union([from_int, from_none], obj.get("created"))
-        timestamp = from_union([from_int, from_none], obj.get("timestamp"))
-        name = from_union([from_str, from_none], obj.get("name"))
-        title = from_union([from_str, from_none], obj.get("title"))
-        subject = from_union([from_str, from_none], obj.get("subject"))
-        mimetype = from_union([from_str, from_none], obj.get("mimetype"))
-        filetype = from_union([from_str, from_none], obj.get("filetype"))
-        pretty_type = from_union([from_str, from_none], obj.get("pretty_type"))
-        user = from_union([from_str, from_none], obj.get("user"))
-        mode = from_union([from_str, from_none], obj.get("mode"))
-        editable = from_union([from_bool, from_none], obj.get("editable"))
-        non_owner_editable = from_union([from_bool, from_none], obj.get("non_owner_editable"))
-        editor = from_union([from_str, from_none], obj.get("editor"))
-        last_editor = from_union([from_str, from_none], obj.get("last_editor"))
-        updated = from_union([from_int, from_none], obj.get("updated"))
-        original_attachment_count = from_union([from_int, from_none], obj.get("original_attachment_count"))
-        is_external = from_union([from_bool, from_none], obj.get("is_external"))
-        external_type = from_union([from_str, from_none], obj.get("external_type"))
-        external_id = from_union([from_str, from_none], obj.get("external_id"))
-        external_url = from_union([from_str, from_none], obj.get("external_url"))
-        username = from_union([from_str, from_none], obj.get("username"))
-        size = from_union([from_int, from_none], obj.get("size"))
-        url_private = from_union([from_str, from_none], obj.get("url_private"))
-        url_private_download = from_union([from_str, from_none], obj.get("url_private_download"))
-        app_id = from_union([from_str, from_none], obj.get("app_id"))
-        app_name = from_union([from_str, from_none], obj.get("app_name"))
-        thumb_64 = from_union([from_str, from_none], obj.get("thumb_64"))
-        thumb_64__gif = from_union([from_str, from_none], obj.get("thumb_64_gif"))
-        thumb_64__w = from_union([from_str, from_none], obj.get("thumb_64_w"))
-        thumb_64__h = from_union([from_str, from_none], obj.get("thumb_64_h"))
-        thumb_80 = from_union([from_str, from_none], obj.get("thumb_80"))
-        thumb_80__gif = from_union([from_str, from_none], obj.get("thumb_80_gif"))
-        thumb_80__w = from_union([from_str, from_none], obj.get("thumb_80_w"))
-        thumb_80__h = from_union([from_str, from_none], obj.get("thumb_80_h"))
-        thumb_160 = from_union([from_str, from_none], obj.get("thumb_160"))
-        thumb_160__gif = from_union([from_str, from_none], obj.get("thumb_160_gif"))
-        thumb_160__w = from_union([from_str, from_none], obj.get("thumb_160_w"))
-        thumb_160__h = from_union([from_str, from_none], obj.get("thumb_160_h"))
-        thumb_360 = from_union([from_str, from_none], obj.get("thumb_360"))
-        thumb_360__gif = from_union([from_str, from_none], obj.get("thumb_360_gif"))
-        thumb_360__w = from_union([from_str, from_none], obj.get("thumb_360_w"))
-        thumb_360__h = from_union([from_str, from_none], obj.get("thumb_360_h"))
-        thumb_480 = from_union([from_str, from_none], obj.get("thumb_480"))
-        thumb_480__gif = from_union([from_str, from_none], obj.get("thumb_480_gif"))
-        thumb_480__w = from_union([from_str, from_none], obj.get("thumb_480_w"))
-        thumb_480__h = from_union([from_str, from_none], obj.get("thumb_480_h"))
-        thumb_720 = from_union([from_str, from_none], obj.get("thumb_720"))
-        thumb_720__gif = from_union([from_str, from_none], obj.get("thumb_720_gif"))
-        thumb_720__w = from_union([from_str, from_none], obj.get("thumb_720_w"))
-        thumb_720__h = from_union([from_str, from_none], obj.get("thumb_720_h"))
-        thumb_800 = from_union([from_str, from_none], obj.get("thumb_800"))
-        thumb_800__gif = from_union([from_str, from_none], obj.get("thumb_800_gif"))
-        thumb_800__w = from_union([from_str, from_none], obj.get("thumb_800_w"))
-        thumb_800__h = from_union([from_str, from_none], obj.get("thumb_800_h"))
-        thumb_960 = from_union([from_str, from_none], obj.get("thumb_960"))
-        thumb_960__gif = from_union([from_str, from_none], obj.get("thumb_960_gif"))
-        thumb_960__w = from_union([from_str, from_none], obj.get("thumb_960_w"))
-        thumb_960__h = from_union([from_str, from_none], obj.get("thumb_960_h"))
-        thumb_1024 = from_union([from_str, from_none], obj.get("thumb_1024"))
-        thumb_1024__gif = from_union([from_str, from_none], obj.get("thumb_1024_gif"))
-        thumb_1024__w = from_union([from_str, from_none], obj.get("thumb_1024_w"))
-        thumb_1024__h = from_union([from_str, from_none], obj.get("thumb_1024_h"))
-        thumb_video = from_union([from_str, from_none], obj.get("thumb_video"))
-        thumb_gif = from_union([from_str, from_none], obj.get("thumb_gif"))
-        thumb_pdf = from_union([from_str, from_none], obj.get("thumb_pdf"))
-        thumb_pdf_w = from_union([from_str, from_none], obj.get("thumb_pdf_w"))
-        thumb_pdf_h = from_union([from_str, from_none], obj.get("thumb_pdf_h"))
-        thumb_tiny = from_union([from_str, from_none], obj.get("thumb_tiny"))
-        converted_pdf = from_union([from_str, from_none], obj.get("converted_pdf"))
-        image_exif_rotation = from_union([from_int, from_none], obj.get("image_exif_rotation"))
-        original_w = from_union([from_str, from_none], obj.get("original_w"))
-        original_h = from_union([from_str, from_none], obj.get("original_h"))
-        deanimate = from_union([from_str, from_none], obj.get("deanimate"))
-        deanimate_gif = from_union([from_str, from_none], obj.get("deanimate_gif"))
-        pjpeg = from_union([from_str, from_none], obj.get("pjpeg"))
-        permalink = from_union([from_str, from_none], obj.get("permalink"))
-        permalink_public = from_union([from_str, from_none], obj.get("permalink_public"))
-        edit_link = from_union([from_str, from_none], obj.get("edit_link"))
-        has_rich_preview = from_union([from_bool, from_none], obj.get("has_rich_preview"))
-        media_display_type = from_union([from_str, from_none], obj.get("media_display_type"))
-        preview_is_truncated = from_union([from_bool, from_none], obj.get("preview_is_truncated"))
-        preview = from_union([from_str, from_none], obj.get("preview"))
-        preview_highlight = from_union([from_str, from_none], obj.get("preview_highlight"))
-        plain_text = from_union([from_str, from_none], obj.get("plain_text"))
-        preview_plain_text = from_union([from_str, from_none], obj.get("preview_plain_text"))
-        has_more = from_union([from_bool, from_none], obj.get("has_more"))
-        sent_to_self = from_union([from_bool, from_none], obj.get("sent_to_self"))
-        lines = from_union([from_int, from_none], obj.get("lines"))
-        lines_more = from_union([from_int, from_none], obj.get("lines_more"))
-        is_public = from_union([from_bool, from_none], obj.get("is_public"))
-        public_url_shared = from_union([from_bool, from_none], obj.get("public_url_shared"))
-        display_as_bot = from_union([from_bool, from_none], obj.get("display_as_bot"))
-        channels = from_union([lambda x: from_list(from_str, x), from_none], obj.get("channels"))
-        groups = from_union([lambda x: from_list(from_str, x), from_none], obj.get("groups"))
-        ims = from_union([lambda x: from_list(from_str, x), from_none], obj.get("ims"))
-        shares = from_union([Shares.from_dict, from_none], obj.get("shares"))
-        to = from_union([lambda x: from_list(Cc.from_dict, x), from_none], obj.get("to"))
-        file_from = from_union([lambda x: from_list(Cc.from_dict, x), from_none], obj.get("from"))
-        cc = from_union([lambda x: from_list(Cc.from_dict, x), from_none], obj.get("cc"))
-        channel_actions_ts = from_union([from_str, from_none], obj.get("channel_actions_ts"))
-        channel_actions_count = from_union([from_int, from_none], obj.get("channel_actions_count"))
-        headers = from_union([Headers.from_dict, from_none], obj.get("headers"))
-        simplified_html = from_union([from_str, from_none], obj.get("simplified_html"))
-        bot_id = from_union([from_str, from_none], obj.get("bot_id"))
-        initial_comment = from_union([Comment.from_dict, from_none], obj.get("initial_comment"))
-        num_stars = from_union([from_int, from_none], obj.get("num_stars"))
-        is_starred = from_union([from_bool, from_none], obj.get("is_starred"))
-        pinned_to = from_union([lambda x: from_list(from_str, x), from_none], obj.get("pinned_to"))
-        reactions = from_union([lambda x: from_list(Reaction.from_dict, x), from_none], obj.get("reactions"))
-        comments_count = from_union([from_int, from_none], obj.get("comments_count"))
-        blocks = from_union([lambda x: from_list(AttachmentBlock.from_dict, x), from_none], obj.get("blocks"))
-        return FileElement(id, created, timestamp, name, title, subject, mimetype, filetype, pretty_type, user, mode, editable, non_owner_editable, editor, last_editor, updated, original_attachment_count, is_external, external_type, external_id, external_url, username, size, url_private, url_private_download, app_id, app_name, thumb_64, thumb_64__gif, thumb_64__w, thumb_64__h, thumb_80, thumb_80__gif, thumb_80__w, thumb_80__h, thumb_160, thumb_160__gif, thumb_160__w, thumb_160__h, thumb_360, thumb_360__gif, thumb_360__w, thumb_360__h, thumb_480, thumb_480__gif, thumb_480__w, thumb_480__h, thumb_720, thumb_720__gif, thumb_720__w, thumb_720__h, thumb_800, thumb_800__gif, thumb_800__w, thumb_800__h, thumb_960, thumb_960__gif, thumb_960__w, thumb_960__h, thumb_1024, thumb_1024__gif, thumb_1024__w, thumb_1024__h, thumb_video, thumb_gif, thumb_pdf, thumb_pdf_w, thumb_pdf_h, thumb_tiny, converted_pdf, image_exif_rotation, original_w, original_h, deanimate, deanimate_gif, pjpeg, permalink, permalink_public, edit_link, has_rich_preview, media_display_type, preview_is_truncated, preview, preview_highlight, plain_text, preview_plain_text, has_more, sent_to_self, lines, lines_more, is_public, public_url_shared, display_as_bot, channels, groups, ims, shares, to, file_from, cc, channel_actions_ts, channel_actions_count, headers, simplified_html, bot_id, initial_comment, num_stars, is_starred, pinned_to, reactions, comments_count, blocks)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["id"] = from_union([from_str, from_none], self.id)
-        result["created"] = from_union([from_int, from_none], self.created)
-        result["timestamp"] = from_union([from_int, from_none], self.timestamp)
-        result["name"] = from_union([from_str, from_none], self.name)
-        result["title"] = from_union([from_str, from_none], self.title)
-        result["subject"] = from_union([from_str, from_none], self.subject)
-        result["mimetype"] = from_union([from_str, from_none], self.mimetype)
-        result["filetype"] = from_union([from_str, from_none], self.filetype)
-        result["pretty_type"] = from_union([from_str, from_none], self.pretty_type)
-        result["user"] = from_union([from_str, from_none], self.user)
-        result["mode"] = from_union([from_str, from_none], self.mode)
-        result["editable"] = from_union([from_bool, from_none], self.editable)
-        result["non_owner_editable"] = from_union([from_bool, from_none], self.non_owner_editable)
-        result["editor"] = from_union([from_str, from_none], self.editor)
-        result["last_editor"] = from_union([from_str, from_none], self.last_editor)
-        result["updated"] = from_union([from_int, from_none], self.updated)
-        result["original_attachment_count"] = from_union([from_int, from_none], self.original_attachment_count)
-        result["is_external"] = from_union([from_bool, from_none], self.is_external)
-        result["external_type"] = from_union([from_str, from_none], self.external_type)
-        result["external_id"] = from_union([from_str, from_none], self.external_id)
-        result["external_url"] = from_union([from_str, from_none], self.external_url)
-        result["username"] = from_union([from_str, from_none], self.username)
-        result["size"] = from_union([from_int, from_none], self.size)
-        result["url_private"] = from_union([from_str, from_none], self.url_private)
-        result["url_private_download"] = from_union([from_str, from_none], self.url_private_download)
-        result["app_id"] = from_union([from_str, from_none], self.app_id)
-        result["app_name"] = from_union([from_str, from_none], self.app_name)
-        result["thumb_64"] = from_union([from_str, from_none], self.thumb_64)
-        result["thumb_64_gif"] = from_union([from_str, from_none], self.thumb_64__gif)
-        result["thumb_64_w"] = from_union([from_str, from_none], self.thumb_64__w)
-        result["thumb_64_h"] = from_union([from_str, from_none], self.thumb_64__h)
-        result["thumb_80"] = from_union([from_str, from_none], self.thumb_80)
-        result["thumb_80_gif"] = from_union([from_str, from_none], self.thumb_80__gif)
-        result["thumb_80_w"] = from_union([from_str, from_none], self.thumb_80__w)
-        result["thumb_80_h"] = from_union([from_str, from_none], self.thumb_80__h)
-        result["thumb_160"] = from_union([from_str, from_none], self.thumb_160)
-        result["thumb_160_gif"] = from_union([from_str, from_none], self.thumb_160__gif)
-        result["thumb_160_w"] = from_union([from_str, from_none], self.thumb_160__w)
-        result["thumb_160_h"] = from_union([from_str, from_none], self.thumb_160__h)
-        result["thumb_360"] = from_union([from_str, from_none], self.thumb_360)
-        result["thumb_360_gif"] = from_union([from_str, from_none], self.thumb_360__gif)
-        result["thumb_360_w"] = from_union([from_str, from_none], self.thumb_360__w)
-        result["thumb_360_h"] = from_union([from_str, from_none], self.thumb_360__h)
-        result["thumb_480"] = from_union([from_str, from_none], self.thumb_480)
-        result["thumb_480_gif"] = from_union([from_str, from_none], self.thumb_480__gif)
-        result["thumb_480_w"] = from_union([from_str, from_none], self.thumb_480__w)
-        result["thumb_480_h"] = from_union([from_str, from_none], self.thumb_480__h)
-        result["thumb_720"] = from_union([from_str, from_none], self.thumb_720)
-        result["thumb_720_gif"] = from_union([from_str, from_none], self.thumb_720__gif)
-        result["thumb_720_w"] = from_union([from_str, from_none], self.thumb_720__w)
-        result["thumb_720_h"] = from_union([from_str, from_none], self.thumb_720__h)
-        result["thumb_800"] = from_union([from_str, from_none], self.thumb_800)
-        result["thumb_800_gif"] = from_union([from_str, from_none], self.thumb_800__gif)
-        result["thumb_800_w"] = from_union([from_str, from_none], self.thumb_800__w)
-        result["thumb_800_h"] = from_union([from_str, from_none], self.thumb_800__h)
-        result["thumb_960"] = from_union([from_str, from_none], self.thumb_960)
-        result["thumb_960_gif"] = from_union([from_str, from_none], self.thumb_960__gif)
-        result["thumb_960_w"] = from_union([from_str, from_none], self.thumb_960__w)
-        result["thumb_960_h"] = from_union([from_str, from_none], self.thumb_960__h)
-        result["thumb_1024"] = from_union([from_str, from_none], self.thumb_1024)
-        result["thumb_1024_gif"] = from_union([from_str, from_none], self.thumb_1024__gif)
-        result["thumb_1024_w"] = from_union([from_str, from_none], self.thumb_1024__w)
-        result["thumb_1024_h"] = from_union([from_str, from_none], self.thumb_1024__h)
-        result["thumb_video"] = from_union([from_str, from_none], self.thumb_video)
-        result["thumb_gif"] = from_union([from_str, from_none], self.thumb_gif)
-        result["thumb_pdf"] = from_union([from_str, from_none], self.thumb_pdf)
-        result["thumb_pdf_w"] = from_union([from_str, from_none], self.thumb_pdf_w)
-        result["thumb_pdf_h"] = from_union([from_str, from_none], self.thumb_pdf_h)
-        result["thumb_tiny"] = from_union([from_str, from_none], self.thumb_tiny)
-        result["converted_pdf"] = from_union([from_str, from_none], self.converted_pdf)
-        result["image_exif_rotation"] = from_union([from_int, from_none], self.image_exif_rotation)
-        result["original_w"] = from_union([from_str, from_none], self.original_w)
-        result["original_h"] = from_union([from_str, from_none], self.original_h)
-        result["deanimate"] = from_union([from_str, from_none], self.deanimate)
-        result["deanimate_gif"] = from_union([from_str, from_none], self.deanimate_gif)
-        result["pjpeg"] = from_union([from_str, from_none], self.pjpeg)
-        result["permalink"] = from_union([from_str, from_none], self.permalink)
-        result["permalink_public"] = from_union([from_str, from_none], self.permalink_public)
-        result["edit_link"] = from_union([from_str, from_none], self.edit_link)
-        result["has_rich_preview"] = from_union([from_bool, from_none], self.has_rich_preview)
-        result["media_display_type"] = from_union([from_str, from_none], self.media_display_type)
-        result["preview_is_truncated"] = from_union([from_bool, from_none], self.preview_is_truncated)
-        result["preview"] = from_union([from_str, from_none], self.preview)
-        result["preview_highlight"] = from_union([from_str, from_none], self.preview_highlight)
-        result["plain_text"] = from_union([from_str, from_none], self.plain_text)
-        result["preview_plain_text"] = from_union([from_str, from_none], self.preview_plain_text)
-        result["has_more"] = from_union([from_bool, from_none], self.has_more)
-        result["sent_to_self"] = from_union([from_bool, from_none], self.sent_to_self)
-        result["lines"] = from_union([from_int, from_none], self.lines)
-        result["lines_more"] = from_union([from_int, from_none], self.lines_more)
-        result["is_public"] = from_union([from_bool, from_none], self.is_public)
-        result["public_url_shared"] = from_union([from_bool, from_none], self.public_url_shared)
-        result["display_as_bot"] = from_union([from_bool, from_none], self.display_as_bot)
-        result["channels"] = from_union([lambda x: from_list(from_str, x), from_none], self.channels)
-        result["groups"] = from_union([lambda x: from_list(from_str, x), from_none], self.groups)
-        result["ims"] = from_union([lambda x: from_list(from_str, x), from_none], self.ims)
-        result["shares"] = from_union([lambda x: to_class(Shares, x), from_none], self.shares)
-        result["to"] = from_union([lambda x: from_list(lambda x: to_class(Cc, x), x), from_none], self.to)
-        result["from"] = from_union([lambda x: from_list(lambda x: to_class(Cc, x), x), from_none], self.file_from)
-        result["cc"] = from_union([lambda x: from_list(lambda x: to_class(Cc, x), x), from_none], self.cc)
-        result["channel_actions_ts"] = from_union([from_str, from_none], self.channel_actions_ts)
-        result["channel_actions_count"] = from_union([from_int, from_none], self.channel_actions_count)
-        result["headers"] = from_union([lambda x: to_class(Headers, x), from_none], self.headers)
-        result["simplified_html"] = from_union([from_str, from_none], self.simplified_html)
-        result["bot_id"] = from_union([from_str, from_none], self.bot_id)
-        result["initial_comment"] = from_union([lambda x: to_class(Comment, x), from_none], self.initial_comment)
-        result["num_stars"] = from_union([from_int, from_none], self.num_stars)
-        result["is_starred"] = from_union([from_bool, from_none], self.is_starred)
-        result["pinned_to"] = from_union([lambda x: from_list(from_str, x), from_none], self.pinned_to)
-        result["reactions"] = from_union([lambda x: from_list(lambda x: to_class(Reaction, x), x), from_none], self.reactions)
-        result["comments_count"] = from_union([from_int, from_none], self.comments_count)
-        result["blocks"] = from_union([lambda x: from_list(lambda x: to_class(AttachmentBlock, x), x), from_none], self.blocks)
         return result
 
 
@@ -1244,6 +1522,34 @@ class Metadata:
 
 
 @dataclass
+class Preview:
+    type: Optional[str] = None
+    can_remove: Optional[bool] = None
+    title: Optional[Description] = None
+    subtitle: Optional[Description] = None
+    icon_url: Optional[str] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Preview':
+        assert isinstance(obj, dict)
+        type = from_union([from_str, from_none], obj.get("type"))
+        can_remove = from_union([from_bool, from_none], obj.get("can_remove"))
+        title = from_union([Description.from_dict, from_none], obj.get("title"))
+        subtitle = from_union([Description.from_dict, from_none], obj.get("subtitle"))
+        icon_url = from_union([from_str, from_none], obj.get("icon_url"))
+        return Preview(type, can_remove, title, subtitle, icon_url)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["type"] = from_union([from_str, from_none], self.type)
+        result["can_remove"] = from_union([from_bool, from_none], self.can_remove)
+        result["title"] = from_union([lambda x: to_class(Description, x), from_none], self.title)
+        result["subtitle"] = from_union([lambda x: to_class(Description, x), from_none], self.subtitle)
+        result["icon_url"] = from_union([from_str, from_none], self.icon_url)
+        return result
+
+
+@dataclass
 class Attachment:
     msg_subtype: Optional[str] = None
     fallback: Optional[str] = None
@@ -1262,7 +1568,9 @@ class Attachment:
     author_subname: Optional[str] = None
     channel_id: Optional[str] = None
     channel_name: Optional[str] = None
+    channel_team: Optional[str] = None
     id: Optional[int] = None
+    app_id: Optional[str] = None
     bot_id: Optional[str] = None
     indent: Optional[bool] = None
     is_msg_unfurl: Optional[bool] = None
@@ -1290,8 +1598,9 @@ class Attachment:
     ts: Optional[str] = None
     mrkdwn_in: Optional[List[str]] = None
     actions: Optional[List[Action]] = None
-    blocks: Optional[List[AttachmentBlock]] = None
-    files: Optional[List[FileElement]] = None
+    blocks: Optional[List[Block]] = None
+    preview: Optional[Preview] = None
+    files: Optional[List[File]] = None
     filename: Optional[str] = None
     size: Optional[int] = None
     mimetype: Optional[str] = None
@@ -1318,7 +1627,9 @@ class Attachment:
         author_subname = from_union([from_str, from_none], obj.get("author_subname"))
         channel_id = from_union([from_str, from_none], obj.get("channel_id"))
         channel_name = from_union([from_str, from_none], obj.get("channel_name"))
+        channel_team = from_union([from_str, from_none], obj.get("channel_team"))
         id = from_union([from_int, from_none], obj.get("id"))
+        app_id = from_union([from_str, from_none], obj.get("app_id"))
         bot_id = from_union([from_str, from_none], obj.get("bot_id"))
         indent = from_union([from_bool, from_none], obj.get("indent"))
         is_msg_unfurl = from_union([from_bool, from_none], obj.get("is_msg_unfurl"))
@@ -1346,14 +1657,15 @@ class Attachment:
         ts = from_union([from_str, from_none], obj.get("ts"))
         mrkdwn_in = from_union([lambda x: from_list(from_str, x), from_none], obj.get("mrkdwn_in"))
         actions = from_union([lambda x: from_list(Action.from_dict, x), from_none], obj.get("actions"))
-        blocks = from_union([lambda x: from_list(AttachmentBlock.from_dict, x), from_none], obj.get("blocks"))
-        files = from_union([lambda x: from_list(FileElement.from_dict, x), from_none], obj.get("files"))
+        blocks = from_union([lambda x: from_list(Block.from_dict, x), from_none], obj.get("blocks"))
+        preview = from_union([Preview.from_dict, from_none], obj.get("preview"))
+        files = from_union([lambda x: from_list(File.from_dict, x), from_none], obj.get("files"))
         filename = from_union([from_str, from_none], obj.get("filename"))
         size = from_union([from_int, from_none], obj.get("size"))
         mimetype = from_union([from_str, from_none], obj.get("mimetype"))
         url = from_union([from_str, from_none], obj.get("url"))
         metadata = from_union([Metadata.from_dict, from_none], obj.get("metadata"))
-        return Attachment(msg_subtype, fallback, callback_id, color, pretext, service_url, service_name, service_icon, author_id, author_name, author_link, author_icon, from_url, original_url, author_subname, channel_id, channel_name, id, bot_id, indent, is_msg_unfurl, is_reply_unfurl, is_thread_root_unfurl, is_app_unfurl, app_unfurl_url, title, title_link, text, fields, image_url, image_width, image_height, image_bytes, thumb_url, thumb_width, thumb_height, video_url, video_html, video_html_width, video_html_height, footer, footer_icon, ts, mrkdwn_in, actions, blocks, files, filename, size, mimetype, url, metadata)
+        return Attachment(msg_subtype, fallback, callback_id, color, pretext, service_url, service_name, service_icon, author_id, author_name, author_link, author_icon, from_url, original_url, author_subname, channel_id, channel_name, channel_team, id, app_id, bot_id, indent, is_msg_unfurl, is_reply_unfurl, is_thread_root_unfurl, is_app_unfurl, app_unfurl_url, title, title_link, text, fields, image_url, image_width, image_height, image_bytes, thumb_url, thumb_width, thumb_height, video_url, video_html, video_html_width, video_html_height, footer, footer_icon, ts, mrkdwn_in, actions, blocks, preview, files, filename, size, mimetype, url, metadata)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -1374,7 +1686,9 @@ class Attachment:
         result["author_subname"] = from_union([from_str, from_none], self.author_subname)
         result["channel_id"] = from_union([from_str, from_none], self.channel_id)
         result["channel_name"] = from_union([from_str, from_none], self.channel_name)
+        result["channel_team"] = from_union([from_str, from_none], self.channel_team)
         result["id"] = from_union([from_int, from_none], self.id)
+        result["app_id"] = from_union([from_str, from_none], self.app_id)
         result["bot_id"] = from_union([from_str, from_none], self.bot_id)
         result["indent"] = from_union([from_bool, from_none], self.indent)
         result["is_msg_unfurl"] = from_union([from_bool, from_none], self.is_msg_unfurl)
@@ -1402,417 +1716,14 @@ class Attachment:
         result["ts"] = from_union([from_str, from_none], self.ts)
         result["mrkdwn_in"] = from_union([lambda x: from_list(from_str, x), from_none], self.mrkdwn_in)
         result["actions"] = from_union([lambda x: from_list(lambda x: to_class(Action, x), x), from_none], self.actions)
-        result["blocks"] = from_union([lambda x: from_list(lambda x: to_class(AttachmentBlock, x), x), from_none], self.blocks)
-        result["files"] = from_union([lambda x: from_list(lambda x: to_class(FileElement, x), x), from_none], self.files)
+        result["blocks"] = from_union([lambda x: from_list(lambda x: to_class(Block, x), x), from_none], self.blocks)
+        result["preview"] = from_union([lambda x: to_class(Preview, x), from_none], self.preview)
+        result["files"] = from_union([lambda x: from_list(lambda x: to_class(File, x), x), from_none], self.files)
         result["filename"] = from_union([from_str, from_none], self.filename)
         result["size"] = from_union([from_int, from_none], self.size)
         result["mimetype"] = from_union([from_str, from_none], self.mimetype)
         result["url"] = from_union([from_str, from_none], self.url)
         result["metadata"] = from_union([lambda x: to_class(Metadata, x), from_none], self.metadata)
-        return result
-
-
-@dataclass
-class PurpleBlock:
-    type: Optional[str] = None
-    elements: Optional[List[Accessory]] = None
-    block_id: Optional[str] = None
-    fallback: Optional[str] = None
-    image_url: Optional[str] = None
-    image_width: Optional[int] = None
-    image_height: Optional[int] = None
-    image_bytes: Optional[int] = None
-    alt_text: Optional[str] = None
-    title: Optional[Text] = None
-    text: Optional[Text] = None
-    fields: Optional[List[Text]] = None
-    accessory: Optional[Accessory] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'PurpleBlock':
-        assert isinstance(obj, dict)
-        type = from_union([from_str, from_none], obj.get("type"))
-        elements = from_union([lambda x: from_list(Accessory.from_dict, x), from_none], obj.get("elements"))
-        block_id = from_union([from_str, from_none], obj.get("block_id"))
-        fallback = from_union([from_str, from_none], obj.get("fallback"))
-        image_url = from_union([from_str, from_none], obj.get("image_url"))
-        image_width = from_union([from_int, from_none], obj.get("image_width"))
-        image_height = from_union([from_int, from_none], obj.get("image_height"))
-        image_bytes = from_union([from_int, from_none], obj.get("image_bytes"))
-        alt_text = from_union([from_str, from_none], obj.get("alt_text"))
-        title = from_union([Text.from_dict, from_none], obj.get("title"))
-        text = from_union([Text.from_dict, from_none], obj.get("text"))
-        fields = from_union([lambda x: from_list(Text.from_dict, x), from_none], obj.get("fields"))
-        accessory = from_union([Accessory.from_dict, from_none], obj.get("accessory"))
-        return PurpleBlock(type, elements, block_id, fallback, image_url, image_width, image_height, image_bytes, alt_text, title, text, fields, accessory)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["type"] = from_union([from_str, from_none], self.type)
-        result["elements"] = from_union([lambda x: from_list(lambda x: to_class(Accessory, x), x), from_none], self.elements)
-        result["block_id"] = from_union([from_str, from_none], self.block_id)
-        result["fallback"] = from_union([from_str, from_none], self.fallback)
-        result["image_url"] = from_union([from_str, from_none], self.image_url)
-        result["image_width"] = from_union([from_int, from_none], self.image_width)
-        result["image_height"] = from_union([from_int, from_none], self.image_height)
-        result["image_bytes"] = from_union([from_int, from_none], self.image_bytes)
-        result["alt_text"] = from_union([from_str, from_none], self.alt_text)
-        result["title"] = from_union([lambda x: to_class(Text, x), from_none], self.title)
-        result["text"] = from_union([lambda x: to_class(Text, x), from_none], self.text)
-        result["fields"] = from_union([lambda x: from_list(lambda x: to_class(Text, x), x), from_none], self.fields)
-        result["accessory"] = from_union([lambda x: to_class(Accessory, x), from_none], self.accessory)
-        return result
-
-
-@dataclass
-class ItemFile:
-    id: Optional[str] = None
-    created: Optional[int] = None
-    timestamp: Optional[int] = None
-    name: Optional[str] = None
-    title: Optional[str] = None
-    subject: Optional[str] = None
-    mimetype: Optional[str] = None
-    filetype: Optional[str] = None
-    pretty_type: Optional[str] = None
-    user: Optional[str] = None
-    mode: Optional[str] = None
-    editable: Optional[bool] = None
-    non_owner_editable: Optional[bool] = None
-    editor: Optional[str] = None
-    last_editor: Optional[str] = None
-    updated: Optional[int] = None
-    original_attachment_count: Optional[int] = None
-    is_external: Optional[bool] = None
-    external_type: Optional[str] = None
-    external_id: Optional[str] = None
-    external_url: Optional[str] = None
-    username: Optional[str] = None
-    size: Optional[int] = None
-    url_private: Optional[str] = None
-    url_private_download: Optional[str] = None
-    app_id: Optional[str] = None
-    app_name: Optional[str] = None
-    thumb_64: Optional[str] = None
-    thumb_64__gif: Optional[str] = None
-    thumb_64__w: Optional[str] = None
-    thumb_64__h: Optional[str] = None
-    thumb_80: Optional[str] = None
-    thumb_80__gif: Optional[str] = None
-    thumb_80__w: Optional[str] = None
-    thumb_80__h: Optional[str] = None
-    thumb_160: Optional[str] = None
-    thumb_160__gif: Optional[str] = None
-    thumb_160__w: Optional[str] = None
-    thumb_160__h: Optional[str] = None
-    thumb_360: Optional[str] = None
-    thumb_360__gif: Optional[str] = None
-    thumb_360__w: Optional[str] = None
-    thumb_360__h: Optional[str] = None
-    thumb_480: Optional[str] = None
-    thumb_480__gif: Optional[str] = None
-    thumb_480__w: Optional[str] = None
-    thumb_480__h: Optional[str] = None
-    thumb_720: Optional[str] = None
-    thumb_720__gif: Optional[str] = None
-    thumb_720__w: Optional[str] = None
-    thumb_720__h: Optional[str] = None
-    thumb_800: Optional[str] = None
-    thumb_800__gif: Optional[str] = None
-    thumb_800__w: Optional[str] = None
-    thumb_800__h: Optional[str] = None
-    thumb_960: Optional[str] = None
-    thumb_960__gif: Optional[str] = None
-    thumb_960__w: Optional[str] = None
-    thumb_960__h: Optional[str] = None
-    thumb_1024: Optional[str] = None
-    thumb_1024__gif: Optional[str] = None
-    thumb_1024__w: Optional[str] = None
-    thumb_1024__h: Optional[str] = None
-    thumb_video: Optional[str] = None
-    thumb_gif: Optional[str] = None
-    thumb_pdf: Optional[str] = None
-    thumb_pdf_w: Optional[str] = None
-    thumb_pdf_h: Optional[str] = None
-    thumb_tiny: Optional[str] = None
-    converted_pdf: Optional[str] = None
-    image_exif_rotation: Optional[int] = None
-    original_w: Optional[str] = None
-    original_h: Optional[str] = None
-    deanimate: Optional[str] = None
-    deanimate_gif: Optional[str] = None
-    pjpeg: Optional[str] = None
-    permalink: Optional[str] = None
-    permalink_public: Optional[str] = None
-    edit_link: Optional[str] = None
-    has_rich_preview: Optional[bool] = None
-    media_display_type: Optional[str] = None
-    preview_is_truncated: Optional[bool] = None
-    preview: Optional[str] = None
-    preview_highlight: Optional[str] = None
-    plain_text: Optional[str] = None
-    preview_plain_text: Optional[str] = None
-    has_more: Optional[bool] = None
-    sent_to_self: Optional[bool] = None
-    lines: Optional[int] = None
-    lines_more: Optional[int] = None
-    is_public: Optional[bool] = None
-    public_url_shared: Optional[bool] = None
-    display_as_bot: Optional[bool] = None
-    channels: Optional[List[str]] = None
-    groups: Optional[List[str]] = None
-    ims: Optional[List[str]] = None
-    shares: Optional[Shares] = None
-    to: Optional[List[Cc]] = None
-    file_from: Optional[List[Cc]] = None
-    cc: Optional[List[Cc]] = None
-    channel_actions_ts: Optional[str] = None
-    channel_actions_count: Optional[int] = None
-    headers: Optional[Headers] = None
-    simplified_html: Optional[str] = None
-    bot_id: Optional[str] = None
-    initial_comment: Optional[Comment] = None
-    num_stars: Optional[int] = None
-    is_starred: Optional[bool] = None
-    pinned_to: Optional[List[str]] = None
-    reactions: Optional[List[Reaction]] = None
-    comments_count: Optional[int] = None
-    attachments: Optional[List[Attachment]] = None
-    blocks: Optional[List[PurpleBlock]] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'ItemFile':
-        assert isinstance(obj, dict)
-        id = from_union([from_str, from_none], obj.get("id"))
-        created = from_union([from_int, from_none], obj.get("created"))
-        timestamp = from_union([from_int, from_none], obj.get("timestamp"))
-        name = from_union([from_str, from_none], obj.get("name"))
-        title = from_union([from_str, from_none], obj.get("title"))
-        subject = from_union([from_str, from_none], obj.get("subject"))
-        mimetype = from_union([from_str, from_none], obj.get("mimetype"))
-        filetype = from_union([from_str, from_none], obj.get("filetype"))
-        pretty_type = from_union([from_str, from_none], obj.get("pretty_type"))
-        user = from_union([from_str, from_none], obj.get("user"))
-        mode = from_union([from_str, from_none], obj.get("mode"))
-        editable = from_union([from_bool, from_none], obj.get("editable"))
-        non_owner_editable = from_union([from_bool, from_none], obj.get("non_owner_editable"))
-        editor = from_union([from_str, from_none], obj.get("editor"))
-        last_editor = from_union([from_str, from_none], obj.get("last_editor"))
-        updated = from_union([from_int, from_none], obj.get("updated"))
-        original_attachment_count = from_union([from_int, from_none], obj.get("original_attachment_count"))
-        is_external = from_union([from_bool, from_none], obj.get("is_external"))
-        external_type = from_union([from_str, from_none], obj.get("external_type"))
-        external_id = from_union([from_str, from_none], obj.get("external_id"))
-        external_url = from_union([from_str, from_none], obj.get("external_url"))
-        username = from_union([from_str, from_none], obj.get("username"))
-        size = from_union([from_int, from_none], obj.get("size"))
-        url_private = from_union([from_str, from_none], obj.get("url_private"))
-        url_private_download = from_union([from_str, from_none], obj.get("url_private_download"))
-        app_id = from_union([from_str, from_none], obj.get("app_id"))
-        app_name = from_union([from_str, from_none], obj.get("app_name"))
-        thumb_64 = from_union([from_str, from_none], obj.get("thumb_64"))
-        thumb_64__gif = from_union([from_str, from_none], obj.get("thumb_64_gif"))
-        thumb_64__w = from_union([from_str, from_none], obj.get("thumb_64_w"))
-        thumb_64__h = from_union([from_str, from_none], obj.get("thumb_64_h"))
-        thumb_80 = from_union([from_str, from_none], obj.get("thumb_80"))
-        thumb_80__gif = from_union([from_str, from_none], obj.get("thumb_80_gif"))
-        thumb_80__w = from_union([from_str, from_none], obj.get("thumb_80_w"))
-        thumb_80__h = from_union([from_str, from_none], obj.get("thumb_80_h"))
-        thumb_160 = from_union([from_str, from_none], obj.get("thumb_160"))
-        thumb_160__gif = from_union([from_str, from_none], obj.get("thumb_160_gif"))
-        thumb_160__w = from_union([from_str, from_none], obj.get("thumb_160_w"))
-        thumb_160__h = from_union([from_str, from_none], obj.get("thumb_160_h"))
-        thumb_360 = from_union([from_str, from_none], obj.get("thumb_360"))
-        thumb_360__gif = from_union([from_str, from_none], obj.get("thumb_360_gif"))
-        thumb_360__w = from_union([from_str, from_none], obj.get("thumb_360_w"))
-        thumb_360__h = from_union([from_str, from_none], obj.get("thumb_360_h"))
-        thumb_480 = from_union([from_str, from_none], obj.get("thumb_480"))
-        thumb_480__gif = from_union([from_str, from_none], obj.get("thumb_480_gif"))
-        thumb_480__w = from_union([from_str, from_none], obj.get("thumb_480_w"))
-        thumb_480__h = from_union([from_str, from_none], obj.get("thumb_480_h"))
-        thumb_720 = from_union([from_str, from_none], obj.get("thumb_720"))
-        thumb_720__gif = from_union([from_str, from_none], obj.get("thumb_720_gif"))
-        thumb_720__w = from_union([from_str, from_none], obj.get("thumb_720_w"))
-        thumb_720__h = from_union([from_str, from_none], obj.get("thumb_720_h"))
-        thumb_800 = from_union([from_str, from_none], obj.get("thumb_800"))
-        thumb_800__gif = from_union([from_str, from_none], obj.get("thumb_800_gif"))
-        thumb_800__w = from_union([from_str, from_none], obj.get("thumb_800_w"))
-        thumb_800__h = from_union([from_str, from_none], obj.get("thumb_800_h"))
-        thumb_960 = from_union([from_str, from_none], obj.get("thumb_960"))
-        thumb_960__gif = from_union([from_str, from_none], obj.get("thumb_960_gif"))
-        thumb_960__w = from_union([from_str, from_none], obj.get("thumb_960_w"))
-        thumb_960__h = from_union([from_str, from_none], obj.get("thumb_960_h"))
-        thumb_1024 = from_union([from_str, from_none], obj.get("thumb_1024"))
-        thumb_1024__gif = from_union([from_str, from_none], obj.get("thumb_1024_gif"))
-        thumb_1024__w = from_union([from_str, from_none], obj.get("thumb_1024_w"))
-        thumb_1024__h = from_union([from_str, from_none], obj.get("thumb_1024_h"))
-        thumb_video = from_union([from_str, from_none], obj.get("thumb_video"))
-        thumb_gif = from_union([from_str, from_none], obj.get("thumb_gif"))
-        thumb_pdf = from_union([from_str, from_none], obj.get("thumb_pdf"))
-        thumb_pdf_w = from_union([from_str, from_none], obj.get("thumb_pdf_w"))
-        thumb_pdf_h = from_union([from_str, from_none], obj.get("thumb_pdf_h"))
-        thumb_tiny = from_union([from_str, from_none], obj.get("thumb_tiny"))
-        converted_pdf = from_union([from_str, from_none], obj.get("converted_pdf"))
-        image_exif_rotation = from_union([from_int, from_none], obj.get("image_exif_rotation"))
-        original_w = from_union([from_str, from_none], obj.get("original_w"))
-        original_h = from_union([from_str, from_none], obj.get("original_h"))
-        deanimate = from_union([from_str, from_none], obj.get("deanimate"))
-        deanimate_gif = from_union([from_str, from_none], obj.get("deanimate_gif"))
-        pjpeg = from_union([from_str, from_none], obj.get("pjpeg"))
-        permalink = from_union([from_str, from_none], obj.get("permalink"))
-        permalink_public = from_union([from_str, from_none], obj.get("permalink_public"))
-        edit_link = from_union([from_str, from_none], obj.get("edit_link"))
-        has_rich_preview = from_union([from_bool, from_none], obj.get("has_rich_preview"))
-        media_display_type = from_union([from_str, from_none], obj.get("media_display_type"))
-        preview_is_truncated = from_union([from_bool, from_none], obj.get("preview_is_truncated"))
-        preview = from_union([from_str, from_none], obj.get("preview"))
-        preview_highlight = from_union([from_str, from_none], obj.get("preview_highlight"))
-        plain_text = from_union([from_str, from_none], obj.get("plain_text"))
-        preview_plain_text = from_union([from_str, from_none], obj.get("preview_plain_text"))
-        has_more = from_union([from_bool, from_none], obj.get("has_more"))
-        sent_to_self = from_union([from_bool, from_none], obj.get("sent_to_self"))
-        lines = from_union([from_int, from_none], obj.get("lines"))
-        lines_more = from_union([from_int, from_none], obj.get("lines_more"))
-        is_public = from_union([from_bool, from_none], obj.get("is_public"))
-        public_url_shared = from_union([from_bool, from_none], obj.get("public_url_shared"))
-        display_as_bot = from_union([from_bool, from_none], obj.get("display_as_bot"))
-        channels = from_union([lambda x: from_list(from_str, x), from_none], obj.get("channels"))
-        groups = from_union([lambda x: from_list(from_str, x), from_none], obj.get("groups"))
-        ims = from_union([lambda x: from_list(from_str, x), from_none], obj.get("ims"))
-        shares = from_union([Shares.from_dict, from_none], obj.get("shares"))
-        to = from_union([lambda x: from_list(Cc.from_dict, x), from_none], obj.get("to"))
-        file_from = from_union([lambda x: from_list(Cc.from_dict, x), from_none], obj.get("from"))
-        cc = from_union([lambda x: from_list(Cc.from_dict, x), from_none], obj.get("cc"))
-        channel_actions_ts = from_union([from_str, from_none], obj.get("channel_actions_ts"))
-        channel_actions_count = from_union([from_int, from_none], obj.get("channel_actions_count"))
-        headers = from_union([Headers.from_dict, from_none], obj.get("headers"))
-        simplified_html = from_union([from_str, from_none], obj.get("simplified_html"))
-        bot_id = from_union([from_str, from_none], obj.get("bot_id"))
-        initial_comment = from_union([Comment.from_dict, from_none], obj.get("initial_comment"))
-        num_stars = from_union([from_int, from_none], obj.get("num_stars"))
-        is_starred = from_union([from_bool, from_none], obj.get("is_starred"))
-        pinned_to = from_union([lambda x: from_list(from_str, x), from_none], obj.get("pinned_to"))
-        reactions = from_union([lambda x: from_list(Reaction.from_dict, x), from_none], obj.get("reactions"))
-        comments_count = from_union([from_int, from_none], obj.get("comments_count"))
-        attachments = from_union([lambda x: from_list(Attachment.from_dict, x), from_none], obj.get("attachments"))
-        blocks = from_union([lambda x: from_list(PurpleBlock.from_dict, x), from_none], obj.get("blocks"))
-        return ItemFile(id, created, timestamp, name, title, subject, mimetype, filetype, pretty_type, user, mode, editable, non_owner_editable, editor, last_editor, updated, original_attachment_count, is_external, external_type, external_id, external_url, username, size, url_private, url_private_download, app_id, app_name, thumb_64, thumb_64__gif, thumb_64__w, thumb_64__h, thumb_80, thumb_80__gif, thumb_80__w, thumb_80__h, thumb_160, thumb_160__gif, thumb_160__w, thumb_160__h, thumb_360, thumb_360__gif, thumb_360__w, thumb_360__h, thumb_480, thumb_480__gif, thumb_480__w, thumb_480__h, thumb_720, thumb_720__gif, thumb_720__w, thumb_720__h, thumb_800, thumb_800__gif, thumb_800__w, thumb_800__h, thumb_960, thumb_960__gif, thumb_960__w, thumb_960__h, thumb_1024, thumb_1024__gif, thumb_1024__w, thumb_1024__h, thumb_video, thumb_gif, thumb_pdf, thumb_pdf_w, thumb_pdf_h, thumb_tiny, converted_pdf, image_exif_rotation, original_w, original_h, deanimate, deanimate_gif, pjpeg, permalink, permalink_public, edit_link, has_rich_preview, media_display_type, preview_is_truncated, preview, preview_highlight, plain_text, preview_plain_text, has_more, sent_to_self, lines, lines_more, is_public, public_url_shared, display_as_bot, channels, groups, ims, shares, to, file_from, cc, channel_actions_ts, channel_actions_count, headers, simplified_html, bot_id, initial_comment, num_stars, is_starred, pinned_to, reactions, comments_count, attachments, blocks)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["id"] = from_union([from_str, from_none], self.id)
-        result["created"] = from_union([from_int, from_none], self.created)
-        result["timestamp"] = from_union([from_int, from_none], self.timestamp)
-        result["name"] = from_union([from_str, from_none], self.name)
-        result["title"] = from_union([from_str, from_none], self.title)
-        result["subject"] = from_union([from_str, from_none], self.subject)
-        result["mimetype"] = from_union([from_str, from_none], self.mimetype)
-        result["filetype"] = from_union([from_str, from_none], self.filetype)
-        result["pretty_type"] = from_union([from_str, from_none], self.pretty_type)
-        result["user"] = from_union([from_str, from_none], self.user)
-        result["mode"] = from_union([from_str, from_none], self.mode)
-        result["editable"] = from_union([from_bool, from_none], self.editable)
-        result["non_owner_editable"] = from_union([from_bool, from_none], self.non_owner_editable)
-        result["editor"] = from_union([from_str, from_none], self.editor)
-        result["last_editor"] = from_union([from_str, from_none], self.last_editor)
-        result["updated"] = from_union([from_int, from_none], self.updated)
-        result["original_attachment_count"] = from_union([from_int, from_none], self.original_attachment_count)
-        result["is_external"] = from_union([from_bool, from_none], self.is_external)
-        result["external_type"] = from_union([from_str, from_none], self.external_type)
-        result["external_id"] = from_union([from_str, from_none], self.external_id)
-        result["external_url"] = from_union([from_str, from_none], self.external_url)
-        result["username"] = from_union([from_str, from_none], self.username)
-        result["size"] = from_union([from_int, from_none], self.size)
-        result["url_private"] = from_union([from_str, from_none], self.url_private)
-        result["url_private_download"] = from_union([from_str, from_none], self.url_private_download)
-        result["app_id"] = from_union([from_str, from_none], self.app_id)
-        result["app_name"] = from_union([from_str, from_none], self.app_name)
-        result["thumb_64"] = from_union([from_str, from_none], self.thumb_64)
-        result["thumb_64_gif"] = from_union([from_str, from_none], self.thumb_64__gif)
-        result["thumb_64_w"] = from_union([from_str, from_none], self.thumb_64__w)
-        result["thumb_64_h"] = from_union([from_str, from_none], self.thumb_64__h)
-        result["thumb_80"] = from_union([from_str, from_none], self.thumb_80)
-        result["thumb_80_gif"] = from_union([from_str, from_none], self.thumb_80__gif)
-        result["thumb_80_w"] = from_union([from_str, from_none], self.thumb_80__w)
-        result["thumb_80_h"] = from_union([from_str, from_none], self.thumb_80__h)
-        result["thumb_160"] = from_union([from_str, from_none], self.thumb_160)
-        result["thumb_160_gif"] = from_union([from_str, from_none], self.thumb_160__gif)
-        result["thumb_160_w"] = from_union([from_str, from_none], self.thumb_160__w)
-        result["thumb_160_h"] = from_union([from_str, from_none], self.thumb_160__h)
-        result["thumb_360"] = from_union([from_str, from_none], self.thumb_360)
-        result["thumb_360_gif"] = from_union([from_str, from_none], self.thumb_360__gif)
-        result["thumb_360_w"] = from_union([from_str, from_none], self.thumb_360__w)
-        result["thumb_360_h"] = from_union([from_str, from_none], self.thumb_360__h)
-        result["thumb_480"] = from_union([from_str, from_none], self.thumb_480)
-        result["thumb_480_gif"] = from_union([from_str, from_none], self.thumb_480__gif)
-        result["thumb_480_w"] = from_union([from_str, from_none], self.thumb_480__w)
-        result["thumb_480_h"] = from_union([from_str, from_none], self.thumb_480__h)
-        result["thumb_720"] = from_union([from_str, from_none], self.thumb_720)
-        result["thumb_720_gif"] = from_union([from_str, from_none], self.thumb_720__gif)
-        result["thumb_720_w"] = from_union([from_str, from_none], self.thumb_720__w)
-        result["thumb_720_h"] = from_union([from_str, from_none], self.thumb_720__h)
-        result["thumb_800"] = from_union([from_str, from_none], self.thumb_800)
-        result["thumb_800_gif"] = from_union([from_str, from_none], self.thumb_800__gif)
-        result["thumb_800_w"] = from_union([from_str, from_none], self.thumb_800__w)
-        result["thumb_800_h"] = from_union([from_str, from_none], self.thumb_800__h)
-        result["thumb_960"] = from_union([from_str, from_none], self.thumb_960)
-        result["thumb_960_gif"] = from_union([from_str, from_none], self.thumb_960__gif)
-        result["thumb_960_w"] = from_union([from_str, from_none], self.thumb_960__w)
-        result["thumb_960_h"] = from_union([from_str, from_none], self.thumb_960__h)
-        result["thumb_1024"] = from_union([from_str, from_none], self.thumb_1024)
-        result["thumb_1024_gif"] = from_union([from_str, from_none], self.thumb_1024__gif)
-        result["thumb_1024_w"] = from_union([from_str, from_none], self.thumb_1024__w)
-        result["thumb_1024_h"] = from_union([from_str, from_none], self.thumb_1024__h)
-        result["thumb_video"] = from_union([from_str, from_none], self.thumb_video)
-        result["thumb_gif"] = from_union([from_str, from_none], self.thumb_gif)
-        result["thumb_pdf"] = from_union([from_str, from_none], self.thumb_pdf)
-        result["thumb_pdf_w"] = from_union([from_str, from_none], self.thumb_pdf_w)
-        result["thumb_pdf_h"] = from_union([from_str, from_none], self.thumb_pdf_h)
-        result["thumb_tiny"] = from_union([from_str, from_none], self.thumb_tiny)
-        result["converted_pdf"] = from_union([from_str, from_none], self.converted_pdf)
-        result["image_exif_rotation"] = from_union([from_int, from_none], self.image_exif_rotation)
-        result["original_w"] = from_union([from_str, from_none], self.original_w)
-        result["original_h"] = from_union([from_str, from_none], self.original_h)
-        result["deanimate"] = from_union([from_str, from_none], self.deanimate)
-        result["deanimate_gif"] = from_union([from_str, from_none], self.deanimate_gif)
-        result["pjpeg"] = from_union([from_str, from_none], self.pjpeg)
-        result["permalink"] = from_union([from_str, from_none], self.permalink)
-        result["permalink_public"] = from_union([from_str, from_none], self.permalink_public)
-        result["edit_link"] = from_union([from_str, from_none], self.edit_link)
-        result["has_rich_preview"] = from_union([from_bool, from_none], self.has_rich_preview)
-        result["media_display_type"] = from_union([from_str, from_none], self.media_display_type)
-        result["preview_is_truncated"] = from_union([from_bool, from_none], self.preview_is_truncated)
-        result["preview"] = from_union([from_str, from_none], self.preview)
-        result["preview_highlight"] = from_union([from_str, from_none], self.preview_highlight)
-        result["plain_text"] = from_union([from_str, from_none], self.plain_text)
-        result["preview_plain_text"] = from_union([from_str, from_none], self.preview_plain_text)
-        result["has_more"] = from_union([from_bool, from_none], self.has_more)
-        result["sent_to_self"] = from_union([from_bool, from_none], self.sent_to_self)
-        result["lines"] = from_union([from_int, from_none], self.lines)
-        result["lines_more"] = from_union([from_int, from_none], self.lines_more)
-        result["is_public"] = from_union([from_bool, from_none], self.is_public)
-        result["public_url_shared"] = from_union([from_bool, from_none], self.public_url_shared)
-        result["display_as_bot"] = from_union([from_bool, from_none], self.display_as_bot)
-        result["channels"] = from_union([lambda x: from_list(from_str, x), from_none], self.channels)
-        result["groups"] = from_union([lambda x: from_list(from_str, x), from_none], self.groups)
-        result["ims"] = from_union([lambda x: from_list(from_str, x), from_none], self.ims)
-        result["shares"] = from_union([lambda x: to_class(Shares, x), from_none], self.shares)
-        result["to"] = from_union([lambda x: from_list(lambda x: to_class(Cc, x), x), from_none], self.to)
-        result["from"] = from_union([lambda x: from_list(lambda x: to_class(Cc, x), x), from_none], self.file_from)
-        result["cc"] = from_union([lambda x: from_list(lambda x: to_class(Cc, x), x), from_none], self.cc)
-        result["channel_actions_ts"] = from_union([from_str, from_none], self.channel_actions_ts)
-        result["channel_actions_count"] = from_union([from_int, from_none], self.channel_actions_count)
-        result["headers"] = from_union([lambda x: to_class(Headers, x), from_none], self.headers)
-        result["simplified_html"] = from_union([from_str, from_none], self.simplified_html)
-        result["bot_id"] = from_union([from_str, from_none], self.bot_id)
-        result["initial_comment"] = from_union([lambda x: to_class(Comment, x), from_none], self.initial_comment)
-        result["num_stars"] = from_union([from_int, from_none], self.num_stars)
-        result["is_starred"] = from_union([from_bool, from_none], self.is_starred)
-        result["pinned_to"] = from_union([lambda x: from_list(from_str, x), from_none], self.pinned_to)
-        result["reactions"] = from_union([lambda x: from_list(lambda x: to_class(Reaction, x), x), from_none], self.reactions)
-        result["comments_count"] = from_union([from_int, from_none], self.comments_count)
-        result["attachments"] = from_union([lambda x: from_list(lambda x: to_class(Attachment, x), x), from_none], self.attachments)
-        result["blocks"] = from_union([lambda x: from_list(lambda x: to_class(PurpleBlock, x), x), from_none], self.blocks)
         return result
 
 
@@ -1904,7 +1815,7 @@ class Message:
     permalink: Optional[str] = None
     subtype: Optional[str] = None
     username: Optional[str] = None
-    blocks: Optional[List[AttachmentBlock]] = None
+    blocks: Optional[List[Block]] = None
     client_msg_id: Optional[str] = None
     thread_ts: Optional[str] = None
     reply_count: Optional[int] = None
@@ -1916,7 +1827,7 @@ class Message:
     reactions: Optional[List[Reaction]] = None
     bot_profile: Optional[BotProfile] = None
     edited: Optional[Edited] = None
-    files: Optional[List[FileElement]] = None
+    files: Optional[List[File]] = None
     upload: Optional[bool] = None
     display_as_bot: Optional[bool] = None
     is_locked: Optional[bool] = None
@@ -1936,7 +1847,7 @@ class Message:
         permalink = from_union([from_str, from_none], obj.get("permalink"))
         subtype = from_union([from_str, from_none], obj.get("subtype"))
         username = from_union([from_str, from_none], obj.get("username"))
-        blocks = from_union([lambda x: from_list(AttachmentBlock.from_dict, x), from_none], obj.get("blocks"))
+        blocks = from_union([lambda x: from_list(Block.from_dict, x), from_none], obj.get("blocks"))
         client_msg_id = from_union([from_str, from_none], obj.get("client_msg_id"))
         thread_ts = from_union([from_str, from_none], obj.get("thread_ts"))
         reply_count = from_union([from_int, from_none], obj.get("reply_count"))
@@ -1948,7 +1859,7 @@ class Message:
         reactions = from_union([lambda x: from_list(Reaction.from_dict, x), from_none], obj.get("reactions"))
         bot_profile = from_union([BotProfile.from_dict, from_none], obj.get("bot_profile"))
         edited = from_union([Edited.from_dict, from_none], obj.get("edited"))
-        files = from_union([lambda x: from_list(FileElement.from_dict, x), from_none], obj.get("files"))
+        files = from_union([lambda x: from_list(File.from_dict, x), from_none], obj.get("files"))
         upload = from_union([from_bool, from_none], obj.get("upload"))
         display_as_bot = from_union([from_bool, from_none], obj.get("display_as_bot"))
         is_locked = from_union([from_bool, from_none], obj.get("is_locked"))
@@ -1968,7 +1879,7 @@ class Message:
         result["permalink"] = from_union([from_str, from_none], self.permalink)
         result["subtype"] = from_union([from_str, from_none], self.subtype)
         result["username"] = from_union([from_str, from_none], self.username)
-        result["blocks"] = from_union([lambda x: from_list(lambda x: to_class(AttachmentBlock, x), x), from_none], self.blocks)
+        result["blocks"] = from_union([lambda x: from_list(lambda x: to_class(Block, x), x), from_none], self.blocks)
         result["client_msg_id"] = from_union([from_str, from_none], self.client_msg_id)
         result["thread_ts"] = from_union([from_str, from_none], self.thread_ts)
         result["reply_count"] = from_union([from_int, from_none], self.reply_count)
@@ -1980,7 +1891,7 @@ class Message:
         result["reactions"] = from_union([lambda x: from_list(lambda x: to_class(Reaction, x), x), from_none], self.reactions)
         result["bot_profile"] = from_union([lambda x: to_class(BotProfile, x), from_none], self.bot_profile)
         result["edited"] = from_union([lambda x: to_class(Edited, x), from_none], self.edited)
-        result["files"] = from_union([lambda x: from_list(lambda x: to_class(FileElement, x), x), from_none], self.files)
+        result["files"] = from_union([lambda x: from_list(lambda x: to_class(File, x), x), from_none], self.files)
         result["upload"] = from_union([from_bool, from_none], self.upload)
         result["display_as_bot"] = from_union([from_bool, from_none], self.display_as_bot)
         result["is_locked"] = from_union([from_bool, from_none], self.is_locked)
@@ -1994,7 +1905,7 @@ class Item:
     channel: Optional[str] = None
     date_create: Optional[int] = None
     message: Optional[Message] = None
-    file: Optional[ItemFile] = None
+    file: Optional[File] = None
     comment: Optional[Comment] = None
 
     @staticmethod
@@ -2004,7 +1915,7 @@ class Item:
         channel = from_union([from_str, from_none], obj.get("channel"))
         date_create = from_union([from_int, from_none], obj.get("date_create"))
         message = from_union([Message.from_dict, from_none], obj.get("message"))
-        file = from_union([ItemFile.from_dict, from_none], obj.get("file"))
+        file = from_union([File.from_dict, from_none], obj.get("file"))
         comment = from_union([Comment.from_dict, from_none], obj.get("comment"))
         return Item(type, channel, date_create, message, file, comment)
 
@@ -2014,7 +1925,7 @@ class Item:
         result["channel"] = from_union([from_str, from_none], self.channel)
         result["date_create"] = from_union([from_int, from_none], self.date_create)
         result["message"] = from_union([lambda x: to_class(Message, x), from_none], self.message)
-        result["file"] = from_union([lambda x: to_class(ItemFile, x), from_none], self.file)
+        result["file"] = from_union([lambda x: to_class(File, x), from_none], self.file)
         result["comment"] = from_union([lambda x: to_class(Comment, x), from_none], self.comment)
         return result
 

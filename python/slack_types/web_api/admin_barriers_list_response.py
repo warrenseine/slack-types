@@ -109,6 +109,7 @@ class AdminBarriersListResponse:
     error: Optional[str] = None
     needed: Optional[str] = None
     provided: Optional[str] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'AdminBarriersListResponse':
@@ -118,7 +119,8 @@ class AdminBarriersListResponse:
         error = from_union([from_str, from_none], obj.get("error"))
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
-        return AdminBarriersListResponse(ok, barriers, error, needed, provided)
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return AdminBarriersListResponse(ok, barriers, error, needed, provided, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -127,6 +129,7 @@ class AdminBarriersListResponse:
         result["error"] = from_union([from_str, from_none], self.error)
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

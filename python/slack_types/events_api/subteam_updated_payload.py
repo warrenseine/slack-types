@@ -121,6 +121,7 @@ class Subteam:
     user_count: Optional[int] = None
     channel_count: Optional[int] = None
     deleted_by: Optional[str] = None
+    is_section: Optional[bool] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Subteam':
@@ -145,7 +146,8 @@ class Subteam:
         user_count = from_union([from_int, from_none], obj.get("user_count"))
         channel_count = from_union([from_int, from_none], obj.get("channel_count"))
         deleted_by = from_union([from_str, from_none], obj.get("deleted_by"))
-        return Subteam(id, team_id, is_usergroup, is_subteam, name, description, handle, is_external, date_create, date_update, date_delete, auto_provision, enterprise_subteam_id, created_by, updated_by, prefs, users, user_count, channel_count, deleted_by)
+        is_section = from_union([from_bool, from_none], obj.get("is_section"))
+        return Subteam(id, team_id, is_usergroup, is_subteam, name, description, handle, is_external, date_create, date_update, date_delete, auto_provision, enterprise_subteam_id, created_by, updated_by, prefs, users, user_count, channel_count, deleted_by, is_section)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -169,6 +171,7 @@ class Subteam:
         result["user_count"] = from_union([from_int, from_none], self.user_count)
         result["channel_count"] = from_union([from_int, from_none], self.channel_count)
         result["deleted_by"] = from_union([from_str, from_none], self.deleted_by)
+        result["is_section"] = from_union([from_bool, from_none], self.is_section)
         return result
 
 

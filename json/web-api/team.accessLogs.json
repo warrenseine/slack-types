@@ -18,9 +18,16 @@
     "count": 12345,
     "total": 12345,
     "page": 12345,
-    "pages": 12345
+    "pages": 12345,
+    "warnings": [
+      ""
+    ]
   },
   "error": "",
   "needed": "",
-  "provided": ""
+  "provided": "",
+  "response_metadata": {
+    "next_cursor": ""
+  },
+  "warning": ""
 }

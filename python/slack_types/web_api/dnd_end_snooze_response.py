@@ -57,6 +57,7 @@ class DNDEndSnoozeResponse:
     snooze_enabled: Optional[bool] = None
     needed: Optional[str] = None
     provided: Optional[str] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'DNDEndSnoozeResponse':
@@ -69,7 +70,8 @@ class DNDEndSnoozeResponse:
         snooze_enabled = from_union([from_bool, from_none], obj.get("snooze_enabled"))
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
-        return DNDEndSnoozeResponse(ok, error, dnd_enabled, next_dnd_start_ts, next_dnd_end_ts, snooze_enabled, needed, provided)
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return DNDEndSnoozeResponse(ok, error, dnd_enabled, next_dnd_start_ts, next_dnd_end_ts, snooze_enabled, needed, provided, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -81,6 +83,7 @@ class DNDEndSnoozeResponse:
         result["snooze_enabled"] = from_union([from_bool, from_none], self.snooze_enabled)
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

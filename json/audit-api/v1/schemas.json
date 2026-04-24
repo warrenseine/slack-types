@@ -16,7 +16,8 @@
         "id": "",
         "name": "",
         "email": "",
-        "team": ""
+        "team": "",
+        "account_type": ""
       },
       "file": {
         "id": "string",
@@ -38,7 +39,10 @@
         "is_distributed": "",
         "is_directory_approved": "",
         "is_workflow_app": "",
-        "scopes": ""
+        "scopes": "",
+        "app_id": "",
+        "distribution_type": "",
+        "user_ids": ""
       },
       "workflow": {
         "id": "",
@@ -53,11 +57,52 @@
         "team": "",
         "channel": "",
         "timestamp": ""
+      },
+      "usergroup": {
+        "id": "",
+        "name": ""
+      },
+      "role": {
+        "id": "",
+        "name": "",
+        "type": ""
+      },
+      "account_type_role": {
+        "id": "",
+        "name": ""
+      },
+      "canvas": {
+        "id": "",
+        "filetype": "",
+        "title": ""
+      },
+      "workflow_v2": {
+        "id": "",
+        "app_id": "",
+        "date_updated": "",
+        "callback_id": "",
+        "name": "",
+        "updated_by": "",
+        "step_configuration": "",
+        "template_id": "",
+        "suspicious_keywords": "",
+        "trigger_name": "",
+        "trigger_channels": "",
+        "trigger_configuration": ""
+      },
+      "template": {
+        "id": "",
+        "template_name": ""
+      },
+      "legal_hold_policy": {
+        "id": "",
+        "name": ""
       }
     }
   ],
   "ok": false,
   "error": "",
   "needed": "",
-  "provided": ""
+  "provided": "",
+  "warning": ""
 }

@@ -4,6 +4,7 @@ export interface TeamProfileGetResponse {
     error?:    string;
     needed?:   string;
     provided?: string;
+    warning?:  string;
 }
 
 export interface Profile {
@@ -12,13 +13,29 @@ export interface Profile {
 }
 
 export interface Field {
-    id?:         string;
-    ordering?:   number;
-    field_name?: string;
-    label?:      string;
-    hint?:       string;
-    type?:       string;
-    is_hidden?:  boolean;
+    id?:              string;
+    ordering?:        number;
+    field_name?:      string;
+    label?:           string;
+    hint?:            string;
+    type?:            string;
+    is_hidden?:       boolean;
+    options?:         Options;
+    section_id?:      string;
+    permissions?:     Permissions;
+    is_inverse?:      boolean;
+    possible_values?: string[];
+}
+
+export interface Options {
+    is_scim?:      boolean;
+    is_protected?: boolean;
+}
+
+export interface Permissions {
+    api?:  string[];
+    ui?:   boolean;
+    scim?: boolean;
 }
 
 export interface Section {

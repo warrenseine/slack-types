@@ -46,6 +46,7 @@ export interface Subteam {
     users?:                 string[];
     user_count?:            number;
     channel_count?:         number;
+    is_section?:            boolean;
 }
 
 export interface Prefs {

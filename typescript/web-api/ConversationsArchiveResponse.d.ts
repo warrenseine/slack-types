@@ -3,4 +3,5 @@ export interface ConversationsArchiveResponse {
     error?:    string;
     needed?:   string;
     provided?: string;
+    warning?:  string;
 }

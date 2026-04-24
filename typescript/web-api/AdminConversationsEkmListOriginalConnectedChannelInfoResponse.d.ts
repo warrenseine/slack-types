@@ -3,4 +3,5 @@ export interface AdminConversationsEkmListOriginalConnectedChannelInfoResponse {
     error?:    string;
     needed?:   string;
     provided?: string;
+    warning?:  string;
 }

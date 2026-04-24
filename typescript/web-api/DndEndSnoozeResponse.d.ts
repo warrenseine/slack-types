@@ -7,4 +7,5 @@ export interface DndEndSnoozeResponse {
     snooze_enabled?:    boolean;
     needed?:            string;
     provided?:          string;
+    warning?:           string;
 }

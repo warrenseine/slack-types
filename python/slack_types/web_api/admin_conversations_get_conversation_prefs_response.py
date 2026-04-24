@@ -7,19 +7,14 @@
 #     result = admin_conversations_get_conversation_prefs_response_from_dict(json.loads(json_string))
 
 from dataclasses import dataclass
-from typing import Optional, List, Any, TypeVar, Callable, Type, cast
+from typing import Optional, Any, List, TypeVar, Callable, Type, cast
 
 
 T = TypeVar("T")
 
 
-def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
-    assert isinstance(x, list)
-    return [f(y) for y in x]
-
-
-def from_str(x: Any) -> str:
-    assert isinstance(x, str)
+def from_bool(x: Any) -> bool:
+    assert isinstance(x, bool)
     return x
 
 
@@ -37,14 +32,40 @@ def from_union(fs, x):
     assert False
 
 
+def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
+    assert isinstance(x, list)
+    return [f(y) for y in x]
+
+
+def from_str(x: Any) -> str:
+    assert isinstance(x, str)
+    return x
+
+
+def from_int(x: Any) -> int:
+    assert isinstance(x, int) and not isinstance(x, bool)
+    return x
+
+
 def to_class(c: Type[T], x: Any) -> dict:
     assert isinstance(x, c)
     return cast(Any, x).to_dict()
 
 
-def from_bool(x: Any) -> bool:
-    assert isinstance(x, bool)
-    return x
+@dataclass
+class CanHuddle:
+    enabled: Optional[bool] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'CanHuddle':
+        assert isinstance(obj, dict)
+        enabled = from_union([from_bool, from_none], obj.get("enabled"))
+        return CanHuddle(enabled)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["enabled"] = from_union([from_bool, from_none], self.enabled)
+        return result
 
 
 @dataclass
@@ -67,21 +88,49 @@ class CanThread:
 
 
 @dataclass
+class MembershipLimit:
+    value: Optional[int] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'MembershipLimit':
+        assert isinstance(obj, dict)
+        value = from_union([from_int, from_none], obj.get("value"))
+        return MembershipLimit(value)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["value"] = from_union([from_int, from_none], self.value)
+        return result
+
+
+@dataclass
 class Prefs:
     who_can_post: Optional[CanThread] = None
     can_thread: Optional[CanThread] = None
+    membership_limit: Optional[MembershipLimit] = None
+    can_huddle: Optional[CanHuddle] = None
+    enable_at_channel: Optional[CanHuddle] = None
+    enable_at_here: Optional[CanHuddle] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Prefs':
         assert isinstance(obj, dict)
         who_can_post = from_union([CanThread.from_dict, from_none], obj.get("who_can_post"))
         can_thread = from_union([CanThread.from_dict, from_none], obj.get("can_thread"))
-        return Prefs(who_can_post, can_thread)
+        membership_limit = from_union([MembershipLimit.from_dict, from_none], obj.get("membership_limit"))
+        can_huddle = from_union([CanHuddle.from_dict, from_none], obj.get("can_huddle"))
+        enable_at_channel = from_union([CanHuddle.from_dict, from_none], obj.get("enable_at_channel"))
+        enable_at_here = from_union([CanHuddle.from_dict, from_none], obj.get("enable_at_here"))
+        return Prefs(who_can_post, can_thread, membership_limit, can_huddle, enable_at_channel, enable_at_here)
 
     def to_dict(self) -> dict:
         result: dict = {}
         result["who_can_post"] = from_union([lambda x: to_class(CanThread, x), from_none], self.who_can_post)
         result["can_thread"] = from_union([lambda x: to_class(CanThread, x), from_none], self.can_thread)
+        result["membership_limit"] = from_union([lambda x: to_class(MembershipLimit, x), from_none], self.membership_limit)
+        result["can_huddle"] = from_union([lambda x: to_class(CanHuddle, x), from_none], self.can_huddle)
+        result["enable_at_channel"] = from_union([lambda x: to_class(CanHuddle, x), from_none], self.enable_at_channel)
+        result["enable_at_here"] = from_union([lambda x: to_class(CanHuddle, x), from_none], self.enable_at_here)
         return result
 
 

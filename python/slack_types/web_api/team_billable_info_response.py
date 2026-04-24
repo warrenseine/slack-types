@@ -32,14 +32,14 @@ def from_union(fs, x):
     assert False
 
 
-def from_dict(f: Callable[[Any], T], x: Any) -> Dict[str, T]:
-    assert isinstance(x, dict)
-    return { k: f(v) for (k, v) in x.items() }
-
-
 def from_str(x: Any) -> str:
     assert isinstance(x, str)
     return x
+
+
+def from_dict(f: Callable[[Any], T], x: Any) -> Dict[str, T]:
+    assert isinstance(x, dict)
+    return { k: f(v) for (k, v) in x.items() }
 
 
 def to_class(c: Type[T], x: Any) -> dict:
@@ -64,12 +64,30 @@ class BillableInfo:
 
 
 @dataclass
+class ResponseMetadata:
+    next_cursor: Optional[str] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'ResponseMetadata':
+        assert isinstance(obj, dict)
+        next_cursor = from_union([from_str, from_none], obj.get("next_cursor"))
+        return ResponseMetadata(next_cursor)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["next_cursor"] = from_union([from_str, from_none], self.next_cursor)
+        return result
+
+
+@dataclass
 class TeamBillableInfoResponse:
     ok: Optional[bool] = None
     billable_info: Optional[Dict[str, BillableInfo]] = None
     error: Optional[str] = None
     needed: Optional[str] = None
     provided: Optional[str] = None
+    response_metadata: Optional[ResponseMetadata] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'TeamBillableInfoResponse':
@@ -79,7 +97,9 @@ class TeamBillableInfoResponse:
         error = from_union([from_str, from_none], obj.get("error"))
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
-        return TeamBillableInfoResponse(ok, billable_info, error, needed, provided)
+        response_metadata = from_union([ResponseMetadata.from_dict, from_none], obj.get("response_metadata"))
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return TeamBillableInfoResponse(ok, billable_info, error, needed, provided, response_metadata, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -88,6 +108,8 @@ class TeamBillableInfoResponse:
         result["error"] = from_union([from_str, from_none], self.error)
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
+        result["response_metadata"] = from_union([lambda x: to_class(ResponseMetadata, x), from_none], self.response_metadata)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

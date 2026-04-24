@@ -4,6 +4,7 @@ export interface BookmarksRemoveResponse {
     response_metadata?: ResponseMetadata;
     needed?:            string;
     provided?:          string;
+    warning?:           string;
 }
 
 export interface ResponseMetadata {

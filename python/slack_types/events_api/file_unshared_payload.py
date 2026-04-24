@@ -140,6 +140,8 @@ class FileUnsharedPayload:
     authorizations: Optional[List[Authorization]] = None
     is_ext_shared_channel: Optional[bool] = None
     event_context: Optional[str] = None
+    context_team_id: Optional[str] = None
+    context_enterprise_id: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'FileUnsharedPayload':
@@ -155,7 +157,9 @@ class FileUnsharedPayload:
         authorizations = from_union([lambda x: from_list(Authorization.from_dict, x), from_none], obj.get("authorizations"))
         is_ext_shared_channel = from_union([from_bool, from_none], obj.get("is_ext_shared_channel"))
         event_context = from_union([from_str, from_none], obj.get("event_context"))
-        return FileUnsharedPayload(token, team_id, enterprise_id, api_app_id, event, type, event_id, event_time, authorizations, is_ext_shared_channel, event_context)
+        context_team_id = from_union([from_str, from_none], obj.get("context_team_id"))
+        context_enterprise_id = from_union([from_str, from_none], obj.get("context_enterprise_id"))
+        return FileUnsharedPayload(token, team_id, enterprise_id, api_app_id, event, type, event_id, event_time, authorizations, is_ext_shared_channel, event_context, context_team_id, context_enterprise_id)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -170,6 +174,8 @@ class FileUnsharedPayload:
         result["authorizations"] = from_union([lambda x: from_list(lambda x: to_class(Authorization, x), x), from_none], self.authorizations)
         result["is_ext_shared_channel"] = from_union([from_bool, from_none], self.is_ext_shared_channel)
         result["event_context"] = from_union([from_str, from_none], self.event_context)
+        result["context_team_id"] = from_union([from_str, from_none], self.context_team_id)
+        result["context_enterprise_id"] = from_union([from_str, from_none], self.context_enterprise_id)
         return result
 
 

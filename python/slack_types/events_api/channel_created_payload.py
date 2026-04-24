@@ -7,7 +7,7 @@
 #     result = channel_created_payload_from_dict(json.loads(json_string))
 
 from dataclasses import dataclass
-from typing import Optional, Any, List, TypeVar, Type, cast, Callable
+from typing import Optional, Any, List, TypeVar, Callable, Type, cast
 
 
 T = TypeVar("T")
@@ -42,14 +42,14 @@ def from_int(x: Any) -> int:
     return x
 
 
-def to_class(c: Type[T], x: Any) -> dict:
-    assert isinstance(x, c)
-    return cast(Any, x).to_dict()
-
-
 def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
     assert isinstance(x, list)
     return [f(y) for y in x]
+
+
+def to_class(c: Type[T], x: Any) -> dict:
+    assert isinstance(x, c)
+    return cast(Any, x).to_dict()
 
 
 @dataclass
@@ -81,6 +81,28 @@ class Authorization:
 
 
 @dataclass
+class Purpose:
+    value: Optional[str] = None
+    creator: Optional[str] = None
+    last_set: Optional[int] = None
+
+    @staticmethod
+    def from_dict(obj: Any) -> 'Purpose':
+        assert isinstance(obj, dict)
+        value = from_union([from_str, from_none], obj.get("value"))
+        creator = from_union([from_str, from_none], obj.get("creator"))
+        last_set = from_union([from_int, from_none], obj.get("last_set"))
+        return Purpose(value, creator, last_set)
+
+    def to_dict(self) -> dict:
+        result: dict = {}
+        result["value"] = from_union([from_str, from_none], self.value)
+        result["creator"] = from_union([from_str, from_none], self.creator)
+        result["last_set"] = from_union([from_int, from_none], self.last_set)
+        return result
+
+
+@dataclass
 class Channel:
     id: Optional[str] = None
     is_channel: Optional[bool] = None
@@ -90,6 +112,25 @@ class Channel:
     creator: Optional[str] = None
     is_shared: Optional[bool] = None
     is_org_shared: Optional[bool] = None
+    context_team_id: Optional[str] = None
+    is_group: Optional[bool] = None
+    is_im: Optional[bool] = None
+    is_mpim: Optional[bool] = None
+    is_private: Optional[bool] = None
+    is_archived: Optional[bool] = None
+    is_general: Optional[bool] = None
+    unlinked: Optional[int] = None
+    is_pending_ext_shared: Optional[bool] = None
+    pending_shared: Optional[List[str]] = None
+    updated: Optional[int] = None
+    is_moved: Optional[int] = None
+    is_ext_shared: Optional[bool] = None
+    shared_team_ids: Optional[List[str]] = None
+    internal_team_ids: Optional[List[str]] = None
+    pending_connected_team_ids: Optional[List[str]] = None
+    topic: Optional[Purpose] = None
+    purpose: Optional[Purpose] = None
+    previous_names: Optional[List[str]] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'Channel':
@@ -102,7 +143,26 @@ class Channel:
         creator = from_union([from_str, from_none], obj.get("creator"))
         is_shared = from_union([from_bool, from_none], obj.get("is_shared"))
         is_org_shared = from_union([from_bool, from_none], obj.get("is_org_shared"))
-        return Channel(id, is_channel, name, name_normalized, created, creator, is_shared, is_org_shared)
+        context_team_id = from_union([from_str, from_none], obj.get("context_team_id"))
+        is_group = from_union([from_bool, from_none], obj.get("is_group"))
+        is_im = from_union([from_bool, from_none], obj.get("is_im"))
+        is_mpim = from_union([from_bool, from_none], obj.get("is_mpim"))
+        is_private = from_union([from_bool, from_none], obj.get("is_private"))
+        is_archived = from_union([from_bool, from_none], obj.get("is_archived"))
+        is_general = from_union([from_bool, from_none], obj.get("is_general"))
+        unlinked = from_union([from_int, from_none], obj.get("unlinked"))
+        is_pending_ext_shared = from_union([from_bool, from_none], obj.get("is_pending_ext_shared"))
+        pending_shared = from_union([lambda x: from_list(from_str, x), from_none], obj.get("pending_shared"))
+        updated = from_union([from_int, from_none], obj.get("updated"))
+        is_moved = from_union([from_int, from_none], obj.get("is_moved"))
+        is_ext_shared = from_union([from_bool, from_none], obj.get("is_ext_shared"))
+        shared_team_ids = from_union([lambda x: from_list(from_str, x), from_none], obj.get("shared_team_ids"))
+        internal_team_ids = from_union([lambda x: from_list(from_str, x), from_none], obj.get("internal_team_ids"))
+        pending_connected_team_ids = from_union([lambda x: from_list(from_str, x), from_none], obj.get("pending_connected_team_ids"))
+        topic = from_union([Purpose.from_dict, from_none], obj.get("topic"))
+        purpose = from_union([Purpose.from_dict, from_none], obj.get("purpose"))
+        previous_names = from_union([lambda x: from_list(from_str, x), from_none], obj.get("previous_names"))
+        return Channel(id, is_channel, name, name_normalized, created, creator, is_shared, is_org_shared, context_team_id, is_group, is_im, is_mpim, is_private, is_archived, is_general, unlinked, is_pending_ext_shared, pending_shared, updated, is_moved, is_ext_shared, shared_team_ids, internal_team_ids, pending_connected_team_ids, topic, purpose, previous_names)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -114,6 +174,25 @@ class Channel:
         result["creator"] = from_union([from_str, from_none], self.creator)
         result["is_shared"] = from_union([from_bool, from_none], self.is_shared)
         result["is_org_shared"] = from_union([from_bool, from_none], self.is_org_shared)
+        result["context_team_id"] = from_union([from_str, from_none], self.context_team_id)
+        result["is_group"] = from_union([from_bool, from_none], self.is_group)
+        result["is_im"] = from_union([from_bool, from_none], self.is_im)
+        result["is_mpim"] = from_union([from_bool, from_none], self.is_mpim)
+        result["is_private"] = from_union([from_bool, from_none], self.is_private)
+        result["is_archived"] = from_union([from_bool, from_none], self.is_archived)
+        result["is_general"] = from_union([from_bool, from_none], self.is_general)
+        result["unlinked"] = from_union([from_int, from_none], self.unlinked)
+        result["is_pending_ext_shared"] = from_union([from_bool, from_none], self.is_pending_ext_shared)
+        result["pending_shared"] = from_union([lambda x: from_list(from_str, x), from_none], self.pending_shared)
+        result["updated"] = from_union([from_int, from_none], self.updated)
+        result["is_moved"] = from_union([from_int, from_none], self.is_moved)
+        result["is_ext_shared"] = from_union([from_bool, from_none], self.is_ext_shared)
+        result["shared_team_ids"] = from_union([lambda x: from_list(from_str, x), from_none], self.shared_team_ids)
+        result["internal_team_ids"] = from_union([lambda x: from_list(from_str, x), from_none], self.internal_team_ids)
+        result["pending_connected_team_ids"] = from_union([lambda x: from_list(from_str, x), from_none], self.pending_connected_team_ids)
+        result["topic"] = from_union([lambda x: to_class(Purpose, x), from_none], self.topic)
+        result["purpose"] = from_union([lambda x: to_class(Purpose, x), from_none], self.purpose)
+        result["previous_names"] = from_union([lambda x: from_list(from_str, x), from_none], self.previous_names)
         return result
 
 

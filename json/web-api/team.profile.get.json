@@ -9,7 +9,23 @@
         "label": "",
         "hint": "",
         "type": "",
-        "is_hidden": false
+        "is_hidden": false,
+        "options": {
+          "is_scim": false,
+          "is_protected": false
+        },
+        "section_id": "",
+        "permissions": {
+          "api": [
+            ""
+          ],
+          "ui": false,
+          "scim": false
+        },
+        "is_inverse": false,
+        "possible_values": [
+          ""
+        ]
       }
     ],
     "sections": [
@@ -18,12 +34,13 @@
         "team_id": "",
         "section_type": "",
         "label": "",
-        "order": 12345,
+        "order": 123,
         "is_hidden": false
       }
     ]
   },
   "error": "",
   "needed": "",
-  "provided": ""
+  "provided": "",
+  "warning": ""
 }

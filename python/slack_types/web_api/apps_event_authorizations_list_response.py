@@ -82,6 +82,7 @@ class AppsEventAuthorizationsListResponse:
     authorizations: Optional[List[Authorization]] = None
     needed: Optional[str] = None
     provided: Optional[str] = None
+    warning: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'AppsEventAuthorizationsListResponse':
@@ -91,7 +92,8 @@ class AppsEventAuthorizationsListResponse:
         authorizations = from_union([lambda x: from_list(Authorization.from_dict, x), from_none], obj.get("authorizations"))
         needed = from_union([from_str, from_none], obj.get("needed"))
         provided = from_union([from_str, from_none], obj.get("provided"))
-        return AppsEventAuthorizationsListResponse(ok, error, authorizations, needed, provided)
+        warning = from_union([from_str, from_none], obj.get("warning"))
+        return AppsEventAuthorizationsListResponse(ok, error, authorizations, needed, provided, warning)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -100,6 +102,7 @@ class AppsEventAuthorizationsListResponse:
         result["authorizations"] = from_union([lambda x: from_list(lambda x: to_class(Authorization, x), x), from_none], self.authorizations)
         result["needed"] = from_union([from_str, from_none], self.needed)
         result["provided"] = from_union([from_str, from_none], self.provided)
+        result["warning"] = from_union([from_str, from_none], self.warning)
         return result
 
 

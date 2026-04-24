@@ -53,7 +53,73 @@
       "conversation_host_id": "E00000000",
       "internal_team_ids": [
         "T00000000"
-      ]
+      ],
+      "context_team_id": "T00000000",
+      "updated": 12345,
+      "properties": {
+        "posting_restricted_to": {
+          "type": [
+            ""
+          ],
+          "user": [
+            "W00000000"
+          ]
+        },
+        "threads_restricted_to": {
+          "type": [
+            ""
+          ],
+          "user": [
+            "W00000000"
+          ]
+        },
+        "canvas": {
+          "file_id": "F00000000",
+          "is_empty": false,
+          "quip_thread_id": "",
+          "is_migrated": false
+        },
+        "tabs": [
+          {
+            "id": "",
+            "label": "",
+            "type": "",
+            "data": {
+              "file_id": "F00000000",
+              "shared_ts": "0000000000.000000",
+              "folder_bookmark_id": "",
+              "mute_edit_updates": false
+            },
+            "is_disabled": false
+          }
+        ],
+        "tabz": [
+          {
+            "id": "",
+            "label": "",
+            "type": "",
+            "data": {
+              "file_id": "F00000000",
+              "shared_ts": "0000000000.000000",
+              "folder_bookmark_id": "",
+              "mute_edit_updates": false
+            },
+            "is_disabled": false
+          }
+        ],
+        "meeting_notes": {
+          "file_id": "F00000000"
+        },
+        "is_dormant": false,
+        "use_case": "",
+        "channel_workflows": [
+          {
+            "workflow_trigger_id": "",
+            "title": ""
+          }
+        ],
+        "has_slack_connect_invite_created": false
+      }
     }
   ],
   "response_metadata": {
@@ -61,5 +127,8 @@
   },
   "error": "",
   "needed": "",
-  "provided": ""
+  "provided": "",
+  "arg": "",
+  "callstack": "",
+  "warning": ""
 }

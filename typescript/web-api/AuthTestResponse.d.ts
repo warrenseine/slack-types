@@ -13,4 +13,7 @@ export interface AuthTestResponse {
     error?:                 string;
     needed?:                string;
     provided?:              string;
+    expires_in?:            number;
+    context?:               string;
+    warning?:               string;
 }

@@ -9,11 +9,33 @@ export interface ViewSubmissionPayload {
     view?:                  View;
     is_enterprise_install?: boolean;
     is_cleared?:            boolean;
+    bot_access_token?:      string;
+    function_data?:         FunctionData;
+    interactivity?:         Interactivity;
 }
 
 export interface Enterprise {
     id?:   string;
     name?: string;
+}
+
+export interface FunctionData {
+    execution_id?: string;
+    function?:     Function;
+}
+
+export interface Function {
+    callback_id?: string;
+}
+
+export interface Interactivity {
+    interactivity_pointer?: string;
+    interactor?:            Interactor;
+}
+
+export interface Interactor {
+    id?:     string;
+    secret?: string;
 }
 
 export interface Team {

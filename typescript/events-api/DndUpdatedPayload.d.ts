@@ -28,10 +28,11 @@ export interface Event {
 }
 
 export interface DndStatus {
-    dnd_enabled?:       boolean;
-    next_dnd_start_ts?: number;
-    next_dnd_end_ts?:   number;
-    snooze_enabled?:    boolean;
-    snooze_endtime?:    number;
-    snooze_remaining?:  number;
+    dnd_enabled?:          boolean;
+    next_dnd_start_ts?:    number;
+    next_dnd_end_ts?:      number;
+    snooze_enabled?:       boolean;
+    snooze_endtime?:       number;
+    snooze_remaining?:     number;
+    snooze_is_indefinite?: boolean;
 }

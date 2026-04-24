@@ -55,7 +55,78 @@
       "priority": 12345,
       "user": "U00000000",
       "is_user_deleted": false,
-      "parent_conversation": "G00000000"
+      "parent_conversation": "G00000000",
+      "context_team_id": "T00000000",
+      "updated": 12345,
+      "properties": {
+        "posting_restricted_to": {
+          "type": [
+            ""
+          ],
+          "user": [
+            "U00000000"
+          ]
+        },
+        "huddles_restricted": false,
+        "canvas": {
+          "file_id": "F00000000",
+          "is_empty": false,
+          "quip_thread_id": "",
+          "is_migrated": false
+        },
+        "threads_restricted_to": {
+          "type": [
+            ""
+          ]
+        },
+        "tabs": [
+          {
+            "id": "",
+            "label": "",
+            "type": "",
+            "data": {
+              "file_id": "F00000000",
+              "shared_ts": "0000000000.000000"
+            },
+            "is_disabled": false
+          },
+          {
+            "type": "",
+            "label": "",
+            "id": "",
+            "data": {
+              "file_id": "F00000000",
+              "shared_ts": "0000000000.000000"
+            }
+          }
+        ],
+        "tabz": [
+          {
+            "id": "",
+            "label": "",
+            "type": "",
+            "data": {
+              "file_id": "F00000000",
+              "shared_ts": "0000000000.000000"
+            },
+            "is_disabled": false
+          },
+          {
+            "type": "",
+            "id": "",
+            "data": {
+              "file_id": "F00000000",
+              "shared_ts": "0000000000.000000"
+            },
+            "label": ""
+          }
+        ],
+        "meeting_notes": {
+          "file_id": "F00000000"
+        },
+        "is_dormant": false,
+        "use_case": ""
+      }
     }
   ],
   "response_metadata": {
@@ -63,5 +134,7 @@
   },
   "error": "",
   "needed": "",
-  "provided": ""
+  "provided": "",
+  "arg": "",
+  "warning": ""
 }

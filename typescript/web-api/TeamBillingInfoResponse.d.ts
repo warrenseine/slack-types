@@ -4,4 +4,5 @@ export interface TeamBillingInfoResponse {
     needed?:   string;
     provided?: string;
     plan?:     string;
+    warning?:  string;
 }

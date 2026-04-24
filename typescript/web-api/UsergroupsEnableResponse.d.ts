@@ -4,6 +4,7 @@ export interface UsergroupsEnableResponse {
     error?:     string;
     needed?:    string;
     provided?:  string;
+    warning?:   string;
 }
 
 export interface Usergroup {
@@ -25,6 +26,12 @@ export interface Usergroup {
     prefs?:                 Prefs;
     channel_count?:         number;
     users?:                 string[];
+    is_section?:            boolean;
+    is_idp_group?:          boolean;
+    is_visible?:            boolean;
+    is_editing_restricted?: boolean;
+    is_membership_locked?:  boolean;
+    is_org_level?:          boolean;
 }
 
 export interface Prefs {

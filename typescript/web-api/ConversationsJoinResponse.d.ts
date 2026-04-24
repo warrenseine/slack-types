@@ -38,6 +38,41 @@ export interface Channel {
     is_moved?:                   number;
     internal_team_ids?:          string[];
     is_starred?:                 boolean;
+    context_team_id?:            string;
+    updated?:                    number;
+    properties?:                 Properties;
+}
+
+export interface Properties {
+    canvas?:        Canvas;
+    tabs?:          Tab[];
+    tabz?:          Tab[];
+    meeting_notes?: MeetingNotes;
+    use_case?:      string;
+}
+
+export interface Canvas {
+    file_id?:        string;
+    is_empty?:       boolean;
+    quip_thread_id?: string;
+    is_migrated?:    boolean;
+}
+
+export interface MeetingNotes {
+    file_id?: string;
+}
+
+export interface Tab {
+    id?:          string;
+    label?:       string;
+    type?:        string;
+    data?:        Data;
+    is_disabled?: boolean;
+}
+
+export interface Data {
+    file_id?:   string;
+    shared_ts?: string;
 }
 
 export interface Purpose {

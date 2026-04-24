@@ -47,7 +47,45 @@
     "internal_team_ids": [
       "T00000000"
     ],
-    "is_starred": false
+    "is_starred": false,
+    "context_team_id": "T00000000",
+    "updated": 12345,
+    "properties": {
+      "canvas": {
+        "file_id": "F00000000",
+        "is_empty": false,
+        "quip_thread_id": "",
+        "is_migrated": false
+      },
+      "tabs": [
+        {
+          "id": "",
+          "label": "",
+          "type": "",
+          "data": {
+            "file_id": "F00000000",
+            "shared_ts": "0000000000.000000"
+          },
+          "is_disabled": false
+        }
+      ],
+      "tabz": [
+        {
+          "id": "",
+          "label": "",
+          "type": "",
+          "data": {
+            "file_id": "F00000000",
+            "shared_ts": "0000000000.000000"
+          },
+          "is_disabled": false
+        }
+      ],
+      "meeting_notes": {
+        "file_id": "F00000000"
+      },
+      "use_case": ""
+    }
   },
   "warning": "",
   "response_metadata": {
