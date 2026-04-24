@@ -294,14 +294,14 @@ export interface Action {
     name?:             string;
     text?:             string;
     style?:            string;
-    type?:             string;
+    type?:             ActionType;
     value?:            string;
     confirm?:          ActionConfirm;
-    options?:          SelectedOptionElement[];
-    selected_options?: SelectedOptionElement[];
+    options?:          Option[];
+    selected_options?: Option[];
     data_source?:      string;
     min_query_length?: number;
-    option_groups?:    ActionOptionGroup[];
+    option_groups?:    OptionGroup[];
     url?:              string;
 }
 
@@ -312,185 +312,62 @@ export interface ActionConfirm {
     dismiss_text?: string;
 }
 
-export interface ActionOptionGroup {
+export interface OptionGroup {
     text?:    string;
-    options?: SelectedOptionElement[];
+    options?: Option[];
 }
 
-export interface SelectedOptionElement {
+export interface Option {
     text?:  string;
     value?: string;
 }
 
+export enum ActionType {
+    Button = "button",
+    Image = "image",
+    WorkflowButton = "workflow_button",
+}
+
 export interface Block {
-    type?:                         BlockType;
-    elements?:                     Accessory[];
-    block_id?:                     string;
-    fallback?:                     string;
-    image_url?:                    string;
-    image_width?:                  number;
-    image_height?:                 number;
-    image_bytes?:                  number;
-    alt_text?:                     string;
-    title?:                        Text | string;
-    text?:                         Text;
-    fields?:                       Text[];
-    accessory?:                    Accessory;
-    title_url?:                    string;
-    description?:                  Text | string;
-    video_url?:                    string;
-    thumbnail_url?:                string;
-    author_name?:                  string;
-    provider_name?:                string;
-    provider_icon_url?:            string;
-    function_trigger_id?:          string;
-    app_id?:                       string;
-    is_workflow_app?:              boolean;
-    sales_home_workflow_app_type?: number;
-    app_collaborators?:            string[];
-    button_label?:                 string;
-    bot_user_id?:                  string;
-    url?:                          string;
-    owning_team_id?:               string;
-    workflow_id?:                  string;
-    developer_trace_id?:           string;
-    trigger_type?:                 string;
-    trigger_subtype?:              string;
-    share_url?:                    string;
+    type?:     BlockType;
+    elements?: Element[];
+    block_id?: string;
 }
 
-export interface Accessory {
-    type?:                            string;
-    image_url?:                       string;
-    alt_text?:                        string;
-    fallback?:                        string;
-    image_width?:                     number;
-    image_height?:                    number;
-    image_bytes?:                     number;
-    text?:                            Text;
-    action_id?:                       string;
-    url?:                             string;
-    value?:                           string;
-    style?:                           string;
-    confirm?:                         AccessoryConfirm;
-    accessibility_label?:             string;
-    workflow?:                        Workflow;
-    options?:                         InitialOptionElement[];
-    initial_options?:                 InitialOptionElement[];
-    focus_on_load?:                   boolean;
-    initial_option?:                  InitialOptionElement;
-    placeholder?:                     Text;
-    initial_channel?:                 string;
-    response_url_enabled?:            boolean;
-    initial_channels?:                string[];
-    max_selected_items?:              number;
-    initial_conversation?:            string;
-    default_to_current_conversation?: boolean;
-    filter?:                          Filter;
-    initial_conversations?:           string[];
-    initial_date?:                    string;
-    initial_time?:                    string;
-    timezone?:                        string;
-    initial_date_time?:               number;
-    min_query_length?:                number;
-    option_groups?:                   AccessoryOptionGroup[];
-    initial_user?:                    string;
-    initial_users?:                   string[];
-    elements?:                        AccessoryElement[];
-    indent?:                          number;
-    offset?:                          number;
-    border?:                          number;
+export interface Element {
+    type?:                ActionType;
+    text?:                Subtitle;
+    action_id?:           string;
+    url?:                 string;
+    value?:               string;
+    style?:               string;
+    confirm?:             ElementConfirm;
+    accessibility_label?: string;
+    workflow?:            Workflow;
+    image_url?:           string;
+    alt_text?:            string;
+    fallback?:            string;
+    image_width?:         number;
+    image_height?:        number;
+    image_bytes?:         number;
 }
 
-export interface AccessoryConfirm {
-    title?:   Text;
-    text?:    Text;
-    confirm?: Text;
-    deny?:    Text;
+export interface ElementConfirm {
+    title?:   Subtitle;
+    text?:    Subtitle;
+    confirm?: Subtitle;
+    deny?:    Subtitle;
     style?:   string;
 }
 
-export interface Text {
-    type?:     TextType;
-    text?:     string;
-    emoji?:    boolean;
-    verbatim?: boolean;
+export interface Subtitle {
+    type?:  SubtitleType;
+    text?:  string;
+    emoji?: boolean;
 }
 
-export enum TextType {
-    Mrkdwn = "mrkdwn",
+export enum SubtitleType {
     PlainText = "plain_text",
-}
-
-export interface AccessoryElement {
-    type?:     FluffyType;
-    elements?: PurpleElement[];
-    style?:    string;
-    indent?:   number;
-    offset?:   number;
-    border?:   number;
-}
-
-export interface PurpleElement {
-    type?:         PurpleType;
-    range?:        string;
-    style?:        Style;
-    text?:         string;
-    channel_id?:   string;
-    value?:        string;
-    timestamp?:    number;
-    url?:          string;
-    team_id?:      string;
-    user_id?:      string;
-    usergroup_id?: string;
-    name?:         string;
-    skin_tone?:    number;
-    unicode?:      string;
-}
-
-export interface Style {
-    bold?:   boolean;
-    italic?: boolean;
-    strike?: boolean;
-    code?:   boolean;
-}
-
-export enum PurpleType {
-    Broadcast = "broadcast",
-    Channel = "channel",
-    Color = "color",
-    Date = "date",
-    Emoji = "emoji",
-    Link = "link",
-    Team = "team",
-    Text = "text",
-    User = "user",
-    Usergroup = "usergroup",
-}
-
-export enum FluffyType {
-    RichTextList = "rich_text_list",
-    RichTextPreformatted = "rich_text_preformatted",
-    RichTextQuote = "rich_text_quote",
-    RichTextSection = "rich_text_section",
-}
-
-export interface Filter {
-    include?:                          any[];
-    exclude_external_shared_channels?: boolean;
-    exclude_bot_users?:                boolean;
-}
-
-export interface InitialOptionElement {
-    text?:        Text;
-    value?:       string;
-    description?: Text;
-    url?:         string;
-}
-
-export interface AccessoryOptionGroup {
-    label?:   Text;
-    options?: InitialOptionElement[];
 }
 
 export interface Workflow {
@@ -510,12 +387,6 @@ export interface CustomizableInputParameter {
 export enum BlockType {
     Actions = "actions",
     Context = "context",
-    Divider = "divider",
-    Image = "image",
-    RichText = "rich_text",
-    Section = "section",
-    ShareShortcut = "share_shortcut",
-    Video = "video",
 }
 
 export interface Field {
@@ -924,8 +795,8 @@ export interface AttachmentMetadata {
 export interface Preview {
     type?:       string;
     can_remove?: boolean;
-    title?:      Text;
-    subtitle?:   Text;
+    title?:      Subtitle;
+    subtitle?:   Subtitle;
     icon_url?:   string;
 }
 

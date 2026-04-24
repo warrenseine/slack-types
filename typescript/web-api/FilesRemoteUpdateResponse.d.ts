@@ -234,87 +234,28 @@ export interface CreationSource {
 }
 
 export interface Block {
-    type?:                         string;
-    elements?:                     Accessory[];
-    block_id?:                     string;
-    fallback?:                     string;
-    image_url?:                    string;
-    image_width?:                  number;
-    image_height?:                 number;
-    image_bytes?:                  number;
-    is_animated?:                  boolean;
-    slack_file?:                   SlackFile;
-    alt_text?:                     string;
-    title?:                        Text | string;
-    text?:                         Text;
-    fields?:                       Text[];
-    accessory?:                    Accessory;
-    expand?:                       boolean;
-    title_url?:                    string;
-    description?:                  Text | string;
-    video_url?:                    string;
-    thumbnail_url?:                string;
-    author_name?:                  string;
-    provider_name?:                string;
-    provider_icon_url?:            string;
-    function_trigger_id?:          string;
-    app_id?:                       string;
-    is_workflow_app?:              boolean;
-    sales_home_workflow_app_type?: number;
-    app_collaborators?:            string[];
-    button_label?:                 string;
-    bot_user_id?:                  string;
-    url?:                          string;
-    owning_team_id?:               string;
-    workflow_id?:                  string;
-    developer_trace_id?:           string;
-    trigger_type?:                 string;
-    trigger_subtype?:              string;
-    share_url?:                    string;
+    type?:     string;
+    elements?: Element[];
+    block_id?: string;
 }
 
-export interface Accessory {
-    type?:                            string;
-    image_url?:                       string;
-    alt_text?:                        string;
-    fallback?:                        string;
-    image_width?:                     number;
-    image_height?:                    number;
-    image_bytes?:                     number;
-    slack_file?:                      SlackFile;
-    text?:                            Text;
-    action_id?:                       string;
-    url?:                             string;
-    value?:                           string;
-    style?:                           string;
-    confirm?:                         Confirm;
-    accessibility_label?:             string;
-    workflow?:                        Workflow;
-    options?:                         Option[];
-    initial_options?:                 Option[];
-    focus_on_load?:                   boolean;
-    initial_option?:                  Option;
-    placeholder?:                     Text;
-    initial_channel?:                 string;
-    response_url_enabled?:            boolean;
-    initial_channels?:                string[];
-    max_selected_items?:              number;
-    initial_conversation?:            string;
-    default_to_current_conversation?: boolean;
-    filter?:                          AccessoryFilter;
-    initial_conversations?:           string[];
-    initial_date?:                    string;
-    initial_time?:                    string;
-    timezone?:                        string;
-    initial_date_time?:               number;
-    min_query_length?:                number;
-    option_groups?:                   OptionGroup[];
-    initial_user?:                    string;
-    initial_users?:                   string[];
-    elements?:                        AccessoryElement[];
-    indent?:                          number;
-    offset?:                          number;
-    border?:                          number;
+export interface Element {
+    type?:                string;
+    text?:                Text;
+    action_id?:           string;
+    url?:                 string;
+    value?:               string;
+    style?:               string;
+    confirm?:             Confirm;
+    accessibility_label?: string;
+    workflow?:            Workflow;
+    image_url?:           string;
+    alt_text?:            string;
+    fallback?:            string;
+    image_width?:         number;
+    image_height?:        number;
+    image_bytes?:         number;
+    slack_file?:          SlackFile;
 }
 
 export interface Confirm {
@@ -326,92 +267,13 @@ export interface Confirm {
 }
 
 export interface Text {
-    type?:     TextType;
-    text?:     string;
-    emoji?:    boolean;
-    verbatim?: boolean;
+    type?:  Type;
+    text?:  string;
+    emoji?: boolean;
 }
 
-export enum TextType {
-    Mrkdwn = "mrkdwn",
+export enum Type {
     PlainText = "plain_text",
-}
-
-export interface AccessoryElement {
-    type?:     FluffyType;
-    elements?: PurpleElement[];
-    style?:    string;
-    indent?:   number;
-    offset?:   number;
-    border?:   number;
-}
-
-export interface PurpleElement {
-    type?:         PurpleType;
-    range?:        string;
-    style?:        Style;
-    text?:         string;
-    channel_id?:   string;
-    value?:        string;
-    timestamp?:    number;
-    format?:       string;
-    url?:          string;
-    fallback?:     string;
-    unsafe?:       boolean;
-    team_id?:      string;
-    user_id?:      string;
-    usergroup_id?: string;
-    name?:         string;
-    skin_tone?:    number;
-    unicode?:      string;
-}
-
-export interface Style {
-    bold?:             boolean;
-    italic?:           boolean;
-    strike?:           boolean;
-    highlight?:        boolean;
-    client_highlight?: boolean;
-    unlink?:           boolean;
-    code?:             boolean;
-}
-
-export enum PurpleType {
-    Broadcast = "broadcast",
-    Channel = "channel",
-    Color = "color",
-    Date = "date",
-    Emoji = "emoji",
-    Link = "link",
-    Team = "team",
-    Text = "text",
-    User = "user",
-    Usergroup = "usergroup",
-}
-
-export enum FluffyType {
-    RichTextList = "rich_text_list",
-    RichTextPreformatted = "rich_text_preformatted",
-    RichTextQuote = "rich_text_quote",
-    RichTextSection = "rich_text_section",
-}
-
-export interface AccessoryFilter {
-    include?:                          any[];
-    exclude_external_shared_channels?: boolean;
-    exclude_bot_users?:                boolean;
-}
-
-export interface Option {
-    text?:        Text;
-    value?:       string;
-    description?: Text;
-    url?:         string;
-}
-
-export interface OptionGroup {
-    label?:   Text;
-    options?: Option[];
 }
 
 export interface SlackFile {
@@ -494,7 +356,7 @@ export interface View {
     default_view_key?:     string;
     show_completed_items?: boolean;
     grouping?:             Grouping;
-    filters?:              FilterElement[];
+    filters?:              Filter[];
 }
 
 export interface Column {
@@ -505,7 +367,7 @@ export interface Column {
     width?:    number;
 }
 
-export interface FilterElement {
+export interface Filter {
     key?:          string;
     operator?:     string;
     values?:       string[];

@@ -5,16 +5,21 @@ class PyWriter
     @project_name = "slack_types"
     @output_prefix_path = __dir__ + '/../../python'
     @index_file = "#{@output_prefix_path}/#{@project_name}/#{index_file}"
+    @helper = __dir__ + '/py_generate.py'
 
     create_file()
   end
 
   def write(root_class_name, json_path, typedef_filepath, input_json)
-    cmd = "quicktype --all-properties-optional --nice-property-names --python-version 3.7 -t #{root_class_name} -l python -o #{@output_prefix_path}/#{@project_name}/#{typedef_filepath}"
+    output_path = "#{@output_prefix_path}/#{@project_name}/#{typedef_filepath}"
+    cmd = [
+      'uv', 'run', '--group', 'dev', 'python', @helper,
+      '--input', json_path,
+      '--output', output_path,
+      '--class-name', root_class_name,
+    ]
     puts "Generating #{root_class_name} from #{json_path}"
-    Open3.popen3(cmd) do |stdin, stdout, stderr, wait_thr|
-      stdin.write(input_json)
-    end
+    system(*cmd) || raise("py_generate failed for #{json_path}")
   end
 
   def create_file()

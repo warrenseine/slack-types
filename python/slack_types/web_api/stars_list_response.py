@@ -1,1997 +1,1857 @@
-# To use this code, make sure you
-#
-#     import json
-#
-# and then, to convert JSON from a string, do
-#
-#     result = stars_list_response_from_dict(json.loads(json_string))
-
-from dataclasses import dataclass
-from typing import Optional, Any, List, Dict, TypeVar, Callable, Type, cast
-
-
-T = TypeVar("T")
-
-
-def from_str(x: Any) -> str:
-    assert isinstance(x, str)
-    return x
-
-
-def from_none(x: Any) -> Any:
-    assert x is None
-    return x
-
-
-def from_union(fs, x):
-    for f in fs:
-        try:
-            return f(x)
-        except:
-            pass
-    assert False
-
-
-def from_int(x: Any) -> int:
-    assert isinstance(x, int) and not isinstance(x, bool)
-    return x
-
-
-def from_bool(x: Any) -> bool:
-    assert isinstance(x, bool)
-    return x
-
-
-def from_list(f: Callable[[Any], T], x: Any) -> List[T]:
-    assert isinstance(x, list)
-    return [f(y) for y in x]
-
-
-def from_dict(f: Callable[[Any], T], x: Any) -> Dict[str, T]:
-    assert isinstance(x, dict)
-    return { k: f(v) for (k, v) in x.items() }
-
-
-def to_class(c: Type[T], x: Any) -> dict:
-    assert isinstance(x, c)
-    return cast(Any, x).to_dict()
-
-
-@dataclass
-class Comment:
-    id: Optional[str] = None
-    created: Optional[int] = None
-    timestamp: Optional[int] = None
-    user: Optional[str] = None
-    is_intro: Optional[bool] = None
-    comment: Optional[str] = None
-    num_stars: Optional[int] = None
-    is_starred: Optional[bool] = None
-    channel: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Comment':
-        assert isinstance(obj, dict)
-        id = from_union([from_str, from_none], obj.get("id"))
-        created = from_union([from_int, from_none], obj.get("created"))
-        timestamp = from_union([from_int, from_none], obj.get("timestamp"))
-        user = from_union([from_str, from_none], obj.get("user"))
-        is_intro = from_union([from_bool, from_none], obj.get("is_intro"))
-        comment = from_union([from_str, from_none], obj.get("comment"))
-        num_stars = from_union([from_int, from_none], obj.get("num_stars"))
-        is_starred = from_union([from_bool, from_none], obj.get("is_starred"))
-        channel = from_union([from_str, from_none], obj.get("channel"))
-        return Comment(id, created, timestamp, user, is_intro, comment, num_stars, is_starred, channel)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["id"] = from_union([from_str, from_none], self.id)
-        result["created"] = from_union([from_int, from_none], self.created)
-        result["timestamp"] = from_union([from_int, from_none], self.timestamp)
-        result["user"] = from_union([from_str, from_none], self.user)
-        result["is_intro"] = from_union([from_bool, from_none], self.is_intro)
-        result["comment"] = from_union([from_str, from_none], self.comment)
-        result["num_stars"] = from_union([from_int, from_none], self.num_stars)
-        result["is_starred"] = from_union([from_bool, from_none], self.is_starred)
-        result["channel"] = from_union([from_str, from_none], self.channel)
-        return result
-
-
-@dataclass
-class Cc:
-    address: Optional[str] = None
-    name: Optional[str] = None
-    original: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Cc':
-        assert isinstance(obj, dict)
-        address = from_union([from_str, from_none], obj.get("address"))
-        name = from_union([from_str, from_none], obj.get("name"))
-        original = from_union([from_str, from_none], obj.get("original"))
-        return Cc(address, name, original)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["address"] = from_union([from_str, from_none], self.address)
-        result["name"] = from_union([from_str, from_none], self.name)
-        result["original"] = from_union([from_str, from_none], self.original)
-        return result
-
-
-@dataclass
-class Headers:
-    date: Optional[str] = None
-    in_reply_to: Optional[str] = None
-    reply_to: Optional[str] = None
-    message_id: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Headers':
-        assert isinstance(obj, dict)
-        date = from_union([from_str, from_none], obj.get("date"))
-        in_reply_to = from_union([from_str, from_none], obj.get("in_reply_to"))
-        reply_to = from_union([from_str, from_none], obj.get("reply_to"))
-        message_id = from_union([from_str, from_none], obj.get("message_id"))
-        return Headers(date, in_reply_to, reply_to, message_id)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["date"] = from_union([from_str, from_none], self.date)
-        result["in_reply_to"] = from_union([from_str, from_none], self.in_reply_to)
-        result["reply_to"] = from_union([from_str, from_none], self.reply_to)
-        result["message_id"] = from_union([from_str, from_none], self.message_id)
-        return result
-
-
-@dataclass
-class MediaProgress:
-    offset_ms: Optional[int] = None
-    max_offset_ms: Optional[int] = None
-    duration_ms: Optional[int] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'MediaProgress':
-        assert isinstance(obj, dict)
-        offset_ms = from_union([from_int, from_none], obj.get("offset_ms"))
-        max_offset_ms = from_union([from_int, from_none], obj.get("max_offset_ms"))
-        duration_ms = from_union([from_int, from_none], obj.get("duration_ms"))
-        return MediaProgress(offset_ms, max_offset_ms, duration_ms)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["offset_ms"] = from_union([from_int, from_none], self.offset_ms)
-        result["max_offset_ms"] = from_union([from_int, from_none], self.max_offset_ms)
-        result["duration_ms"] = from_union([from_int, from_none], self.duration_ms)
-        return result
-
-
-@dataclass
-class Reaction:
-    name: Optional[str] = None
-    count: Optional[int] = None
-    users: Optional[List[str]] = None
-    url: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Reaction':
-        assert isinstance(obj, dict)
-        name = from_union([from_str, from_none], obj.get("name"))
-        count = from_union([from_int, from_none], obj.get("count"))
-        users = from_union([lambda x: from_list(from_str, x), from_none], obj.get("users"))
-        url = from_union([from_str, from_none], obj.get("url"))
-        return Reaction(name, count, users, url)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["name"] = from_union([from_str, from_none], self.name)
-        result["count"] = from_union([from_int, from_none], self.count)
-        result["users"] = from_union([lambda x: from_list(from_str, x), from_none], self.users)
-        result["url"] = from_union([from_str, from_none], self.url)
-        return result
-
-
-@dataclass
-class Saved:
-    is_archived: Optional[bool] = None
-    date_completed: Optional[int] = None
-    date_due: Optional[int] = None
-    state: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Saved':
-        assert isinstance(obj, dict)
-        is_archived = from_union([from_bool, from_none], obj.get("is_archived"))
-        date_completed = from_union([from_int, from_none], obj.get("date_completed"))
-        date_due = from_union([from_int, from_none], obj.get("date_due"))
-        state = from_union([from_str, from_none], obj.get("state"))
-        return Saved(is_archived, date_completed, date_due, state)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["is_archived"] = from_union([from_bool, from_none], self.is_archived)
-        result["date_completed"] = from_union([from_int, from_none], self.date_completed)
-        result["date_due"] = from_union([from_int, from_none], self.date_due)
-        result["state"] = from_union([from_str, from_none], self.state)
-        return result
-
-
-@dataclass
-class Private:
-    share_user_id: Optional[str] = None
-    reply_users: Optional[List[str]] = None
-    reply_users_count: Optional[int] = None
-    reply_count: Optional[int] = None
-    ts: Optional[str] = None
-    thread_ts: Optional[str] = None
-    latest_reply: Optional[str] = None
-    channel_name: Optional[str] = None
-    team_id: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Private':
-        assert isinstance(obj, dict)
-        share_user_id = from_union([from_str, from_none], obj.get("share_user_id"))
-        reply_users = from_union([lambda x: from_list(from_str, x), from_none], obj.get("reply_users"))
-        reply_users_count = from_union([from_int, from_none], obj.get("reply_users_count"))
-        reply_count = from_union([from_int, from_none], obj.get("reply_count"))
-        ts = from_union([from_str, from_none], obj.get("ts"))
-        thread_ts = from_union([from_str, from_none], obj.get("thread_ts"))
-        latest_reply = from_union([from_str, from_none], obj.get("latest_reply"))
-        channel_name = from_union([from_str, from_none], obj.get("channel_name"))
-        team_id = from_union([from_str, from_none], obj.get("team_id"))
-        return Private(share_user_id, reply_users, reply_users_count, reply_count, ts, thread_ts, latest_reply, channel_name, team_id)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["share_user_id"] = from_union([from_str, from_none], self.share_user_id)
-        result["reply_users"] = from_union([lambda x: from_list(from_str, x), from_none], self.reply_users)
-        result["reply_users_count"] = from_union([from_int, from_none], self.reply_users_count)
-        result["reply_count"] = from_union([from_int, from_none], self.reply_count)
-        result["ts"] = from_union([from_str, from_none], self.ts)
-        result["thread_ts"] = from_union([from_str, from_none], self.thread_ts)
-        result["latest_reply"] = from_union([from_str, from_none], self.latest_reply)
-        result["channel_name"] = from_union([from_str, from_none], self.channel_name)
-        result["team_id"] = from_union([from_str, from_none], self.team_id)
-        return result
-
-
-@dataclass
-class Shares:
-    public: Optional[Dict[str, List[Private]]] = None
-    private: Optional[Dict[str, List[Private]]] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Shares':
-        assert isinstance(obj, dict)
-        public = from_union([lambda x: from_dict(lambda x: from_list(Private.from_dict, x), x), from_none], obj.get("public"))
-        private = from_union([lambda x: from_dict(lambda x: from_list(Private.from_dict, x), x), from_none], obj.get("private"))
-        return Shares(public, private)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["public"] = from_union([lambda x: from_dict(lambda x: from_list(lambda x: to_class(Private, x), x), x), from_none], self.public)
-        result["private"] = from_union([lambda x: from_dict(lambda x: from_list(lambda x: to_class(Private, x), x), x), from_none], self.private)
-        return result
-
-
-@dataclass
-class Transcription:
-    status: Optional[str] = None
-    locale: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Transcription':
-        assert isinstance(obj, dict)
-        status = from_union([from_str, from_none], obj.get("status"))
-        locale = from_union([from_str, from_none], obj.get("locale"))
-        return Transcription(status, locale)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["status"] = from_union([from_str, from_none], self.status)
-        result["locale"] = from_union([from_str, from_none], self.locale)
-        return result
-
-
-@dataclass
-class File:
-    id: Optional[str] = None
-    created: Optional[int] = None
-    timestamp: Optional[int] = None
-    name: Optional[str] = None
-    title: Optional[str] = None
-    subject: Optional[str] = None
-    mimetype: Optional[str] = None
-    filetype: Optional[str] = None
-    pretty_type: Optional[str] = None
-    user: Optional[str] = None
-    user_team: Optional[str] = None
-    source_team: Optional[str] = None
-    mode: Optional[str] = None
-    editable: Optional[bool] = None
-    non_owner_editable: Optional[bool] = None
-    editor: Optional[str] = None
-    last_editor: Optional[str] = None
-    updated: Optional[int] = None
-    file_access: Optional[str] = None
-    alt_txt: Optional[str] = None
-    subtype: Optional[str] = None
-    transcription: Optional[Transcription] = None
-    mp4: Optional[str] = None
-    mp4_low: Optional[str] = None
-    vtt: Optional[str] = None
-    hls: Optional[str] = None
-    hls_embed: Optional[str] = None
-    duration_ms: Optional[int] = None
-    thumb_video_w: Optional[int] = None
-    thumb_video_h: Optional[int] = None
-    original_attachment_count: Optional[int] = None
-    is_external: Optional[bool] = None
-    external_type: Optional[str] = None
-    external_id: Optional[str] = None
-    external_url: Optional[str] = None
-    username: Optional[str] = None
-    size: Optional[int] = None
-    url_private: Optional[str] = None
-    url_private_download: Optional[str] = None
-    app_id: Optional[str] = None
-    app_name: Optional[str] = None
-    thumb_64: Optional[str] = None
-    thumb_64__gif: Optional[str] = None
-    thumb_64__w: Optional[str] = None
-    thumb_64__h: Optional[str] = None
-    thumb_80: Optional[str] = None
-    thumb_80__gif: Optional[str] = None
-    thumb_80__w: Optional[str] = None
-    thumb_80__h: Optional[str] = None
-    thumb_160: Optional[str] = None
-    thumb_160__gif: Optional[str] = None
-    thumb_160__w: Optional[str] = None
-    thumb_160__h: Optional[str] = None
-    thumb_360: Optional[str] = None
-    thumb_360__gif: Optional[str] = None
-    thumb_360__w: Optional[str] = None
-    thumb_360__h: Optional[str] = None
-    thumb_480: Optional[str] = None
-    thumb_480__gif: Optional[str] = None
-    thumb_480__w: Optional[str] = None
-    thumb_480__h: Optional[str] = None
-    thumb_720: Optional[str] = None
-    thumb_720__gif: Optional[str] = None
-    thumb_720__w: Optional[str] = None
-    thumb_720__h: Optional[str] = None
-    thumb_800: Optional[str] = None
-    thumb_800__gif: Optional[str] = None
-    thumb_800__w: Optional[str] = None
-    thumb_800__h: Optional[str] = None
-    thumb_960: Optional[str] = None
-    thumb_960__gif: Optional[str] = None
-    thumb_960__w: Optional[str] = None
-    thumb_960__h: Optional[str] = None
-    thumb_1024: Optional[str] = None
-    thumb_1024__gif: Optional[str] = None
-    thumb_1024__w: Optional[str] = None
-    thumb_1024__h: Optional[str] = None
-    thumb_video: Optional[str] = None
-    thumb_gif: Optional[str] = None
-    thumb_pdf: Optional[str] = None
-    thumb_pdf_w: Optional[str] = None
-    thumb_pdf_h: Optional[str] = None
-    thumb_tiny: Optional[str] = None
-    converted_pdf: Optional[str] = None
-    image_exif_rotation: Optional[int] = None
-    original_w: Optional[str] = None
-    original_h: Optional[str] = None
-    deanimate: Optional[str] = None
-    deanimate_gif: Optional[str] = None
-    pjpeg: Optional[str] = None
-    permalink: Optional[str] = None
-    permalink_public: Optional[str] = None
-    edit_link: Optional[str] = None
-    has_rich_preview: Optional[bool] = None
-    media_display_type: Optional[str] = None
-    preview_is_truncated: Optional[bool] = None
-    preview: Optional[str] = None
-    preview_highlight: Optional[str] = None
-    plain_text: Optional[str] = None
-    preview_plain_text: Optional[str] = None
-    has_more: Optional[bool] = None
-    sent_to_self: Optional[bool] = None
-    lines: Optional[int] = None
-    lines_more: Optional[int] = None
-    is_public: Optional[bool] = None
-    public_url_shared: Optional[bool] = None
-    display_as_bot: Optional[bool] = None
-    channels: Optional[List[str]] = None
-    groups: Optional[List[str]] = None
-    ims: Optional[List[str]] = None
-    shares: Optional[Shares] = None
-    has_more_shares: Optional[bool] = None
-    to: Optional[List[Cc]] = None
-    file_from: Optional[List[Cc]] = None
-    cc: Optional[List[Cc]] = None
-    channel_actions_ts: Optional[str] = None
-    channel_actions_count: Optional[int] = None
-    headers: Optional[Headers] = None
-    simplified_html: Optional[str] = None
-    media_progress: Optional[MediaProgress] = None
-    saved: Optional[Saved] = None
-    bot_id: Optional[str] = None
-    initial_comment: Optional[Comment] = None
-    num_stars: Optional[int] = None
-    is_starred: Optional[bool] = None
-    pinned_to: Optional[List[str]] = None
-    reactions: Optional[List[Reaction]] = None
-    comments_count: Optional[int] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'File':
-        assert isinstance(obj, dict)
-        id = from_union([from_str, from_none], obj.get("id"))
-        created = from_union([from_int, from_none], obj.get("created"))
-        timestamp = from_union([from_int, from_none], obj.get("timestamp"))
-        name = from_union([from_str, from_none], obj.get("name"))
-        title = from_union([from_str, from_none], obj.get("title"))
-        subject = from_union([from_str, from_none], obj.get("subject"))
-        mimetype = from_union([from_str, from_none], obj.get("mimetype"))
-        filetype = from_union([from_str, from_none], obj.get("filetype"))
-        pretty_type = from_union([from_str, from_none], obj.get("pretty_type"))
-        user = from_union([from_str, from_none], obj.get("user"))
-        user_team = from_union([from_str, from_none], obj.get("user_team"))
-        source_team = from_union([from_str, from_none], obj.get("source_team"))
-        mode = from_union([from_str, from_none], obj.get("mode"))
-        editable = from_union([from_bool, from_none], obj.get("editable"))
-        non_owner_editable = from_union([from_bool, from_none], obj.get("non_owner_editable"))
-        editor = from_union([from_str, from_none], obj.get("editor"))
-        last_editor = from_union([from_str, from_none], obj.get("last_editor"))
-        updated = from_union([from_int, from_none], obj.get("updated"))
-        file_access = from_union([from_str, from_none], obj.get("file_access"))
-        alt_txt = from_union([from_str, from_none], obj.get("alt_txt"))
-        subtype = from_union([from_str, from_none], obj.get("subtype"))
-        transcription = from_union([Transcription.from_dict, from_none], obj.get("transcription"))
-        mp4 = from_union([from_str, from_none], obj.get("mp4"))
-        mp4_low = from_union([from_str, from_none], obj.get("mp4_low"))
-        vtt = from_union([from_str, from_none], obj.get("vtt"))
-        hls = from_union([from_str, from_none], obj.get("hls"))
-        hls_embed = from_union([from_str, from_none], obj.get("hls_embed"))
-        duration_ms = from_union([from_int, from_none], obj.get("duration_ms"))
-        thumb_video_w = from_union([from_int, from_none], obj.get("thumb_video_w"))
-        thumb_video_h = from_union([from_int, from_none], obj.get("thumb_video_h"))
-        original_attachment_count = from_union([from_int, from_none], obj.get("original_attachment_count"))
-        is_external = from_union([from_bool, from_none], obj.get("is_external"))
-        external_type = from_union([from_str, from_none], obj.get("external_type"))
-        external_id = from_union([from_str, from_none], obj.get("external_id"))
-        external_url = from_union([from_str, from_none], obj.get("external_url"))
-        username = from_union([from_str, from_none], obj.get("username"))
-        size = from_union([from_int, from_none], obj.get("size"))
-        url_private = from_union([from_str, from_none], obj.get("url_private"))
-        url_private_download = from_union([from_str, from_none], obj.get("url_private_download"))
-        app_id = from_union([from_str, from_none], obj.get("app_id"))
-        app_name = from_union([from_str, from_none], obj.get("app_name"))
-        thumb_64 = from_union([from_str, from_none], obj.get("thumb_64"))
-        thumb_64__gif = from_union([from_str, from_none], obj.get("thumb_64_gif"))
-        thumb_64__w = from_union([from_str, from_none], obj.get("thumb_64_w"))
-        thumb_64__h = from_union([from_str, from_none], obj.get("thumb_64_h"))
-        thumb_80 = from_union([from_str, from_none], obj.get("thumb_80"))
-        thumb_80__gif = from_union([from_str, from_none], obj.get("thumb_80_gif"))
-        thumb_80__w = from_union([from_str, from_none], obj.get("thumb_80_w"))
-        thumb_80__h = from_union([from_str, from_none], obj.get("thumb_80_h"))
-        thumb_160 = from_union([from_str, from_none], obj.get("thumb_160"))
-        thumb_160__gif = from_union([from_str, from_none], obj.get("thumb_160_gif"))
-        thumb_160__w = from_union([from_str, from_none], obj.get("thumb_160_w"))
-        thumb_160__h = from_union([from_str, from_none], obj.get("thumb_160_h"))
-        thumb_360 = from_union([from_str, from_none], obj.get("thumb_360"))
-        thumb_360__gif = from_union([from_str, from_none], obj.get("thumb_360_gif"))
-        thumb_360__w = from_union([from_str, from_none], obj.get("thumb_360_w"))
-        thumb_360__h = from_union([from_str, from_none], obj.get("thumb_360_h"))
-        thumb_480 = from_union([from_str, from_none], obj.get("thumb_480"))
-        thumb_480__gif = from_union([from_str, from_none], obj.get("thumb_480_gif"))
-        thumb_480__w = from_union([from_str, from_none], obj.get("thumb_480_w"))
-        thumb_480__h = from_union([from_str, from_none], obj.get("thumb_480_h"))
-        thumb_720 = from_union([from_str, from_none], obj.get("thumb_720"))
-        thumb_720__gif = from_union([from_str, from_none], obj.get("thumb_720_gif"))
-        thumb_720__w = from_union([from_str, from_none], obj.get("thumb_720_w"))
-        thumb_720__h = from_union([from_str, from_none], obj.get("thumb_720_h"))
-        thumb_800 = from_union([from_str, from_none], obj.get("thumb_800"))
-        thumb_800__gif = from_union([from_str, from_none], obj.get("thumb_800_gif"))
-        thumb_800__w = from_union([from_str, from_none], obj.get("thumb_800_w"))
-        thumb_800__h = from_union([from_str, from_none], obj.get("thumb_800_h"))
-        thumb_960 = from_union([from_str, from_none], obj.get("thumb_960"))
-        thumb_960__gif = from_union([from_str, from_none], obj.get("thumb_960_gif"))
-        thumb_960__w = from_union([from_str, from_none], obj.get("thumb_960_w"))
-        thumb_960__h = from_union([from_str, from_none], obj.get("thumb_960_h"))
-        thumb_1024 = from_union([from_str, from_none], obj.get("thumb_1024"))
-        thumb_1024__gif = from_union([from_str, from_none], obj.get("thumb_1024_gif"))
-        thumb_1024__w = from_union([from_str, from_none], obj.get("thumb_1024_w"))
-        thumb_1024__h = from_union([from_str, from_none], obj.get("thumb_1024_h"))
-        thumb_video = from_union([from_str, from_none], obj.get("thumb_video"))
-        thumb_gif = from_union([from_str, from_none], obj.get("thumb_gif"))
-        thumb_pdf = from_union([from_str, from_none], obj.get("thumb_pdf"))
-        thumb_pdf_w = from_union([from_str, from_none], obj.get("thumb_pdf_w"))
-        thumb_pdf_h = from_union([from_str, from_none], obj.get("thumb_pdf_h"))
-        thumb_tiny = from_union([from_str, from_none], obj.get("thumb_tiny"))
-        converted_pdf = from_union([from_str, from_none], obj.get("converted_pdf"))
-        image_exif_rotation = from_union([from_int, from_none], obj.get("image_exif_rotation"))
-        original_w = from_union([from_str, from_none], obj.get("original_w"))
-        original_h = from_union([from_str, from_none], obj.get("original_h"))
-        deanimate = from_union([from_str, from_none], obj.get("deanimate"))
-        deanimate_gif = from_union([from_str, from_none], obj.get("deanimate_gif"))
-        pjpeg = from_union([from_str, from_none], obj.get("pjpeg"))
-        permalink = from_union([from_str, from_none], obj.get("permalink"))
-        permalink_public = from_union([from_str, from_none], obj.get("permalink_public"))
-        edit_link = from_union([from_str, from_none], obj.get("edit_link"))
-        has_rich_preview = from_union([from_bool, from_none], obj.get("has_rich_preview"))
-        media_display_type = from_union([from_str, from_none], obj.get("media_display_type"))
-        preview_is_truncated = from_union([from_bool, from_none], obj.get("preview_is_truncated"))
-        preview = from_union([from_str, from_none], obj.get("preview"))
-        preview_highlight = from_union([from_str, from_none], obj.get("preview_highlight"))
-        plain_text = from_union([from_str, from_none], obj.get("plain_text"))
-        preview_plain_text = from_union([from_str, from_none], obj.get("preview_plain_text"))
-        has_more = from_union([from_bool, from_none], obj.get("has_more"))
-        sent_to_self = from_union([from_bool, from_none], obj.get("sent_to_self"))
-        lines = from_union([from_int, from_none], obj.get("lines"))
-        lines_more = from_union([from_int, from_none], obj.get("lines_more"))
-        is_public = from_union([from_bool, from_none], obj.get("is_public"))
-        public_url_shared = from_union([from_bool, from_none], obj.get("public_url_shared"))
-        display_as_bot = from_union([from_bool, from_none], obj.get("display_as_bot"))
-        channels = from_union([lambda x: from_list(from_str, x), from_none], obj.get("channels"))
-        groups = from_union([lambda x: from_list(from_str, x), from_none], obj.get("groups"))
-        ims = from_union([lambda x: from_list(from_str, x), from_none], obj.get("ims"))
-        shares = from_union([Shares.from_dict, from_none], obj.get("shares"))
-        has_more_shares = from_union([from_bool, from_none], obj.get("has_more_shares"))
-        to = from_union([lambda x: from_list(Cc.from_dict, x), from_none], obj.get("to"))
-        file_from = from_union([lambda x: from_list(Cc.from_dict, x), from_none], obj.get("from"))
-        cc = from_union([lambda x: from_list(Cc.from_dict, x), from_none], obj.get("cc"))
-        channel_actions_ts = from_union([from_str, from_none], obj.get("channel_actions_ts"))
-        channel_actions_count = from_union([from_int, from_none], obj.get("channel_actions_count"))
-        headers = from_union([Headers.from_dict, from_none], obj.get("headers"))
-        simplified_html = from_union([from_str, from_none], obj.get("simplified_html"))
-        media_progress = from_union([MediaProgress.from_dict, from_none], obj.get("media_progress"))
-        saved = from_union([Saved.from_dict, from_none], obj.get("saved"))
-        bot_id = from_union([from_str, from_none], obj.get("bot_id"))
-        initial_comment = from_union([Comment.from_dict, from_none], obj.get("initial_comment"))
-        num_stars = from_union([from_int, from_none], obj.get("num_stars"))
-        is_starred = from_union([from_bool, from_none], obj.get("is_starred"))
-        pinned_to = from_union([lambda x: from_list(from_str, x), from_none], obj.get("pinned_to"))
-        reactions = from_union([lambda x: from_list(Reaction.from_dict, x), from_none], obj.get("reactions"))
-        comments_count = from_union([from_int, from_none], obj.get("comments_count"))
-        return File(id, created, timestamp, name, title, subject, mimetype, filetype, pretty_type, user, user_team, source_team, mode, editable, non_owner_editable, editor, last_editor, updated, file_access, alt_txt, subtype, transcription, mp4, mp4_low, vtt, hls, hls_embed, duration_ms, thumb_video_w, thumb_video_h, original_attachment_count, is_external, external_type, external_id, external_url, username, size, url_private, url_private_download, app_id, app_name, thumb_64, thumb_64__gif, thumb_64__w, thumb_64__h, thumb_80, thumb_80__gif, thumb_80__w, thumb_80__h, thumb_160, thumb_160__gif, thumb_160__w, thumb_160__h, thumb_360, thumb_360__gif, thumb_360__w, thumb_360__h, thumb_480, thumb_480__gif, thumb_480__w, thumb_480__h, thumb_720, thumb_720__gif, thumb_720__w, thumb_720__h, thumb_800, thumb_800__gif, thumb_800__w, thumb_800__h, thumb_960, thumb_960__gif, thumb_960__w, thumb_960__h, thumb_1024, thumb_1024__gif, thumb_1024__w, thumb_1024__h, thumb_video, thumb_gif, thumb_pdf, thumb_pdf_w, thumb_pdf_h, thumb_tiny, converted_pdf, image_exif_rotation, original_w, original_h, deanimate, deanimate_gif, pjpeg, permalink, permalink_public, edit_link, has_rich_preview, media_display_type, preview_is_truncated, preview, preview_highlight, plain_text, preview_plain_text, has_more, sent_to_self, lines, lines_more, is_public, public_url_shared, display_as_bot, channels, groups, ims, shares, has_more_shares, to, file_from, cc, channel_actions_ts, channel_actions_count, headers, simplified_html, media_progress, saved, bot_id, initial_comment, num_stars, is_starred, pinned_to, reactions, comments_count)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["id"] = from_union([from_str, from_none], self.id)
-        result["created"] = from_union([from_int, from_none], self.created)
-        result["timestamp"] = from_union([from_int, from_none], self.timestamp)
-        result["name"] = from_union([from_str, from_none], self.name)
-        result["title"] = from_union([from_str, from_none], self.title)
-        result["subject"] = from_union([from_str, from_none], self.subject)
-        result["mimetype"] = from_union([from_str, from_none], self.mimetype)
-        result["filetype"] = from_union([from_str, from_none], self.filetype)
-        result["pretty_type"] = from_union([from_str, from_none], self.pretty_type)
-        result["user"] = from_union([from_str, from_none], self.user)
-        result["user_team"] = from_union([from_str, from_none], self.user_team)
-        result["source_team"] = from_union([from_str, from_none], self.source_team)
-        result["mode"] = from_union([from_str, from_none], self.mode)
-        result["editable"] = from_union([from_bool, from_none], self.editable)
-        result["non_owner_editable"] = from_union([from_bool, from_none], self.non_owner_editable)
-        result["editor"] = from_union([from_str, from_none], self.editor)
-        result["last_editor"] = from_union([from_str, from_none], self.last_editor)
-        result["updated"] = from_union([from_int, from_none], self.updated)
-        result["file_access"] = from_union([from_str, from_none], self.file_access)
-        result["alt_txt"] = from_union([from_str, from_none], self.alt_txt)
-        result["subtype"] = from_union([from_str, from_none], self.subtype)
-        result["transcription"] = from_union([lambda x: to_class(Transcription, x), from_none], self.transcription)
-        result["mp4"] = from_union([from_str, from_none], self.mp4)
-        result["mp4_low"] = from_union([from_str, from_none], self.mp4_low)
-        result["vtt"] = from_union([from_str, from_none], self.vtt)
-        result["hls"] = from_union([from_str, from_none], self.hls)
-        result["hls_embed"] = from_union([from_str, from_none], self.hls_embed)
-        result["duration_ms"] = from_union([from_int, from_none], self.duration_ms)
-        result["thumb_video_w"] = from_union([from_int, from_none], self.thumb_video_w)
-        result["thumb_video_h"] = from_union([from_int, from_none], self.thumb_video_h)
-        result["original_attachment_count"] = from_union([from_int, from_none], self.original_attachment_count)
-        result["is_external"] = from_union([from_bool, from_none], self.is_external)
-        result["external_type"] = from_union([from_str, from_none], self.external_type)
-        result["external_id"] = from_union([from_str, from_none], self.external_id)
-        result["external_url"] = from_union([from_str, from_none], self.external_url)
-        result["username"] = from_union([from_str, from_none], self.username)
-        result["size"] = from_union([from_int, from_none], self.size)
-        result["url_private"] = from_union([from_str, from_none], self.url_private)
-        result["url_private_download"] = from_union([from_str, from_none], self.url_private_download)
-        result["app_id"] = from_union([from_str, from_none], self.app_id)
-        result["app_name"] = from_union([from_str, from_none], self.app_name)
-        result["thumb_64"] = from_union([from_str, from_none], self.thumb_64)
-        result["thumb_64_gif"] = from_union([from_str, from_none], self.thumb_64__gif)
-        result["thumb_64_w"] = from_union([from_str, from_none], self.thumb_64__w)
-        result["thumb_64_h"] = from_union([from_str, from_none], self.thumb_64__h)
-        result["thumb_80"] = from_union([from_str, from_none], self.thumb_80)
-        result["thumb_80_gif"] = from_union([from_str, from_none], self.thumb_80__gif)
-        result["thumb_80_w"] = from_union([from_str, from_none], self.thumb_80__w)
-        result["thumb_80_h"] = from_union([from_str, from_none], self.thumb_80__h)
-        result["thumb_160"] = from_union([from_str, from_none], self.thumb_160)
-        result["thumb_160_gif"] = from_union([from_str, from_none], self.thumb_160__gif)
-        result["thumb_160_w"] = from_union([from_str, from_none], self.thumb_160__w)
-        result["thumb_160_h"] = from_union([from_str, from_none], self.thumb_160__h)
-        result["thumb_360"] = from_union([from_str, from_none], self.thumb_360)
-        result["thumb_360_gif"] = from_union([from_str, from_none], self.thumb_360__gif)
-        result["thumb_360_w"] = from_union([from_str, from_none], self.thumb_360__w)
-        result["thumb_360_h"] = from_union([from_str, from_none], self.thumb_360__h)
-        result["thumb_480"] = from_union([from_str, from_none], self.thumb_480)
-        result["thumb_480_gif"] = from_union([from_str, from_none], self.thumb_480__gif)
-        result["thumb_480_w"] = from_union([from_str, from_none], self.thumb_480__w)
-        result["thumb_480_h"] = from_union([from_str, from_none], self.thumb_480__h)
-        result["thumb_720"] = from_union([from_str, from_none], self.thumb_720)
-        result["thumb_720_gif"] = from_union([from_str, from_none], self.thumb_720__gif)
-        result["thumb_720_w"] = from_union([from_str, from_none], self.thumb_720__w)
-        result["thumb_720_h"] = from_union([from_str, from_none], self.thumb_720__h)
-        result["thumb_800"] = from_union([from_str, from_none], self.thumb_800)
-        result["thumb_800_gif"] = from_union([from_str, from_none], self.thumb_800__gif)
-        result["thumb_800_w"] = from_union([from_str, from_none], self.thumb_800__w)
-        result["thumb_800_h"] = from_union([from_str, from_none], self.thumb_800__h)
-        result["thumb_960"] = from_union([from_str, from_none], self.thumb_960)
-        result["thumb_960_gif"] = from_union([from_str, from_none], self.thumb_960__gif)
-        result["thumb_960_w"] = from_union([from_str, from_none], self.thumb_960__w)
-        result["thumb_960_h"] = from_union([from_str, from_none], self.thumb_960__h)
-        result["thumb_1024"] = from_union([from_str, from_none], self.thumb_1024)
-        result["thumb_1024_gif"] = from_union([from_str, from_none], self.thumb_1024__gif)
-        result["thumb_1024_w"] = from_union([from_str, from_none], self.thumb_1024__w)
-        result["thumb_1024_h"] = from_union([from_str, from_none], self.thumb_1024__h)
-        result["thumb_video"] = from_union([from_str, from_none], self.thumb_video)
-        result["thumb_gif"] = from_union([from_str, from_none], self.thumb_gif)
-        result["thumb_pdf"] = from_union([from_str, from_none], self.thumb_pdf)
-        result["thumb_pdf_w"] = from_union([from_str, from_none], self.thumb_pdf_w)
-        result["thumb_pdf_h"] = from_union([from_str, from_none], self.thumb_pdf_h)
-        result["thumb_tiny"] = from_union([from_str, from_none], self.thumb_tiny)
-        result["converted_pdf"] = from_union([from_str, from_none], self.converted_pdf)
-        result["image_exif_rotation"] = from_union([from_int, from_none], self.image_exif_rotation)
-        result["original_w"] = from_union([from_str, from_none], self.original_w)
-        result["original_h"] = from_union([from_str, from_none], self.original_h)
-        result["deanimate"] = from_union([from_str, from_none], self.deanimate)
-        result["deanimate_gif"] = from_union([from_str, from_none], self.deanimate_gif)
-        result["pjpeg"] = from_union([from_str, from_none], self.pjpeg)
-        result["permalink"] = from_union([from_str, from_none], self.permalink)
-        result["permalink_public"] = from_union([from_str, from_none], self.permalink_public)
-        result["edit_link"] = from_union([from_str, from_none], self.edit_link)
-        result["has_rich_preview"] = from_union([from_bool, from_none], self.has_rich_preview)
-        result["media_display_type"] = from_union([from_str, from_none], self.media_display_type)
-        result["preview_is_truncated"] = from_union([from_bool, from_none], self.preview_is_truncated)
-        result["preview"] = from_union([from_str, from_none], self.preview)
-        result["preview_highlight"] = from_union([from_str, from_none], self.preview_highlight)
-        result["plain_text"] = from_union([from_str, from_none], self.plain_text)
-        result["preview_plain_text"] = from_union([from_str, from_none], self.preview_plain_text)
-        result["has_more"] = from_union([from_bool, from_none], self.has_more)
-        result["sent_to_self"] = from_union([from_bool, from_none], self.sent_to_self)
-        result["lines"] = from_union([from_int, from_none], self.lines)
-        result["lines_more"] = from_union([from_int, from_none], self.lines_more)
-        result["is_public"] = from_union([from_bool, from_none], self.is_public)
-        result["public_url_shared"] = from_union([from_bool, from_none], self.public_url_shared)
-        result["display_as_bot"] = from_union([from_bool, from_none], self.display_as_bot)
-        result["channels"] = from_union([lambda x: from_list(from_str, x), from_none], self.channels)
-        result["groups"] = from_union([lambda x: from_list(from_str, x), from_none], self.groups)
-        result["ims"] = from_union([lambda x: from_list(from_str, x), from_none], self.ims)
-        result["shares"] = from_union([lambda x: to_class(Shares, x), from_none], self.shares)
-        result["has_more_shares"] = from_union([from_bool, from_none], self.has_more_shares)
-        result["to"] = from_union([lambda x: from_list(lambda x: to_class(Cc, x), x), from_none], self.to)
-        result["from"] = from_union([lambda x: from_list(lambda x: to_class(Cc, x), x), from_none], self.file_from)
-        result["cc"] = from_union([lambda x: from_list(lambda x: to_class(Cc, x), x), from_none], self.cc)
-        result["channel_actions_ts"] = from_union([from_str, from_none], self.channel_actions_ts)
-        result["channel_actions_count"] = from_union([from_int, from_none], self.channel_actions_count)
-        result["headers"] = from_union([lambda x: to_class(Headers, x), from_none], self.headers)
-        result["simplified_html"] = from_union([from_str, from_none], self.simplified_html)
-        result["media_progress"] = from_union([lambda x: to_class(MediaProgress, x), from_none], self.media_progress)
-        result["saved"] = from_union([lambda x: to_class(Saved, x), from_none], self.saved)
-        result["bot_id"] = from_union([from_str, from_none], self.bot_id)
-        result["initial_comment"] = from_union([lambda x: to_class(Comment, x), from_none], self.initial_comment)
-        result["num_stars"] = from_union([from_int, from_none], self.num_stars)
-        result["is_starred"] = from_union([from_bool, from_none], self.is_starred)
-        result["pinned_to"] = from_union([lambda x: from_list(from_str, x), from_none], self.pinned_to)
-        result["reactions"] = from_union([lambda x: from_list(lambda x: to_class(Reaction, x), x), from_none], self.reactions)
-        result["comments_count"] = from_union([from_int, from_none], self.comments_count)
-        return result
-
-
-@dataclass
-class ActionConfirm:
-    title: Optional[str] = None
-    text: Optional[str] = None
-    ok_text: Optional[str] = None
-    dismiss_text: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'ActionConfirm':
-        assert isinstance(obj, dict)
-        title = from_union([from_str, from_none], obj.get("title"))
-        text = from_union([from_str, from_none], obj.get("text"))
-        ok_text = from_union([from_str, from_none], obj.get("ok_text"))
-        dismiss_text = from_union([from_str, from_none], obj.get("dismiss_text"))
-        return ActionConfirm(title, text, ok_text, dismiss_text)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["title"] = from_union([from_str, from_none], self.title)
-        result["text"] = from_union([from_str, from_none], self.text)
-        result["ok_text"] = from_union([from_str, from_none], self.ok_text)
-        result["dismiss_text"] = from_union([from_str, from_none], self.dismiss_text)
-        return result
-
-
-@dataclass
-class SelectedOptionElement:
-    text: Optional[str] = None
-    value: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'SelectedOptionElement':
-        assert isinstance(obj, dict)
-        text = from_union([from_str, from_none], obj.get("text"))
-        value = from_union([from_str, from_none], obj.get("value"))
-        return SelectedOptionElement(text, value)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["text"] = from_union([from_str, from_none], self.text)
-        result["value"] = from_union([from_str, from_none], self.value)
-        return result
-
-
-@dataclass
-class ActionOptionGroup:
-    text: Optional[str] = None
-    options: Optional[List[SelectedOptionElement]] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'ActionOptionGroup':
-        assert isinstance(obj, dict)
-        text = from_union([from_str, from_none], obj.get("text"))
-        options = from_union([lambda x: from_list(SelectedOptionElement.from_dict, x), from_none], obj.get("options"))
-        return ActionOptionGroup(text, options)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["text"] = from_union([from_str, from_none], self.text)
-        result["options"] = from_union([lambda x: from_list(lambda x: to_class(SelectedOptionElement, x), x), from_none], self.options)
-        return result
-
-
-@dataclass
-class Action:
-    id: Optional[str] = None
-    name: Optional[str] = None
-    text: Optional[str] = None
-    style: Optional[str] = None
-    type: Optional[str] = None
-    value: Optional[str] = None
-    confirm: Optional[ActionConfirm] = None
-    options: Optional[List[SelectedOptionElement]] = None
-    selected_options: Optional[List[SelectedOptionElement]] = None
-    data_source: Optional[str] = None
-    min_query_length: Optional[int] = None
-    option_groups: Optional[List[ActionOptionGroup]] = None
-    url: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Action':
-        assert isinstance(obj, dict)
-        id = from_union([from_str, from_none], obj.get("id"))
-        name = from_union([from_str, from_none], obj.get("name"))
-        text = from_union([from_str, from_none], obj.get("text"))
-        style = from_union([from_str, from_none], obj.get("style"))
-        type = from_union([from_str, from_none], obj.get("type"))
-        value = from_union([from_str, from_none], obj.get("value"))
-        confirm = from_union([ActionConfirm.from_dict, from_none], obj.get("confirm"))
-        options = from_union([lambda x: from_list(SelectedOptionElement.from_dict, x), from_none], obj.get("options"))
-        selected_options = from_union([lambda x: from_list(SelectedOptionElement.from_dict, x), from_none], obj.get("selected_options"))
-        data_source = from_union([from_str, from_none], obj.get("data_source"))
-        min_query_length = from_union([from_int, from_none], obj.get("min_query_length"))
-        option_groups = from_union([lambda x: from_list(ActionOptionGroup.from_dict, x), from_none], obj.get("option_groups"))
-        url = from_union([from_str, from_none], obj.get("url"))
-        return Action(id, name, text, style, type, value, confirm, options, selected_options, data_source, min_query_length, option_groups, url)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["id"] = from_union([from_str, from_none], self.id)
-        result["name"] = from_union([from_str, from_none], self.name)
-        result["text"] = from_union([from_str, from_none], self.text)
-        result["style"] = from_union([from_str, from_none], self.style)
-        result["type"] = from_union([from_str, from_none], self.type)
-        result["value"] = from_union([from_str, from_none], self.value)
-        result["confirm"] = from_union([lambda x: to_class(ActionConfirm, x), from_none], self.confirm)
-        result["options"] = from_union([lambda x: from_list(lambda x: to_class(SelectedOptionElement, x), x), from_none], self.options)
-        result["selected_options"] = from_union([lambda x: from_list(lambda x: to_class(SelectedOptionElement, x), x), from_none], self.selected_options)
-        result["data_source"] = from_union([from_str, from_none], self.data_source)
-        result["min_query_length"] = from_union([from_int, from_none], self.min_query_length)
-        result["option_groups"] = from_union([lambda x: from_list(lambda x: to_class(ActionOptionGroup, x), x), from_none], self.option_groups)
-        result["url"] = from_union([from_str, from_none], self.url)
-        return result
-
-
-@dataclass
-class Description:
-    type: Optional[str] = None
-    text: Optional[str] = None
-    emoji: Optional[bool] = None
-    verbatim: Optional[bool] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Description':
-        assert isinstance(obj, dict)
-        type = from_union([from_str, from_none], obj.get("type"))
-        text = from_union([from_str, from_none], obj.get("text"))
-        emoji = from_union([from_bool, from_none], obj.get("emoji"))
-        verbatim = from_union([from_bool, from_none], obj.get("verbatim"))
-        return Description(type, text, emoji, verbatim)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["type"] = from_union([from_str, from_none], self.type)
-        result["text"] = from_union([from_str, from_none], self.text)
-        result["emoji"] = from_union([from_bool, from_none], self.emoji)
-        result["verbatim"] = from_union([from_bool, from_none], self.verbatim)
-        return result
-
-
-@dataclass
-class AccessoryConfirm:
-    title: Optional[Description] = None
-    text: Optional[Description] = None
-    confirm: Optional[Description] = None
-    deny: Optional[Description] = None
-    style: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'AccessoryConfirm':
-        assert isinstance(obj, dict)
-        title = from_union([Description.from_dict, from_none], obj.get("title"))
-        text = from_union([Description.from_dict, from_none], obj.get("text"))
-        confirm = from_union([Description.from_dict, from_none], obj.get("confirm"))
-        deny = from_union([Description.from_dict, from_none], obj.get("deny"))
-        style = from_union([from_str, from_none], obj.get("style"))
-        return AccessoryConfirm(title, text, confirm, deny, style)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["title"] = from_union([lambda x: to_class(Description, x), from_none], self.title)
-        result["text"] = from_union([lambda x: to_class(Description, x), from_none], self.text)
-        result["confirm"] = from_union([lambda x: to_class(Description, x), from_none], self.confirm)
-        result["deny"] = from_union([lambda x: to_class(Description, x), from_none], self.deny)
-        result["style"] = from_union([from_str, from_none], self.style)
-        return result
-
-
-@dataclass
-class Style:
-    bold: Optional[bool] = None
-    italic: Optional[bool] = None
-    strike: Optional[bool] = None
-    code: Optional[bool] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Style':
-        assert isinstance(obj, dict)
-        bold = from_union([from_bool, from_none], obj.get("bold"))
-        italic = from_union([from_bool, from_none], obj.get("italic"))
-        strike = from_union([from_bool, from_none], obj.get("strike"))
-        code = from_union([from_bool, from_none], obj.get("code"))
-        return Style(bold, italic, strike, code)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["bold"] = from_union([from_bool, from_none], self.bold)
-        result["italic"] = from_union([from_bool, from_none], self.italic)
-        result["strike"] = from_union([from_bool, from_none], self.strike)
-        result["code"] = from_union([from_bool, from_none], self.code)
-        return result
-
-
-@dataclass
-class PurpleElement:
-    type: Optional[str] = None
-    range: Optional[str] = None
-    text: Optional[str] = None
-    style: Optional[Style] = None
-    channel_id: Optional[str] = None
-    value: Optional[str] = None
-    timestamp: Optional[int] = None
-    url: Optional[str] = None
-    team_id: Optional[str] = None
-    user_id: Optional[str] = None
-    usergroup_id: Optional[str] = None
-    name: Optional[str] = None
-    skin_tone: Optional[int] = None
-    unicode: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'PurpleElement':
-        assert isinstance(obj, dict)
-        type = from_union([from_str, from_none], obj.get("type"))
-        range = from_union([from_str, from_none], obj.get("range"))
-        text = from_union([from_str, from_none], obj.get("text"))
-        style = from_union([Style.from_dict, from_none], obj.get("style"))
-        channel_id = from_union([from_str, from_none], obj.get("channel_id"))
-        value = from_union([from_str, from_none], obj.get("value"))
-        timestamp = from_union([from_int, from_none], obj.get("timestamp"))
-        url = from_union([from_str, from_none], obj.get("url"))
-        team_id = from_union([from_str, from_none], obj.get("team_id"))
-        user_id = from_union([from_str, from_none], obj.get("user_id"))
-        usergroup_id = from_union([from_str, from_none], obj.get("usergroup_id"))
-        name = from_union([from_str, from_none], obj.get("name"))
-        skin_tone = from_union([from_int, from_none], obj.get("skin_tone"))
-        unicode = from_union([from_str, from_none], obj.get("unicode"))
-        return PurpleElement(type, range, text, style, channel_id, value, timestamp, url, team_id, user_id, usergroup_id, name, skin_tone, unicode)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["type"] = from_union([from_str, from_none], self.type)
-        result["range"] = from_union([from_str, from_none], self.range)
-        result["text"] = from_union([from_str, from_none], self.text)
-        result["style"] = from_union([lambda x: to_class(Style, x), from_none], self.style)
-        result["channel_id"] = from_union([from_str, from_none], self.channel_id)
-        result["value"] = from_union([from_str, from_none], self.value)
-        result["timestamp"] = from_union([from_int, from_none], self.timestamp)
-        result["url"] = from_union([from_str, from_none], self.url)
-        result["team_id"] = from_union([from_str, from_none], self.team_id)
-        result["user_id"] = from_union([from_str, from_none], self.user_id)
-        result["usergroup_id"] = from_union([from_str, from_none], self.usergroup_id)
-        result["name"] = from_union([from_str, from_none], self.name)
-        result["skin_tone"] = from_union([from_int, from_none], self.skin_tone)
-        result["unicode"] = from_union([from_str, from_none], self.unicode)
-        return result
-
-
-@dataclass
-class AccessoryElement:
-    type: Optional[str] = None
-    elements: Optional[List[PurpleElement]] = None
-    style: Optional[str] = None
-    indent: Optional[int] = None
-    offset: Optional[int] = None
-    border: Optional[int] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'AccessoryElement':
-        assert isinstance(obj, dict)
-        type = from_union([from_str, from_none], obj.get("type"))
-        elements = from_union([lambda x: from_list(PurpleElement.from_dict, x), from_none], obj.get("elements"))
-        style = from_union([from_str, from_none], obj.get("style"))
-        indent = from_union([from_int, from_none], obj.get("indent"))
-        offset = from_union([from_int, from_none], obj.get("offset"))
-        border = from_union([from_int, from_none], obj.get("border"))
-        return AccessoryElement(type, elements, style, indent, offset, border)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["type"] = from_union([from_str, from_none], self.type)
-        result["elements"] = from_union([lambda x: from_list(lambda x: to_class(PurpleElement, x), x), from_none], self.elements)
-        result["style"] = from_union([from_str, from_none], self.style)
-        result["indent"] = from_union([from_int, from_none], self.indent)
-        result["offset"] = from_union([from_int, from_none], self.offset)
-        result["border"] = from_union([from_int, from_none], self.border)
-        return result
-
-
-@dataclass
-class Filter:
-    include: Optional[List[str]] = None
-    exclude_external_shared_channels: Optional[bool] = None
-    exclude_bot_users: Optional[bool] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Filter':
-        assert isinstance(obj, dict)
-        include = from_union([lambda x: from_list(from_str, x), from_none], obj.get("include"))
-        exclude_external_shared_channels = from_union([from_bool, from_none], obj.get("exclude_external_shared_channels"))
-        exclude_bot_users = from_union([from_bool, from_none], obj.get("exclude_bot_users"))
-        return Filter(include, exclude_external_shared_channels, exclude_bot_users)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["include"] = from_union([lambda x: from_list(from_str, x), from_none], self.include)
-        result["exclude_external_shared_channels"] = from_union([from_bool, from_none], self.exclude_external_shared_channels)
-        result["exclude_bot_users"] = from_union([from_bool, from_none], self.exclude_bot_users)
-        return result
-
-
-@dataclass
-class InitialOptionElement:
-    text: Optional[Description] = None
-    value: Optional[str] = None
-    description: Optional[Description] = None
-    url: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'InitialOptionElement':
-        assert isinstance(obj, dict)
-        text = from_union([Description.from_dict, from_none], obj.get("text"))
-        value = from_union([from_str, from_none], obj.get("value"))
-        description = from_union([Description.from_dict, from_none], obj.get("description"))
-        url = from_union([from_str, from_none], obj.get("url"))
-        return InitialOptionElement(text, value, description, url)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["text"] = from_union([lambda x: to_class(Description, x), from_none], self.text)
-        result["value"] = from_union([from_str, from_none], self.value)
-        result["description"] = from_union([lambda x: to_class(Description, x), from_none], self.description)
-        result["url"] = from_union([from_str, from_none], self.url)
-        return result
-
-
-@dataclass
-class AccessoryOptionGroup:
-    label: Optional[Description] = None
-    options: Optional[List[InitialOptionElement]] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'AccessoryOptionGroup':
-        assert isinstance(obj, dict)
-        label = from_union([Description.from_dict, from_none], obj.get("label"))
-        options = from_union([lambda x: from_list(InitialOptionElement.from_dict, x), from_none], obj.get("options"))
-        return AccessoryOptionGroup(label, options)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["label"] = from_union([lambda x: to_class(Description, x), from_none], self.label)
-        result["options"] = from_union([lambda x: from_list(lambda x: to_class(InitialOptionElement, x), x), from_none], self.options)
-        return result
-
-
-@dataclass
-class Accessory:
-    type: Optional[str] = None
-    text: Optional[Description] = None
-    action_id: Optional[str] = None
-    url: Optional[str] = None
-    value: Optional[str] = None
-    style: Optional[str] = None
-    confirm: Optional[AccessoryConfirm] = None
-    accessibility_label: Optional[str] = None
-    options: Optional[List[InitialOptionElement]] = None
-    initial_options: Optional[List[InitialOptionElement]] = None
-    focus_on_load: Optional[bool] = None
-    initial_option: Optional[InitialOptionElement] = None
-    placeholder: Optional[Description] = None
-    initial_channel: Optional[str] = None
-    response_url_enabled: Optional[bool] = None
-    initial_channels: Optional[List[str]] = None
-    max_selected_items: Optional[int] = None
-    initial_conversation: Optional[str] = None
-    default_to_current_conversation: Optional[bool] = None
-    filter: Optional[Filter] = None
-    initial_conversations: Optional[List[str]] = None
-    initial_date: Optional[str] = None
-    initial_time: Optional[str] = None
-    timezone: Optional[str] = None
-    initial_date_time: Optional[int] = None
-    min_query_length: Optional[int] = None
-    image_url: Optional[str] = None
-    alt_text: Optional[str] = None
-    fallback: Optional[str] = None
-    image_width: Optional[int] = None
-    image_height: Optional[int] = None
-    image_bytes: Optional[int] = None
-    option_groups: Optional[List[AccessoryOptionGroup]] = None
-    initial_user: Optional[str] = None
-    initial_users: Optional[List[str]] = None
-    elements: Optional[List[AccessoryElement]] = None
-    indent: Optional[int] = None
-    offset: Optional[int] = None
-    border: Optional[int] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Accessory':
-        assert isinstance(obj, dict)
-        type = from_union([from_str, from_none], obj.get("type"))
-        text = from_union([Description.from_dict, from_none], obj.get("text"))
-        action_id = from_union([from_str, from_none], obj.get("action_id"))
-        url = from_union([from_str, from_none], obj.get("url"))
-        value = from_union([from_str, from_none], obj.get("value"))
-        style = from_union([from_str, from_none], obj.get("style"))
-        confirm = from_union([AccessoryConfirm.from_dict, from_none], obj.get("confirm"))
-        accessibility_label = from_union([from_str, from_none], obj.get("accessibility_label"))
-        options = from_union([lambda x: from_list(InitialOptionElement.from_dict, x), from_none], obj.get("options"))
-        initial_options = from_union([lambda x: from_list(InitialOptionElement.from_dict, x), from_none], obj.get("initial_options"))
-        focus_on_load = from_union([from_bool, from_none], obj.get("focus_on_load"))
-        initial_option = from_union([InitialOptionElement.from_dict, from_none], obj.get("initial_option"))
-        placeholder = from_union([Description.from_dict, from_none], obj.get("placeholder"))
-        initial_channel = from_union([from_str, from_none], obj.get("initial_channel"))
-        response_url_enabled = from_union([from_bool, from_none], obj.get("response_url_enabled"))
-        initial_channels = from_union([lambda x: from_list(from_str, x), from_none], obj.get("initial_channels"))
-        max_selected_items = from_union([from_int, from_none], obj.get("max_selected_items"))
-        initial_conversation = from_union([from_str, from_none], obj.get("initial_conversation"))
-        default_to_current_conversation = from_union([from_bool, from_none], obj.get("default_to_current_conversation"))
-        filter = from_union([Filter.from_dict, from_none], obj.get("filter"))
-        initial_conversations = from_union([lambda x: from_list(from_str, x), from_none], obj.get("initial_conversations"))
-        initial_date = from_union([from_str, from_none], obj.get("initial_date"))
-        initial_time = from_union([from_str, from_none], obj.get("initial_time"))
-        timezone = from_union([from_str, from_none], obj.get("timezone"))
-        initial_date_time = from_union([from_int, from_none], obj.get("initial_date_time"))
-        min_query_length = from_union([from_int, from_none], obj.get("min_query_length"))
-        image_url = from_union([from_str, from_none], obj.get("image_url"))
-        alt_text = from_union([from_str, from_none], obj.get("alt_text"))
-        fallback = from_union([from_str, from_none], obj.get("fallback"))
-        image_width = from_union([from_int, from_none], obj.get("image_width"))
-        image_height = from_union([from_int, from_none], obj.get("image_height"))
-        image_bytes = from_union([from_int, from_none], obj.get("image_bytes"))
-        option_groups = from_union([lambda x: from_list(AccessoryOptionGroup.from_dict, x), from_none], obj.get("option_groups"))
-        initial_user = from_union([from_str, from_none], obj.get("initial_user"))
-        initial_users = from_union([lambda x: from_list(from_str, x), from_none], obj.get("initial_users"))
-        elements = from_union([lambda x: from_list(AccessoryElement.from_dict, x), from_none], obj.get("elements"))
-        indent = from_union([from_int, from_none], obj.get("indent"))
-        offset = from_union([from_int, from_none], obj.get("offset"))
-        border = from_union([from_int, from_none], obj.get("border"))
-        return Accessory(type, text, action_id, url, value, style, confirm, accessibility_label, options, initial_options, focus_on_load, initial_option, placeholder, initial_channel, response_url_enabled, initial_channels, max_selected_items, initial_conversation, default_to_current_conversation, filter, initial_conversations, initial_date, initial_time, timezone, initial_date_time, min_query_length, image_url, alt_text, fallback, image_width, image_height, image_bytes, option_groups, initial_user, initial_users, elements, indent, offset, border)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["type"] = from_union([from_str, from_none], self.type)
-        result["text"] = from_union([lambda x: to_class(Description, x), from_none], self.text)
-        result["action_id"] = from_union([from_str, from_none], self.action_id)
-        result["url"] = from_union([from_str, from_none], self.url)
-        result["value"] = from_union([from_str, from_none], self.value)
-        result["style"] = from_union([from_str, from_none], self.style)
-        result["confirm"] = from_union([lambda x: to_class(AccessoryConfirm, x), from_none], self.confirm)
-        result["accessibility_label"] = from_union([from_str, from_none], self.accessibility_label)
-        result["options"] = from_union([lambda x: from_list(lambda x: to_class(InitialOptionElement, x), x), from_none], self.options)
-        result["initial_options"] = from_union([lambda x: from_list(lambda x: to_class(InitialOptionElement, x), x), from_none], self.initial_options)
-        result["focus_on_load"] = from_union([from_bool, from_none], self.focus_on_load)
-        result["initial_option"] = from_union([lambda x: to_class(InitialOptionElement, x), from_none], self.initial_option)
-        result["placeholder"] = from_union([lambda x: to_class(Description, x), from_none], self.placeholder)
-        result["initial_channel"] = from_union([from_str, from_none], self.initial_channel)
-        result["response_url_enabled"] = from_union([from_bool, from_none], self.response_url_enabled)
-        result["initial_channels"] = from_union([lambda x: from_list(from_str, x), from_none], self.initial_channels)
-        result["max_selected_items"] = from_union([from_int, from_none], self.max_selected_items)
-        result["initial_conversation"] = from_union([from_str, from_none], self.initial_conversation)
-        result["default_to_current_conversation"] = from_union([from_bool, from_none], self.default_to_current_conversation)
-        result["filter"] = from_union([lambda x: to_class(Filter, x), from_none], self.filter)
-        result["initial_conversations"] = from_union([lambda x: from_list(from_str, x), from_none], self.initial_conversations)
-        result["initial_date"] = from_union([from_str, from_none], self.initial_date)
-        result["initial_time"] = from_union([from_str, from_none], self.initial_time)
-        result["timezone"] = from_union([from_str, from_none], self.timezone)
-        result["initial_date_time"] = from_union([from_int, from_none], self.initial_date_time)
-        result["min_query_length"] = from_union([from_int, from_none], self.min_query_length)
-        result["image_url"] = from_union([from_str, from_none], self.image_url)
-        result["alt_text"] = from_union([from_str, from_none], self.alt_text)
-        result["fallback"] = from_union([from_str, from_none], self.fallback)
-        result["image_width"] = from_union([from_int, from_none], self.image_width)
-        result["image_height"] = from_union([from_int, from_none], self.image_height)
-        result["image_bytes"] = from_union([from_int, from_none], self.image_bytes)
-        result["option_groups"] = from_union([lambda x: from_list(lambda x: to_class(AccessoryOptionGroup, x), x), from_none], self.option_groups)
-        result["initial_user"] = from_union([from_str, from_none], self.initial_user)
-        result["initial_users"] = from_union([lambda x: from_list(from_str, x), from_none], self.initial_users)
-        result["elements"] = from_union([lambda x: from_list(lambda x: to_class(AccessoryElement, x), x), from_none], self.elements)
-        result["indent"] = from_union([from_int, from_none], self.indent)
-        result["offset"] = from_union([from_int, from_none], self.offset)
-        result["border"] = from_union([from_int, from_none], self.border)
-        return result
-
-
-@dataclass
-class Participant:
-    slack_id: Optional[str] = None
-    external_id: Optional[str] = None
-    display_name: Optional[str] = None
-    avatar_url: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Participant':
-        assert isinstance(obj, dict)
-        slack_id = from_union([from_str, from_none], obj.get("slack_id"))
-        external_id = from_union([from_str, from_none], obj.get("external_id"))
-        display_name = from_union([from_str, from_none], obj.get("display_name"))
-        avatar_url = from_union([from_str, from_none], obj.get("avatar_url"))
-        return Participant(slack_id, external_id, display_name, avatar_url)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["slack_id"] = from_union([from_str, from_none], self.slack_id)
-        result["external_id"] = from_union([from_str, from_none], self.external_id)
-        result["display_name"] = from_union([from_str, from_none], self.display_name)
-        result["avatar_url"] = from_union([from_str, from_none], self.avatar_url)
-        return result
-
-
-@dataclass
-class AppIconUrls:
-    image_32: Optional[str] = None
-    image_36: Optional[str] = None
-    image_48: Optional[str] = None
-    image_64: Optional[str] = None
-    image_72: Optional[str] = None
-    image_96: Optional[str] = None
-    image_128: Optional[str] = None
-    image_192: Optional[str] = None
-    image_512: Optional[str] = None
-    image_1024: Optional[str] = None
-    image_original: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'AppIconUrls':
-        assert isinstance(obj, dict)
-        image_32 = from_union([from_str, from_none], obj.get("image_32"))
-        image_36 = from_union([from_str, from_none], obj.get("image_36"))
-        image_48 = from_union([from_str, from_none], obj.get("image_48"))
-        image_64 = from_union([from_str, from_none], obj.get("image_64"))
-        image_72 = from_union([from_str, from_none], obj.get("image_72"))
-        image_96 = from_union([from_str, from_none], obj.get("image_96"))
-        image_128 = from_union([from_str, from_none], obj.get("image_128"))
-        image_192 = from_union([from_str, from_none], obj.get("image_192"))
-        image_512 = from_union([from_str, from_none], obj.get("image_512"))
-        image_1024 = from_union([from_str, from_none], obj.get("image_1024"))
-        image_original = from_union([from_str, from_none], obj.get("image_original"))
-        return AppIconUrls(image_32, image_36, image_48, image_64, image_72, image_96, image_128, image_192, image_512, image_1024, image_original)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["image_32"] = from_union([from_str, from_none], self.image_32)
-        result["image_36"] = from_union([from_str, from_none], self.image_36)
-        result["image_48"] = from_union([from_str, from_none], self.image_48)
-        result["image_64"] = from_union([from_str, from_none], self.image_64)
-        result["image_72"] = from_union([from_str, from_none], self.image_72)
-        result["image_96"] = from_union([from_str, from_none], self.image_96)
-        result["image_128"] = from_union([from_str, from_none], self.image_128)
-        result["image_192"] = from_union([from_str, from_none], self.image_192)
-        result["image_512"] = from_union([from_str, from_none], self.image_512)
-        result["image_1024"] = from_union([from_str, from_none], self.image_1024)
-        result["image_original"] = from_union([from_str, from_none], self.image_original)
-        return result
-
-
-@dataclass
-class V1:
-    id: Optional[str] = None
-    app_id: Optional[str] = None
-    app_icon_urls: Optional[AppIconUrls] = None
-    date_start: Optional[int] = None
-    active_participants: Optional[List[Participant]] = None
-    all_participants: Optional[List[Participant]] = None
-    display_id: Optional[str] = None
-    join_url: Optional[str] = None
-    desktop_app_join_url: Optional[str] = None
-    name: Optional[str] = None
-    created_by: Optional[str] = None
-    date_end: Optional[int] = None
-    channels: Optional[List[str]] = None
-    is_dm_call: Optional[bool] = None
-    was_rejected: Optional[bool] = None
-    was_missed: Optional[bool] = None
-    was_accepted: Optional[bool] = None
-    has_ended: Optional[bool] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'V1':
-        assert isinstance(obj, dict)
-        id = from_union([from_str, from_none], obj.get("id"))
-        app_id = from_union([from_str, from_none], obj.get("app_id"))
-        app_icon_urls = from_union([AppIconUrls.from_dict, from_none], obj.get("app_icon_urls"))
-        date_start = from_union([from_int, from_none], obj.get("date_start"))
-        active_participants = from_union([lambda x: from_list(Participant.from_dict, x), from_none], obj.get("active_participants"))
-        all_participants = from_union([lambda x: from_list(Participant.from_dict, x), from_none], obj.get("all_participants"))
-        display_id = from_union([from_str, from_none], obj.get("display_id"))
-        join_url = from_union([from_str, from_none], obj.get("join_url"))
-        desktop_app_join_url = from_union([from_str, from_none], obj.get("desktop_app_join_url"))
-        name = from_union([from_str, from_none], obj.get("name"))
-        created_by = from_union([from_str, from_none], obj.get("created_by"))
-        date_end = from_union([from_int, from_none], obj.get("date_end"))
-        channels = from_union([lambda x: from_list(from_str, x), from_none], obj.get("channels"))
-        is_dm_call = from_union([from_bool, from_none], obj.get("is_dm_call"))
-        was_rejected = from_union([from_bool, from_none], obj.get("was_rejected"))
-        was_missed = from_union([from_bool, from_none], obj.get("was_missed"))
-        was_accepted = from_union([from_bool, from_none], obj.get("was_accepted"))
-        has_ended = from_union([from_bool, from_none], obj.get("has_ended"))
-        return V1(id, app_id, app_icon_urls, date_start, active_participants, all_participants, display_id, join_url, desktop_app_join_url, name, created_by, date_end, channels, is_dm_call, was_rejected, was_missed, was_accepted, has_ended)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["id"] = from_union([from_str, from_none], self.id)
-        result["app_id"] = from_union([from_str, from_none], self.app_id)
-        result["app_icon_urls"] = from_union([lambda x: to_class(AppIconUrls, x), from_none], self.app_icon_urls)
-        result["date_start"] = from_union([from_int, from_none], self.date_start)
-        result["active_participants"] = from_union([lambda x: from_list(lambda x: to_class(Participant, x), x), from_none], self.active_participants)
-        result["all_participants"] = from_union([lambda x: from_list(lambda x: to_class(Participant, x), x), from_none], self.all_participants)
-        result["display_id"] = from_union([from_str, from_none], self.display_id)
-        result["join_url"] = from_union([from_str, from_none], self.join_url)
-        result["desktop_app_join_url"] = from_union([from_str, from_none], self.desktop_app_join_url)
-        result["name"] = from_union([from_str, from_none], self.name)
-        result["created_by"] = from_union([from_str, from_none], self.created_by)
-        result["date_end"] = from_union([from_int, from_none], self.date_end)
-        result["channels"] = from_union([lambda x: from_list(from_str, x), from_none], self.channels)
-        result["is_dm_call"] = from_union([from_bool, from_none], self.is_dm_call)
-        result["was_rejected"] = from_union([from_bool, from_none], self.was_rejected)
-        result["was_missed"] = from_union([from_bool, from_none], self.was_missed)
-        result["was_accepted"] = from_union([from_bool, from_none], self.was_accepted)
-        result["has_ended"] = from_union([from_bool, from_none], self.has_ended)
-        return result
-
-
-@dataclass
-class Call:
-    v1: Optional[V1] = None
-    media_backend_type: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Call':
-        assert isinstance(obj, dict)
-        v1 = from_union([V1.from_dict, from_none], obj.get("v1"))
-        media_backend_type = from_union([from_str, from_none], obj.get("media_backend_type"))
-        return Call(v1, media_backend_type)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["v1"] = from_union([lambda x: to_class(V1, x), from_none], self.v1)
-        result["media_backend_type"] = from_union([from_str, from_none], self.media_backend_type)
-        return result
-
-
-@dataclass
-class Block:
-    type: Optional[str] = None
-    elements: Optional[List[Accessory]] = None
-    block_id: Optional[str] = None
-    call_id: Optional[str] = None
-    api_decoration_available: Optional[bool] = None
-    call: Optional[Call] = None
-    external_id: Optional[str] = None
-    source: Optional[str] = None
-    file_id: Optional[str] = None
-    file: Optional[File] = None
-    text: Optional[Description] = None
-    fallback: Optional[str] = None
-    image_url: Optional[str] = None
-    image_width: Optional[int] = None
-    image_height: Optional[int] = None
-    image_bytes: Optional[int] = None
-    alt_text: Optional[str] = None
-    title: Optional[Description] = None
-    title_url: Optional[str] = None
-    description: Optional[Description] = None
-    video_url: Optional[str] = None
-    thumbnail_url: Optional[str] = None
-    author_name: Optional[str] = None
-    provider_name: Optional[str] = None
-    provider_icon_url: Optional[str] = None
-    function_trigger_id: Optional[str] = None
-    app_id: Optional[str] = None
-    is_workflow_app: Optional[bool] = None
-    app_collaborators: Optional[List[str]] = None
-    button_label: Optional[str] = None
-    bot_user_id: Optional[str] = None
-    url: Optional[str] = None
-    fields: Optional[List[Description]] = None
-    accessory: Optional[Accessory] = None
-    label: Optional[Description] = None
-    element: Optional[Accessory] = None
-    dispatch_action: Optional[bool] = None
-    hint: Optional[Description] = None
-    optional: Optional[bool] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Block':
-        assert isinstance(obj, dict)
-        type = from_union([from_str, from_none], obj.get("type"))
-        elements = from_union([lambda x: from_list(Accessory.from_dict, x), from_none], obj.get("elements"))
-        block_id = from_union([from_str, from_none], obj.get("block_id"))
-        call_id = from_union([from_str, from_none], obj.get("call_id"))
-        api_decoration_available = from_union([from_bool, from_none], obj.get("api_decoration_available"))
-        call = from_union([Call.from_dict, from_none], obj.get("call"))
-        external_id = from_union([from_str, from_none], obj.get("external_id"))
-        source = from_union([from_str, from_none], obj.get("source"))
-        file_id = from_union([from_str, from_none], obj.get("file_id"))
-        file = from_union([File.from_dict, from_none], obj.get("file"))
-        text = from_union([Description.from_dict, from_none], obj.get("text"))
-        fallback = from_union([from_str, from_none], obj.get("fallback"))
-        image_url = from_union([from_str, from_none], obj.get("image_url"))
-        image_width = from_union([from_int, from_none], obj.get("image_width"))
-        image_height = from_union([from_int, from_none], obj.get("image_height"))
-        image_bytes = from_union([from_int, from_none], obj.get("image_bytes"))
-        alt_text = from_union([from_str, from_none], obj.get("alt_text"))
-        title = from_union([Description.from_dict, from_none], obj.get("title"))
-        title_url = from_union([from_str, from_none], obj.get("title_url"))
-        description = from_union([Description.from_dict, from_none], obj.get("description"))
-        video_url = from_union([from_str, from_none], obj.get("video_url"))
-        thumbnail_url = from_union([from_str, from_none], obj.get("thumbnail_url"))
-        author_name = from_union([from_str, from_none], obj.get("author_name"))
-        provider_name = from_union([from_str, from_none], obj.get("provider_name"))
-        provider_icon_url = from_union([from_str, from_none], obj.get("provider_icon_url"))
-        function_trigger_id = from_union([from_str, from_none], obj.get("function_trigger_id"))
-        app_id = from_union([from_str, from_none], obj.get("app_id"))
-        is_workflow_app = from_union([from_bool, from_none], obj.get("is_workflow_app"))
-        app_collaborators = from_union([lambda x: from_list(from_str, x), from_none], obj.get("app_collaborators"))
-        button_label = from_union([from_str, from_none], obj.get("button_label"))
-        bot_user_id = from_union([from_str, from_none], obj.get("bot_user_id"))
-        url = from_union([from_str, from_none], obj.get("url"))
-        fields = from_union([lambda x: from_list(Description.from_dict, x), from_none], obj.get("fields"))
-        accessory = from_union([Accessory.from_dict, from_none], obj.get("accessory"))
-        label = from_union([Description.from_dict, from_none], obj.get("label"))
-        element = from_union([Accessory.from_dict, from_none], obj.get("element"))
-        dispatch_action = from_union([from_bool, from_none], obj.get("dispatch_action"))
-        hint = from_union([Description.from_dict, from_none], obj.get("hint"))
-        optional = from_union([from_bool, from_none], obj.get("optional"))
-        return Block(type, elements, block_id, call_id, api_decoration_available, call, external_id, source, file_id, file, text, fallback, image_url, image_width, image_height, image_bytes, alt_text, title, title_url, description, video_url, thumbnail_url, author_name, provider_name, provider_icon_url, function_trigger_id, app_id, is_workflow_app, app_collaborators, button_label, bot_user_id, url, fields, accessory, label, element, dispatch_action, hint, optional)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["type"] = from_union([from_str, from_none], self.type)
-        result["elements"] = from_union([lambda x: from_list(lambda x: to_class(Accessory, x), x), from_none], self.elements)
-        result["block_id"] = from_union([from_str, from_none], self.block_id)
-        result["call_id"] = from_union([from_str, from_none], self.call_id)
-        result["api_decoration_available"] = from_union([from_bool, from_none], self.api_decoration_available)
-        result["call"] = from_union([lambda x: to_class(Call, x), from_none], self.call)
-        result["external_id"] = from_union([from_str, from_none], self.external_id)
-        result["source"] = from_union([from_str, from_none], self.source)
-        result["file_id"] = from_union([from_str, from_none], self.file_id)
-        result["file"] = from_union([lambda x: to_class(File, x), from_none], self.file)
-        result["text"] = from_union([lambda x: to_class(Description, x), from_none], self.text)
-        result["fallback"] = from_union([from_str, from_none], self.fallback)
-        result["image_url"] = from_union([from_str, from_none], self.image_url)
-        result["image_width"] = from_union([from_int, from_none], self.image_width)
-        result["image_height"] = from_union([from_int, from_none], self.image_height)
-        result["image_bytes"] = from_union([from_int, from_none], self.image_bytes)
-        result["alt_text"] = from_union([from_str, from_none], self.alt_text)
-        result["title"] = from_union([lambda x: to_class(Description, x), from_none], self.title)
-        result["title_url"] = from_union([from_str, from_none], self.title_url)
-        result["description"] = from_union([lambda x: to_class(Description, x), from_none], self.description)
-        result["video_url"] = from_union([from_str, from_none], self.video_url)
-        result["thumbnail_url"] = from_union([from_str, from_none], self.thumbnail_url)
-        result["author_name"] = from_union([from_str, from_none], self.author_name)
-        result["provider_name"] = from_union([from_str, from_none], self.provider_name)
-        result["provider_icon_url"] = from_union([from_str, from_none], self.provider_icon_url)
-        result["function_trigger_id"] = from_union([from_str, from_none], self.function_trigger_id)
-        result["app_id"] = from_union([from_str, from_none], self.app_id)
-        result["is_workflow_app"] = from_union([from_bool, from_none], self.is_workflow_app)
-        result["app_collaborators"] = from_union([lambda x: from_list(from_str, x), from_none], self.app_collaborators)
-        result["button_label"] = from_union([from_str, from_none], self.button_label)
-        result["bot_user_id"] = from_union([from_str, from_none], self.bot_user_id)
-        result["url"] = from_union([from_str, from_none], self.url)
-        result["fields"] = from_union([lambda x: from_list(lambda x: to_class(Description, x), x), from_none], self.fields)
-        result["accessory"] = from_union([lambda x: to_class(Accessory, x), from_none], self.accessory)
-        result["label"] = from_union([lambda x: to_class(Description, x), from_none], self.label)
-        result["element"] = from_union([lambda x: to_class(Accessory, x), from_none], self.element)
-        result["dispatch_action"] = from_union([from_bool, from_none], self.dispatch_action)
-        result["hint"] = from_union([lambda x: to_class(Description, x), from_none], self.hint)
-        result["optional"] = from_union([from_bool, from_none], self.optional)
-        return result
-
-
-@dataclass
-class Field:
-    title: Optional[str] = None
-    value: Optional[str] = None
-    short: Optional[bool] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Field':
-        assert isinstance(obj, dict)
-        title = from_union([from_str, from_none], obj.get("title"))
-        value = from_union([from_str, from_none], obj.get("value"))
-        short = from_union([from_bool, from_none], obj.get("short"))
-        return Field(title, value, short)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["title"] = from_union([from_str, from_none], self.title)
-        result["value"] = from_union([from_str, from_none], self.value)
-        result["short"] = from_union([from_bool, from_none], self.short)
-        return result
-
-
-@dataclass
-class Metadata:
-    thumb_64: Optional[bool] = None
-    thumb_80: Optional[bool] = None
-    thumb_160: Optional[bool] = None
-    original_w: Optional[int] = None
-    original_h: Optional[int] = None
-    thumb_360__w: Optional[int] = None
-    thumb_360__h: Optional[int] = None
-    format: Optional[str] = None
-    extension: Optional[str] = None
-    rotation: Optional[int] = None
-    thumb_tiny: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Metadata':
-        assert isinstance(obj, dict)
-        thumb_64 = from_union([from_bool, from_none], obj.get("thumb_64"))
-        thumb_80 = from_union([from_bool, from_none], obj.get("thumb_80"))
-        thumb_160 = from_union([from_bool, from_none], obj.get("thumb_160"))
-        original_w = from_union([from_int, from_none], obj.get("original_w"))
-        original_h = from_union([from_int, from_none], obj.get("original_h"))
-        thumb_360__w = from_union([from_int, from_none], obj.get("thumb_360_w"))
-        thumb_360__h = from_union([from_int, from_none], obj.get("thumb_360_h"))
-        format = from_union([from_str, from_none], obj.get("format"))
-        extension = from_union([from_str, from_none], obj.get("extension"))
-        rotation = from_union([from_int, from_none], obj.get("rotation"))
-        thumb_tiny = from_union([from_str, from_none], obj.get("thumb_tiny"))
-        return Metadata(thumb_64, thumb_80, thumb_160, original_w, original_h, thumb_360__w, thumb_360__h, format, extension, rotation, thumb_tiny)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["thumb_64"] = from_union([from_bool, from_none], self.thumb_64)
-        result["thumb_80"] = from_union([from_bool, from_none], self.thumb_80)
-        result["thumb_160"] = from_union([from_bool, from_none], self.thumb_160)
-        result["original_w"] = from_union([from_int, from_none], self.original_w)
-        result["original_h"] = from_union([from_int, from_none], self.original_h)
-        result["thumb_360_w"] = from_union([from_int, from_none], self.thumb_360__w)
-        result["thumb_360_h"] = from_union([from_int, from_none], self.thumb_360__h)
-        result["format"] = from_union([from_str, from_none], self.format)
-        result["extension"] = from_union([from_str, from_none], self.extension)
-        result["rotation"] = from_union([from_int, from_none], self.rotation)
-        result["thumb_tiny"] = from_union([from_str, from_none], self.thumb_tiny)
-        return result
-
-
-@dataclass
-class Preview:
-    type: Optional[str] = None
-    can_remove: Optional[bool] = None
-    title: Optional[Description] = None
-    subtitle: Optional[Description] = None
-    icon_url: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Preview':
-        assert isinstance(obj, dict)
-        type = from_union([from_str, from_none], obj.get("type"))
-        can_remove = from_union([from_bool, from_none], obj.get("can_remove"))
-        title = from_union([Description.from_dict, from_none], obj.get("title"))
-        subtitle = from_union([Description.from_dict, from_none], obj.get("subtitle"))
-        icon_url = from_union([from_str, from_none], obj.get("icon_url"))
-        return Preview(type, can_remove, title, subtitle, icon_url)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["type"] = from_union([from_str, from_none], self.type)
-        result["can_remove"] = from_union([from_bool, from_none], self.can_remove)
-        result["title"] = from_union([lambda x: to_class(Description, x), from_none], self.title)
-        result["subtitle"] = from_union([lambda x: to_class(Description, x), from_none], self.subtitle)
-        result["icon_url"] = from_union([from_str, from_none], self.icon_url)
-        return result
-
-
-@dataclass
-class Attachment:
-    msg_subtype: Optional[str] = None
-    fallback: Optional[str] = None
-    callback_id: Optional[str] = None
-    color: Optional[str] = None
-    pretext: Optional[str] = None
-    service_url: Optional[str] = None
-    service_name: Optional[str] = None
-    service_icon: Optional[str] = None
-    author_id: Optional[str] = None
-    author_name: Optional[str] = None
-    author_link: Optional[str] = None
-    author_icon: Optional[str] = None
-    from_url: Optional[str] = None
-    original_url: Optional[str] = None
-    author_subname: Optional[str] = None
-    channel_id: Optional[str] = None
-    channel_name: Optional[str] = None
-    channel_team: Optional[str] = None
-    id: Optional[int] = None
-    app_id: Optional[str] = None
-    bot_id: Optional[str] = None
-    indent: Optional[bool] = None
-    is_msg_unfurl: Optional[bool] = None
-    is_reply_unfurl: Optional[bool] = None
-    is_thread_root_unfurl: Optional[bool] = None
-    is_app_unfurl: Optional[bool] = None
-    app_unfurl_url: Optional[str] = None
-    title: Optional[str] = None
-    title_link: Optional[str] = None
-    text: Optional[str] = None
-    fields: Optional[List[Field]] = None
-    image_url: Optional[str] = None
-    image_width: Optional[int] = None
-    image_height: Optional[int] = None
-    image_bytes: Optional[int] = None
-    thumb_url: Optional[str] = None
-    thumb_width: Optional[int] = None
-    thumb_height: Optional[int] = None
-    video_url: Optional[str] = None
-    video_html: Optional[str] = None
-    video_html_width: Optional[int] = None
-    video_html_height: Optional[int] = None
-    footer: Optional[str] = None
-    footer_icon: Optional[str] = None
-    ts: Optional[str] = None
-    mrkdwn_in: Optional[List[str]] = None
-    actions: Optional[List[Action]] = None
-    blocks: Optional[List[Block]] = None
-    preview: Optional[Preview] = None
-    files: Optional[List[File]] = None
-    filename: Optional[str] = None
-    size: Optional[int] = None
-    mimetype: Optional[str] = None
-    url: Optional[str] = None
-    metadata: Optional[Metadata] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Attachment':
-        assert isinstance(obj, dict)
-        msg_subtype = from_union([from_str, from_none], obj.get("msg_subtype"))
-        fallback = from_union([from_str, from_none], obj.get("fallback"))
-        callback_id = from_union([from_str, from_none], obj.get("callback_id"))
-        color = from_union([from_str, from_none], obj.get("color"))
-        pretext = from_union([from_str, from_none], obj.get("pretext"))
-        service_url = from_union([from_str, from_none], obj.get("service_url"))
-        service_name = from_union([from_str, from_none], obj.get("service_name"))
-        service_icon = from_union([from_str, from_none], obj.get("service_icon"))
-        author_id = from_union([from_str, from_none], obj.get("author_id"))
-        author_name = from_union([from_str, from_none], obj.get("author_name"))
-        author_link = from_union([from_str, from_none], obj.get("author_link"))
-        author_icon = from_union([from_str, from_none], obj.get("author_icon"))
-        from_url = from_union([from_str, from_none], obj.get("from_url"))
-        original_url = from_union([from_str, from_none], obj.get("original_url"))
-        author_subname = from_union([from_str, from_none], obj.get("author_subname"))
-        channel_id = from_union([from_str, from_none], obj.get("channel_id"))
-        channel_name = from_union([from_str, from_none], obj.get("channel_name"))
-        channel_team = from_union([from_str, from_none], obj.get("channel_team"))
-        id = from_union([from_int, from_none], obj.get("id"))
-        app_id = from_union([from_str, from_none], obj.get("app_id"))
-        bot_id = from_union([from_str, from_none], obj.get("bot_id"))
-        indent = from_union([from_bool, from_none], obj.get("indent"))
-        is_msg_unfurl = from_union([from_bool, from_none], obj.get("is_msg_unfurl"))
-        is_reply_unfurl = from_union([from_bool, from_none], obj.get("is_reply_unfurl"))
-        is_thread_root_unfurl = from_union([from_bool, from_none], obj.get("is_thread_root_unfurl"))
-        is_app_unfurl = from_union([from_bool, from_none], obj.get("is_app_unfurl"))
-        app_unfurl_url = from_union([from_str, from_none], obj.get("app_unfurl_url"))
-        title = from_union([from_str, from_none], obj.get("title"))
-        title_link = from_union([from_str, from_none], obj.get("title_link"))
-        text = from_union([from_str, from_none], obj.get("text"))
-        fields = from_union([lambda x: from_list(Field.from_dict, x), from_none], obj.get("fields"))
-        image_url = from_union([from_str, from_none], obj.get("image_url"))
-        image_width = from_union([from_int, from_none], obj.get("image_width"))
-        image_height = from_union([from_int, from_none], obj.get("image_height"))
-        image_bytes = from_union([from_int, from_none], obj.get("image_bytes"))
-        thumb_url = from_union([from_str, from_none], obj.get("thumb_url"))
-        thumb_width = from_union([from_int, from_none], obj.get("thumb_width"))
-        thumb_height = from_union([from_int, from_none], obj.get("thumb_height"))
-        video_url = from_union([from_str, from_none], obj.get("video_url"))
-        video_html = from_union([from_str, from_none], obj.get("video_html"))
-        video_html_width = from_union([from_int, from_none], obj.get("video_html_width"))
-        video_html_height = from_union([from_int, from_none], obj.get("video_html_height"))
-        footer = from_union([from_str, from_none], obj.get("footer"))
-        footer_icon = from_union([from_str, from_none], obj.get("footer_icon"))
-        ts = from_union([from_str, from_none], obj.get("ts"))
-        mrkdwn_in = from_union([lambda x: from_list(from_str, x), from_none], obj.get("mrkdwn_in"))
-        actions = from_union([lambda x: from_list(Action.from_dict, x), from_none], obj.get("actions"))
-        blocks = from_union([lambda x: from_list(Block.from_dict, x), from_none], obj.get("blocks"))
-        preview = from_union([Preview.from_dict, from_none], obj.get("preview"))
-        files = from_union([lambda x: from_list(File.from_dict, x), from_none], obj.get("files"))
-        filename = from_union([from_str, from_none], obj.get("filename"))
-        size = from_union([from_int, from_none], obj.get("size"))
-        mimetype = from_union([from_str, from_none], obj.get("mimetype"))
-        url = from_union([from_str, from_none], obj.get("url"))
-        metadata = from_union([Metadata.from_dict, from_none], obj.get("metadata"))
-        return Attachment(msg_subtype, fallback, callback_id, color, pretext, service_url, service_name, service_icon, author_id, author_name, author_link, author_icon, from_url, original_url, author_subname, channel_id, channel_name, channel_team, id, app_id, bot_id, indent, is_msg_unfurl, is_reply_unfurl, is_thread_root_unfurl, is_app_unfurl, app_unfurl_url, title, title_link, text, fields, image_url, image_width, image_height, image_bytes, thumb_url, thumb_width, thumb_height, video_url, video_html, video_html_width, video_html_height, footer, footer_icon, ts, mrkdwn_in, actions, blocks, preview, files, filename, size, mimetype, url, metadata)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["msg_subtype"] = from_union([from_str, from_none], self.msg_subtype)
-        result["fallback"] = from_union([from_str, from_none], self.fallback)
-        result["callback_id"] = from_union([from_str, from_none], self.callback_id)
-        result["color"] = from_union([from_str, from_none], self.color)
-        result["pretext"] = from_union([from_str, from_none], self.pretext)
-        result["service_url"] = from_union([from_str, from_none], self.service_url)
-        result["service_name"] = from_union([from_str, from_none], self.service_name)
-        result["service_icon"] = from_union([from_str, from_none], self.service_icon)
-        result["author_id"] = from_union([from_str, from_none], self.author_id)
-        result["author_name"] = from_union([from_str, from_none], self.author_name)
-        result["author_link"] = from_union([from_str, from_none], self.author_link)
-        result["author_icon"] = from_union([from_str, from_none], self.author_icon)
-        result["from_url"] = from_union([from_str, from_none], self.from_url)
-        result["original_url"] = from_union([from_str, from_none], self.original_url)
-        result["author_subname"] = from_union([from_str, from_none], self.author_subname)
-        result["channel_id"] = from_union([from_str, from_none], self.channel_id)
-        result["channel_name"] = from_union([from_str, from_none], self.channel_name)
-        result["channel_team"] = from_union([from_str, from_none], self.channel_team)
-        result["id"] = from_union([from_int, from_none], self.id)
-        result["app_id"] = from_union([from_str, from_none], self.app_id)
-        result["bot_id"] = from_union([from_str, from_none], self.bot_id)
-        result["indent"] = from_union([from_bool, from_none], self.indent)
-        result["is_msg_unfurl"] = from_union([from_bool, from_none], self.is_msg_unfurl)
-        result["is_reply_unfurl"] = from_union([from_bool, from_none], self.is_reply_unfurl)
-        result["is_thread_root_unfurl"] = from_union([from_bool, from_none], self.is_thread_root_unfurl)
-        result["is_app_unfurl"] = from_union([from_bool, from_none], self.is_app_unfurl)
-        result["app_unfurl_url"] = from_union([from_str, from_none], self.app_unfurl_url)
-        result["title"] = from_union([from_str, from_none], self.title)
-        result["title_link"] = from_union([from_str, from_none], self.title_link)
-        result["text"] = from_union([from_str, from_none], self.text)
-        result["fields"] = from_union([lambda x: from_list(lambda x: to_class(Field, x), x), from_none], self.fields)
-        result["image_url"] = from_union([from_str, from_none], self.image_url)
-        result["image_width"] = from_union([from_int, from_none], self.image_width)
-        result["image_height"] = from_union([from_int, from_none], self.image_height)
-        result["image_bytes"] = from_union([from_int, from_none], self.image_bytes)
-        result["thumb_url"] = from_union([from_str, from_none], self.thumb_url)
-        result["thumb_width"] = from_union([from_int, from_none], self.thumb_width)
-        result["thumb_height"] = from_union([from_int, from_none], self.thumb_height)
-        result["video_url"] = from_union([from_str, from_none], self.video_url)
-        result["video_html"] = from_union([from_str, from_none], self.video_html)
-        result["video_html_width"] = from_union([from_int, from_none], self.video_html_width)
-        result["video_html_height"] = from_union([from_int, from_none], self.video_html_height)
-        result["footer"] = from_union([from_str, from_none], self.footer)
-        result["footer_icon"] = from_union([from_str, from_none], self.footer_icon)
-        result["ts"] = from_union([from_str, from_none], self.ts)
-        result["mrkdwn_in"] = from_union([lambda x: from_list(from_str, x), from_none], self.mrkdwn_in)
-        result["actions"] = from_union([lambda x: from_list(lambda x: to_class(Action, x), x), from_none], self.actions)
-        result["blocks"] = from_union([lambda x: from_list(lambda x: to_class(Block, x), x), from_none], self.blocks)
-        result["preview"] = from_union([lambda x: to_class(Preview, x), from_none], self.preview)
-        result["files"] = from_union([lambda x: from_list(lambda x: to_class(File, x), x), from_none], self.files)
-        result["filename"] = from_union([from_str, from_none], self.filename)
-        result["size"] = from_union([from_int, from_none], self.size)
-        result["mimetype"] = from_union([from_str, from_none], self.mimetype)
-        result["url"] = from_union([from_str, from_none], self.url)
-        result["metadata"] = from_union([lambda x: to_class(Metadata, x), from_none], self.metadata)
-        return result
-
-
-@dataclass
-class Icons:
-    image_36: Optional[str] = None
-    image_48: Optional[str] = None
-    image_72: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Icons':
-        assert isinstance(obj, dict)
-        image_36 = from_union([from_str, from_none], obj.get("image_36"))
-        image_48 = from_union([from_str, from_none], obj.get("image_48"))
-        image_72 = from_union([from_str, from_none], obj.get("image_72"))
-        return Icons(image_36, image_48, image_72)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["image_36"] = from_union([from_str, from_none], self.image_36)
-        result["image_48"] = from_union([from_str, from_none], self.image_48)
-        result["image_72"] = from_union([from_str, from_none], self.image_72)
-        return result
-
-
-@dataclass
-class BotProfile:
-    id: Optional[str] = None
-    deleted: Optional[bool] = None
-    name: Optional[str] = None
-    updated: Optional[int] = None
-    app_id: Optional[str] = None
-    icons: Optional[Icons] = None
-    team_id: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'BotProfile':
-        assert isinstance(obj, dict)
-        id = from_union([from_str, from_none], obj.get("id"))
-        deleted = from_union([from_bool, from_none], obj.get("deleted"))
-        name = from_union([from_str, from_none], obj.get("name"))
-        updated = from_union([from_int, from_none], obj.get("updated"))
-        app_id = from_union([from_str, from_none], obj.get("app_id"))
-        icons = from_union([Icons.from_dict, from_none], obj.get("icons"))
-        team_id = from_union([from_str, from_none], obj.get("team_id"))
-        return BotProfile(id, deleted, name, updated, app_id, icons, team_id)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["id"] = from_union([from_str, from_none], self.id)
-        result["deleted"] = from_union([from_bool, from_none], self.deleted)
-        result["name"] = from_union([from_str, from_none], self.name)
-        result["updated"] = from_union([from_int, from_none], self.updated)
-        result["app_id"] = from_union([from_str, from_none], self.app_id)
-        result["icons"] = from_union([lambda x: to_class(Icons, x), from_none], self.icons)
-        result["team_id"] = from_union([from_str, from_none], self.team_id)
-        return result
-
-
-@dataclass
-class Edited:
-    user: Optional[str] = None
-    ts: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Edited':
-        assert isinstance(obj, dict)
-        user = from_union([from_str, from_none], obj.get("user"))
-        ts = from_union([from_str, from_none], obj.get("ts"))
-        return Edited(user, ts)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["user"] = from_union([from_str, from_none], self.user)
-        result["ts"] = from_union([from_str, from_none], self.ts)
-        return result
-
-
-@dataclass
-class Message:
-    bot_id: Optional[str] = None
-    type: Optional[str] = None
-    text: Optional[str] = None
-    user: Optional[str] = None
-    ts: Optional[str] = None
-    team: Optional[str] = None
-    attachments: Optional[List[Attachment]] = None
-    is_starred: Optional[bool] = None
-    permalink: Optional[str] = None
-    subtype: Optional[str] = None
-    username: Optional[str] = None
-    blocks: Optional[List[Block]] = None
-    client_msg_id: Optional[str] = None
-    thread_ts: Optional[str] = None
-    reply_count: Optional[int] = None
-    reply_users_count: Optional[int] = None
-    latest_reply: Optional[str] = None
-    reply_users: Optional[List[str]] = None
-    subscribed: Optional[bool] = None
-    last_read: Optional[str] = None
-    reactions: Optional[List[Reaction]] = None
-    bot_profile: Optional[BotProfile] = None
-    edited: Optional[Edited] = None
-    files: Optional[List[File]] = None
-    upload: Optional[bool] = None
-    display_as_bot: Optional[bool] = None
-    is_locked: Optional[bool] = None
-    inviter: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Message':
-        assert isinstance(obj, dict)
-        bot_id = from_union([from_str, from_none], obj.get("bot_id"))
-        type = from_union([from_str, from_none], obj.get("type"))
-        text = from_union([from_str, from_none], obj.get("text"))
-        user = from_union([from_str, from_none], obj.get("user"))
-        ts = from_union([from_str, from_none], obj.get("ts"))
-        team = from_union([from_str, from_none], obj.get("team"))
-        attachments = from_union([lambda x: from_list(Attachment.from_dict, x), from_none], obj.get("attachments"))
-        is_starred = from_union([from_bool, from_none], obj.get("is_starred"))
-        permalink = from_union([from_str, from_none], obj.get("permalink"))
-        subtype = from_union([from_str, from_none], obj.get("subtype"))
-        username = from_union([from_str, from_none], obj.get("username"))
-        blocks = from_union([lambda x: from_list(Block.from_dict, x), from_none], obj.get("blocks"))
-        client_msg_id = from_union([from_str, from_none], obj.get("client_msg_id"))
-        thread_ts = from_union([from_str, from_none], obj.get("thread_ts"))
-        reply_count = from_union([from_int, from_none], obj.get("reply_count"))
-        reply_users_count = from_union([from_int, from_none], obj.get("reply_users_count"))
-        latest_reply = from_union([from_str, from_none], obj.get("latest_reply"))
-        reply_users = from_union([lambda x: from_list(from_str, x), from_none], obj.get("reply_users"))
-        subscribed = from_union([from_bool, from_none], obj.get("subscribed"))
-        last_read = from_union([from_str, from_none], obj.get("last_read"))
-        reactions = from_union([lambda x: from_list(Reaction.from_dict, x), from_none], obj.get("reactions"))
-        bot_profile = from_union([BotProfile.from_dict, from_none], obj.get("bot_profile"))
-        edited = from_union([Edited.from_dict, from_none], obj.get("edited"))
-        files = from_union([lambda x: from_list(File.from_dict, x), from_none], obj.get("files"))
-        upload = from_union([from_bool, from_none], obj.get("upload"))
-        display_as_bot = from_union([from_bool, from_none], obj.get("display_as_bot"))
-        is_locked = from_union([from_bool, from_none], obj.get("is_locked"))
-        inviter = from_union([from_str, from_none], obj.get("inviter"))
-        return Message(bot_id, type, text, user, ts, team, attachments, is_starred, permalink, subtype, username, blocks, client_msg_id, thread_ts, reply_count, reply_users_count, latest_reply, reply_users, subscribed, last_read, reactions, bot_profile, edited, files, upload, display_as_bot, is_locked, inviter)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["bot_id"] = from_union([from_str, from_none], self.bot_id)
-        result["type"] = from_union([from_str, from_none], self.type)
-        result["text"] = from_union([from_str, from_none], self.text)
-        result["user"] = from_union([from_str, from_none], self.user)
-        result["ts"] = from_union([from_str, from_none], self.ts)
-        result["team"] = from_union([from_str, from_none], self.team)
-        result["attachments"] = from_union([lambda x: from_list(lambda x: to_class(Attachment, x), x), from_none], self.attachments)
-        result["is_starred"] = from_union([from_bool, from_none], self.is_starred)
-        result["permalink"] = from_union([from_str, from_none], self.permalink)
-        result["subtype"] = from_union([from_str, from_none], self.subtype)
-        result["username"] = from_union([from_str, from_none], self.username)
-        result["blocks"] = from_union([lambda x: from_list(lambda x: to_class(Block, x), x), from_none], self.blocks)
-        result["client_msg_id"] = from_union([from_str, from_none], self.client_msg_id)
-        result["thread_ts"] = from_union([from_str, from_none], self.thread_ts)
-        result["reply_count"] = from_union([from_int, from_none], self.reply_count)
-        result["reply_users_count"] = from_union([from_int, from_none], self.reply_users_count)
-        result["latest_reply"] = from_union([from_str, from_none], self.latest_reply)
-        result["reply_users"] = from_union([lambda x: from_list(from_str, x), from_none], self.reply_users)
-        result["subscribed"] = from_union([from_bool, from_none], self.subscribed)
-        result["last_read"] = from_union([from_str, from_none], self.last_read)
-        result["reactions"] = from_union([lambda x: from_list(lambda x: to_class(Reaction, x), x), from_none], self.reactions)
-        result["bot_profile"] = from_union([lambda x: to_class(BotProfile, x), from_none], self.bot_profile)
-        result["edited"] = from_union([lambda x: to_class(Edited, x), from_none], self.edited)
-        result["files"] = from_union([lambda x: from_list(lambda x: to_class(File, x), x), from_none], self.files)
-        result["upload"] = from_union([from_bool, from_none], self.upload)
-        result["display_as_bot"] = from_union([from_bool, from_none], self.display_as_bot)
-        result["is_locked"] = from_union([from_bool, from_none], self.is_locked)
-        result["inviter"] = from_union([from_str, from_none], self.inviter)
-        return result
-
-
-@dataclass
-class Item:
-    type: Optional[str] = None
-    channel: Optional[str] = None
-    date_create: Optional[int] = None
-    message: Optional[Message] = None
-    file: Optional[File] = None
-    comment: Optional[Comment] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Item':
-        assert isinstance(obj, dict)
-        type = from_union([from_str, from_none], obj.get("type"))
-        channel = from_union([from_str, from_none], obj.get("channel"))
-        date_create = from_union([from_int, from_none], obj.get("date_create"))
-        message = from_union([Message.from_dict, from_none], obj.get("message"))
-        file = from_union([File.from_dict, from_none], obj.get("file"))
-        comment = from_union([Comment.from_dict, from_none], obj.get("comment"))
-        return Item(type, channel, date_create, message, file, comment)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["type"] = from_union([from_str, from_none], self.type)
-        result["channel"] = from_union([from_str, from_none], self.channel)
-        result["date_create"] = from_union([from_int, from_none], self.date_create)
-        result["message"] = from_union([lambda x: to_class(Message, x), from_none], self.message)
-        result["file"] = from_union([lambda x: to_class(File, x), from_none], self.file)
-        result["comment"] = from_union([lambda x: to_class(Comment, x), from_none], self.comment)
-        return result
-
-
-@dataclass
-class Paging:
-    per_page: Optional[int] = None
-    spill: Optional[int] = None
-    page: Optional[int] = None
-    total: Optional[int] = None
-    pages: Optional[int] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'Paging':
-        assert isinstance(obj, dict)
-        per_page = from_union([from_int, from_none], obj.get("per_page"))
-        spill = from_union([from_int, from_none], obj.get("spill"))
-        page = from_union([from_int, from_none], obj.get("page"))
-        total = from_union([from_int, from_none], obj.get("total"))
-        pages = from_union([from_int, from_none], obj.get("pages"))
-        return Paging(per_page, spill, page, total, pages)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["per_page"] = from_union([from_int, from_none], self.per_page)
-        result["spill"] = from_union([from_int, from_none], self.spill)
-        result["page"] = from_union([from_int, from_none], self.page)
-        result["total"] = from_union([from_int, from_none], self.total)
-        result["pages"] = from_union([from_int, from_none], self.pages)
-        return result
-
-
-@dataclass
-class StarsListResponse:
-    ok: Optional[bool] = None
-    items: Optional[List[Item]] = None
-    paging: Optional[Paging] = None
-    error: Optional[str] = None
-    needed: Optional[str] = None
-    provided: Optional[str] = None
-
-    @staticmethod
-    def from_dict(obj: Any) -> 'StarsListResponse':
-        assert isinstance(obj, dict)
-        ok = from_union([from_bool, from_none], obj.get("ok"))
-        items = from_union([lambda x: from_list(Item.from_dict, x), from_none], obj.get("items"))
-        paging = from_union([Paging.from_dict, from_none], obj.get("paging"))
-        error = from_union([from_str, from_none], obj.get("error"))
-        needed = from_union([from_str, from_none], obj.get("needed"))
-        provided = from_union([from_str, from_none], obj.get("provided"))
-        return StarsListResponse(ok, items, paging, error, needed, provided)
-
-    def to_dict(self) -> dict:
-        result: dict = {}
-        result["ok"] = from_union([from_bool, from_none], self.ok)
-        result["items"] = from_union([lambda x: from_list(lambda x: to_class(Item, x), x), from_none], self.items)
-        result["paging"] = from_union([lambda x: to_class(Paging, x), from_none], self.paging)
-        result["error"] = from_union([from_str, from_none], self.error)
-        result["needed"] = from_union([from_str, from_none], self.needed)
-        result["provided"] = from_union([from_str, from_none], self.provided)
-        return result
-
-
-def stars_list_response_from_dict(s: Any) -> StarsListResponse:
-    return StarsListResponse.from_dict(s)
-
-
-def stars_list_response_to_dict(x: StarsListResponse) -> Any:
-    return to_class(StarsListResponse, x)
+# generated by datamodel-codegen:
+#   filename:  tmpchygw20k.schema.json
+
+from pydantic import BaseModel, Field
+from typing import List
+
+
+class FieldModel(BaseModel):
+    title: str | None = None
+    value: str | None = None
+    short: bool | None = None
+
+
+class Confirm(BaseModel):
+    title: str | None = None
+    text: str | None = None
+    ok_text: str | None = None
+    dismiss_text: str | None = None
+
+
+class Option(BaseModel):
+    text: str | None = None
+    value: str | None = None
+
+
+class SelectedOption(BaseModel):
+    text: str | None = None
+    value: str | None = None
+
+
+class OptionGroup(BaseModel):
+    text: str | None = None
+    options: List[Option] | None = None
+
+
+class Action(BaseModel):
+    id: str | None = None
+    name: str | None = None
+    text: str | None = None
+    style: str | None = None
+    type: str | None = None
+    value: str | None = None
+    confirm: Confirm | None = None
+    options: List[Option] | None = None
+    selected_options: List[SelectedOption] | None = None
+    data_source: str | None = None
+    min_query_length: int | None = None
+    option_groups: List[OptionGroup] | None = None
+    url: str | None = None
+
+
+class Text(BaseModel):
+    type: str | None = None
+    text: str | None = None
+    emoji: bool | None = None
+
+
+class Title(BaseModel):
+    type: str | None = None
+    text: str | None = None
+    emoji: bool | None = None
+
+
+class Confirm2(BaseModel):
+    type: str | None = None
+    text: str | None = None
+    emoji: bool | None = None
+
+
+class Deny(BaseModel):
+    type: str | None = None
+    text: str | None = None
+    emoji: bool | None = None
+
+
+class Confirm1(BaseModel):
+    title: Title | None = None
+    text: Text | None = None
+    confirm: Confirm2 | None = None
+    deny: Deny | None = None
+    style: str | None = None
+
+
+class Description(BaseModel):
+    type: str | None = None
+    text: str | None = None
+    emoji: bool | None = None
+
+
+class Option2(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class InitialOption(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class InitialOption1(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class Placeholder(BaseModel):
+    type: str | None = None
+    text: str | None = None
+    emoji: bool | None = None
+
+
+class Filter(BaseModel):
+    include: List[str] | None = None
+    exclude_external_shared_channels: bool | None = None
+    exclude_bot_users: bool | None = None
+
+
+class Label(BaseModel):
+    type: str | None = None
+    text: str | None = None
+    emoji: bool | None = None
+
+
+class Option3(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class OptionGroup1(BaseModel):
+    label: Label | None = None
+    options: List[Option3] | None = None
+
+
+class Style(BaseModel):
+    bold: bool | None = None
+    italic: bool | None = None
+    strike: bool | None = None
+    code: bool | None = None
+
+
+class Element2(BaseModel):
+    type: str | None = None
+    range: str | None = None
+    text: str | None = None
+    style: Style | None = None
+    channel_id: str | None = None
+    value: str | None = None
+    timestamp: int | None = None
+    url: str | None = None
+    team_id: str | None = None
+    user_id: str | None = None
+    usergroup_id: str | None = None
+    name: str | None = None
+    skin_tone: int | None = None
+    unicode: str | None = None
+
+
+class Element1(BaseModel):
+    type: str | None = None
+    elements: List[Element2] | None = None
+    style: str | None = None
+    indent: int | None = None
+    offset: int | None = None
+    border: int | None = None
+
+
+class Element(BaseModel):
+    type: str | None = None
+    text: Text | None = None
+    action_id: str | None = None
+    url: str | None = None
+    value: str | None = None
+    style: str | None = None
+    confirm: Confirm1 | None = None
+    accessibility_label: str | None = None
+    options: List[Option2] | None = None
+    initial_options: List[InitialOption] | None = None
+    focus_on_load: bool | None = None
+    initial_option: InitialOption1 | None = None
+    placeholder: Placeholder | None = None
+    initial_channel: str | None = None
+    response_url_enabled: bool | None = None
+    initial_channels: List[str] | None = None
+    max_selected_items: int | None = None
+    initial_conversation: str | None = None
+    default_to_current_conversation: bool | None = None
+    filter: Filter | None = None
+    initial_conversations: List[str] | None = None
+    initial_date: str | None = None
+    initial_time: str | None = None
+    timezone: str | None = None
+    initial_date_time: int | None = None
+    min_query_length: int | None = None
+    image_url: str | None = None
+    alt_text: str | None = None
+    fallback: str | None = None
+    image_width: int | None = None
+    image_height: int | None = None
+    image_bytes: int | None = None
+    option_groups: List[OptionGroup1] | None = None
+    initial_user: str | None = None
+    initial_users: List[str] | None = None
+    elements: List[Element1] | None = None
+    indent: int | None = None
+    offset: int | None = None
+    border: int | None = None
+
+
+class AppIconUrls(BaseModel):
+    image_32: str | None = None
+    image_36: str | None = None
+    image_48: str | None = None
+    image_64: str | None = None
+    image_72: str | None = None
+    image_96: str | None = None
+    image_128: str | None = None
+    image_192: str | None = None
+    image_512: str | None = None
+    image_1024: str | None = None
+    image_original: str | None = None
+
+
+class ActiveParticipant(BaseModel):
+    slack_id: str | None = None
+    external_id: str | None = None
+    display_name: str | None = None
+    avatar_url: str | None = None
+
+
+class AllParticipant(BaseModel):
+    slack_id: str | None = None
+    external_id: str | None = None
+    display_name: str | None = None
+    avatar_url: str | None = None
+
+
+class V1(BaseModel):
+    id: str | None = None
+    app_id: str | None = None
+    app_icon_urls: AppIconUrls | None = None
+    date_start: int | None = None
+    active_participants: List[ActiveParticipant] | None = None
+    all_participants: List[AllParticipant] | None = None
+    display_id: str | None = None
+    join_url: str | None = None
+    desktop_app_join_url: str | None = None
+    name: str | None = None
+    created_by: str | None = None
+    date_end: int | None = None
+    channels: List[str] | None = None
+    is_dm_call: bool | None = None
+    was_rejected: bool | None = None
+    was_missed: bool | None = None
+    was_accepted: bool | None = None
+    has_ended: bool | None = None
+
+
+class Call(BaseModel):
+    v1: V1 | None = None
+    media_backend_type: str | None = None
+
+
+class C03E94MkuItem(BaseModel):
+    share_user_id: str | None = None
+    reply_users: List[str] | None = None
+    reply_users_count: int | None = None
+    reply_count: int | None = None
+    ts: str | None = None
+    thread_ts: str | None = None
+    latest_reply: str | None = None
+    channel_name: str | None = None
+    team_id: str | None = None
+
+
+class Public(BaseModel):
+    c03_e94_mku: List[C03E94MkuItem] | None = Field(None, alias='C03E94MKU')
+    c03_e94_mku_: List[C03E94MkuItem] | None = Field(None, alias='C03E94MKU_')
+
+
+class Private(BaseModel):
+    c03_e94_mku: List[C03E94MkuItem] | None = Field(None, alias='C03E94MKU')
+    c03_e94_mku_: List[C03E94MkuItem] | None = Field(None, alias='C03E94MKU_')
+
+
+class Shares(BaseModel):
+    public: Public | None = None
+    private: Private | None = None
+
+
+class ToItem(BaseModel):
+    address: str | None = None
+    name: str | None = None
+    original: str | None = None
+
+
+class FromItem(BaseModel):
+    address: str | None = None
+    name: str | None = None
+    original: str | None = None
+
+
+class CcItem(BaseModel):
+    address: str | None = None
+    name: str | None = None
+    original: str | None = None
+
+
+class Headers(BaseModel):
+    date: str | None = None
+    in_reply_to: str | None = None
+    reply_to: str | None = None
+    message_id: str | None = None
+
+
+class MediaProgress(BaseModel):
+    offset_ms: int | None = None
+    max_offset_ms: int | None = None
+    duration_ms: int | None = None
+
+
+class Saved(BaseModel):
+    is_archived: bool | None = None
+    date_completed: int | None = None
+    date_due: int | None = None
+    state: str | None = None
+
+
+class InitialComment(BaseModel):
+    id: str | None = None
+    created: int | None = None
+    timestamp: int | None = None
+    user: str | None = None
+    comment: str | None = None
+    channel: str | None = None
+    is_intro: bool | None = None
+
+
+class Reaction(BaseModel):
+    name: str | None = None
+    count: int | None = None
+    users: List[str] | None = None
+    url: str | None = None
+
+
+class Transcription(BaseModel):
+    status: str | None = None
+    locale: str | None = None
+
+
+class File(BaseModel):
+    shares: Shares | None = None
+    has_more_shares: bool | None = None
+    to: List[ToItem] | None = None
+    from_: List[FromItem] | None = Field(None, alias='from')
+    cc: List[CcItem] | None = None
+    channel_actions_ts: str | None = None
+    channel_actions_count: int | None = None
+    headers: Headers | None = None
+    simplified_html: str | None = None
+    media_progress: MediaProgress | None = None
+    saved: Saved | None = None
+    bot_id: str | None = None
+    initial_comment: InitialComment | None = None
+    num_stars: int | None = None
+    is_starred: bool | None = None
+    pinned_to: List[str] | None = None
+    reactions: List[Reaction] | None = None
+    comments_count: int | None = None
+    thumb_pdf_w: str | None = None
+    id: str | None = None
+    created: int | None = None
+    timestamp: int | None = None
+    name: str | None = None
+    title: str | None = None
+    subject: str | None = None
+    mimetype: str | None = None
+    filetype: str | None = None
+    pretty_type: str | None = None
+    user: str | None = None
+    user_team: str | None = None
+    source_team: str | None = None
+    mode: str | None = None
+    editable: bool | None = None
+    non_owner_editable: bool | None = None
+    editor: str | None = None
+    last_editor: str | None = None
+    updated: int | None = None
+    file_access: str | None = None
+    alt_txt: str | None = None
+    subtype: str | None = None
+    transcription: Transcription | None = None
+    mp4: str | None = None
+    mp4_low: str | None = None
+    vtt: str | None = None
+    hls: str | None = None
+    hls_embed: str | None = None
+    duration_ms: int | None = None
+    thumb_video_w: int | None = None
+    thumb_video_h: int | None = None
+    original_attachment_count: int | None = None
+    is_external: bool | None = None
+    external_id: str | None = None
+    external_url: str | None = None
+    username: str | None = None
+    size: int | None = None
+    url_private: str | None = None
+    url_private_download: str | None = None
+    app_id: str | None = None
+    app_name: str | None = None
+    thumb_64: str | None = None
+    thumb_64_gif: str | None = None
+    thumb_64_w: str | None = None
+    thumb_64_h: str | None = None
+    thumb_80: str | None = None
+    thumb_80_gif: str | None = None
+    thumb_80_w: str | None = None
+    thumb_80_h: str | None = None
+    thumb_160: str | None = None
+    thumb_160_gif: str | None = None
+    thumb_160_w: str | None = None
+    thumb_160_h: str | None = None
+    thumb_360: str | None = None
+    thumb_360_gif: str | None = None
+    thumb_360_w: str | None = None
+    thumb_360_h: str | None = None
+    thumb_480: str | None = None
+    thumb_480_gif: str | None = None
+    thumb_480_w: str | None = None
+    thumb_480_h: str | None = None
+    thumb_720: str | None = None
+    thumb_720_gif: str | None = None
+    thumb_720_w: str | None = None
+    thumb_720_h: str | None = None
+    thumb_800: str | None = None
+    thumb_800_gif: str | None = None
+    thumb_800_w: str | None = None
+    thumb_800_h: str | None = None
+    thumb_960: str | None = None
+    thumb_960_gif: str | None = None
+    thumb_960_w: str | None = None
+    thumb_960_h: str | None = None
+    thumb_1024: str | None = None
+    thumb_1024_gif: str | None = None
+    thumb_1024_w: str | None = None
+    thumb_1024_h: str | None = None
+    thumb_video: str | None = None
+    thumb_gif: str | None = None
+    thumb_pdf: str | None = None
+    thumb_pdf_h: str | None = None
+    thumb_tiny: str | None = None
+    converted_pdf: str | None = None
+    image_exif_rotation: int | None = None
+    original_w: str | None = None
+    original_h: str | None = None
+    deanimate: str | None = None
+    deanimate_gif: str | None = None
+    pjpeg: str | None = None
+    permalink: str | None = None
+    permalink_public: str | None = None
+    edit_link: str | None = None
+    has_rich_preview: bool | None = None
+    media_display_type: str | None = None
+    preview_is_truncated: bool | None = None
+    preview: str | None = None
+    preview_highlight: str | None = None
+    plain_text: str | None = None
+    preview_plain_text: str | None = None
+    has_more: bool | None = None
+    sent_to_self: bool | None = None
+    lines: int | None = None
+    lines_more: int | None = None
+    is_public: bool | None = None
+    public_url_shared: bool | None = None
+    display_as_bot: bool | None = None
+    channels: List[str] | None = None
+    groups: List[str] | None = None
+    ims: List[str] | None = None
+
+
+class Field1(BaseModel):
+    type: str | None = None
+    text: str | None = None
+    emoji: bool | None = None
+    verbatim: bool | None = None
+
+
+class Confirm4(BaseModel):
+    type: str | None = None
+    text: str | None = None
+    emoji: bool | None = None
+
+
+class Confirm3(BaseModel):
+    title: Title | None = None
+    text: Text | None = None
+    confirm: Confirm4 | None = None
+    deny: Deny | None = None
+    style: str | None = None
+
+
+class Option4(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class InitialOption2(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class InitialOption3(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class Option5(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class OptionGroup2(BaseModel):
+    label: Label | None = None
+    options: List[Option5] | None = None
+
+
+class Accessory(BaseModel):
+    type: str | None = None
+    text: Text | None = None
+    action_id: str | None = None
+    url: str | None = None
+    value: str | None = None
+    style: str | None = None
+    confirm: Confirm3 | None = None
+    accessibility_label: str | None = None
+    options: List[Option4] | None = None
+    initial_options: List[InitialOption2] | None = None
+    focus_on_load: bool | None = None
+    initial_option: InitialOption3 | None = None
+    placeholder: Placeholder | None = None
+    initial_channel: str | None = None
+    response_url_enabled: bool | None = None
+    initial_channels: List[str] | None = None
+    max_selected_items: int | None = None
+    initial_conversation: str | None = None
+    default_to_current_conversation: bool | None = None
+    filter: Filter | None = None
+    initial_conversations: List[str] | None = None
+    initial_date: str | None = None
+    initial_time: str | None = None
+    timezone: str | None = None
+    initial_date_time: int | None = None
+    min_query_length: int | None = None
+    image_url: str | None = None
+    alt_text: str | None = None
+    fallback: str | None = None
+    image_width: int | None = None
+    image_height: int | None = None
+    image_bytes: int | None = None
+    option_groups: List[OptionGroup2] | None = None
+    initial_user: str | None = None
+    initial_users: List[str] | None = None
+
+
+class Confirm6(BaseModel):
+    type: str | None = None
+    text: str | None = None
+    emoji: bool | None = None
+
+
+class Confirm5(BaseModel):
+    title: Title | None = None
+    text: Text | None = None
+    confirm: Confirm6 | None = None
+    deny: Deny | None = None
+    style: str | None = None
+
+
+class Option6(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class InitialOption4(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class InitialOption5(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class Option7(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class OptionGroup3(BaseModel):
+    label: Label | None = None
+    options: List[Option7] | None = None
+
+
+class Element3(BaseModel):
+    type: str | None = None
+    text: Text | None = None
+    action_id: str | None = None
+    url: str | None = None
+    value: str | None = None
+    style: str | None = None
+    confirm: Confirm5 | None = None
+    accessibility_label: str | None = None
+    options: List[Option6] | None = None
+    initial_options: List[InitialOption4] | None = None
+    focus_on_load: bool | None = None
+    initial_option: InitialOption5 | None = None
+    placeholder: Placeholder | None = None
+    initial_channel: str | None = None
+    response_url_enabled: bool | None = None
+    initial_channels: List[str] | None = None
+    max_selected_items: int | None = None
+    initial_conversation: str | None = None
+    default_to_current_conversation: bool | None = None
+    filter: Filter | None = None
+    initial_conversations: List[str] | None = None
+    initial_date: str | None = None
+    initial_time: str | None = None
+    timezone: str | None = None
+    initial_date_time: int | None = None
+    min_query_length: int | None = None
+    image_url: str | None = None
+    alt_text: str | None = None
+    fallback: str | None = None
+    image_width: int | None = None
+    image_height: int | None = None
+    image_bytes: int | None = None
+    option_groups: List[OptionGroup3] | None = None
+    initial_user: str | None = None
+    initial_users: List[str] | None = None
+
+
+class Hint(BaseModel):
+    type: str | None = None
+    text: str | None = None
+    emoji: bool | None = None
+
+
+class Block(BaseModel):
+    type: str | None = None
+    elements: List[Element] | None = None
+    block_id: str | None = None
+    call_id: str | None = None
+    api_decoration_available: bool | None = None
+    call: Call | None = None
+    external_id: str | None = None
+    source: str | None = None
+    file_id: str | None = None
+    file: File | None = None
+    text: Text | None = None
+    fallback: str | None = None
+    image_url: str | None = None
+    image_width: int | None = None
+    image_height: int | None = None
+    image_bytes: int | None = None
+    alt_text: str | None = None
+    title: Title | None = None
+    title_url: str | None = None
+    description: Description | None = None
+    video_url: str | None = None
+    thumbnail_url: str | None = None
+    author_name: str | None = None
+    provider_name: str | None = None
+    provider_icon_url: str | None = None
+    function_trigger_id: str | None = None
+    app_id: str | None = None
+    is_workflow_app: bool | None = None
+    app_collaborators: List[str] | None = None
+    button_label: str | None = None
+    bot_user_id: str | None = None
+    url: str | None = None
+    fields: List[Field1] | None = None
+    accessory: Accessory | None = None
+    label: Label | None = None
+    element: Element3 | None = None
+    dispatch_action: bool | None = None
+    hint: Hint | None = None
+    optional: bool | None = None
+
+
+class Subtitle(BaseModel):
+    type: str | None = None
+    text: str | None = None
+    emoji: bool | None = None
+
+
+class Preview(BaseModel):
+    type: str | None = None
+    can_remove: bool | None = None
+    title: Title | None = None
+    subtitle: Subtitle | None = None
+    icon_url: str | None = None
+
+
+class C00000000Item(BaseModel):
+    share_user_id: str | None = None
+    reply_users: List[str] | None = None
+    reply_users_count: int | None = None
+    reply_count: int | None = None
+    ts: str | None = None
+    thread_ts: str | None = None
+    latest_reply: str | None = None
+    channel_name: str | None = None
+    team_id: str | None = None
+
+
+class C00000001Item(BaseModel):
+    share_user_id: str | None = None
+    reply_users: List[str] | None = None
+    reply_users_count: int | None = None
+    reply_count: int | None = None
+    ts: str | None = None
+    thread_ts: str | None = None
+    latest_reply: str | None = None
+    channel_name: str | None = None
+    team_id: str | None = None
+
+
+class Public1(BaseModel):
+    c00000000: List[C00000000Item] | None = Field(None, alias='C00000000')
+    c00000001: List[C00000001Item] | None = Field(None, alias='C00000001')
+
+
+class Private1(BaseModel):
+    c00000000: List[C00000000Item] | None = Field(None, alias='C00000000')
+    c00000001: List[C00000001Item] | None = Field(None, alias='C00000001')
+
+
+class Shares1(BaseModel):
+    public: Public1 | None = None
+    private: Private1 | None = None
+
+
+class File1(BaseModel):
+    id: str | None = None
+    created: int | None = None
+    timestamp: int | None = None
+    name: str | None = None
+    title: str | None = None
+    subject: str | None = None
+    mimetype: str | None = None
+    filetype: str | None = None
+    pretty_type: str | None = None
+    user: str | None = None
+    user_team: str | None = None
+    source_team: str | None = None
+    mode: str | None = None
+    editable: bool | None = None
+    non_owner_editable: bool | None = None
+    editor: str | None = None
+    last_editor: str | None = None
+    updated: int | None = None
+    file_access: str | None = None
+    alt_txt: str | None = None
+    subtype: str | None = None
+    transcription: Transcription | None = None
+    mp4: str | None = None
+    mp4_low: str | None = None
+    vtt: str | None = None
+    hls: str | None = None
+    hls_embed: str | None = None
+    duration_ms: int | None = None
+    thumb_video_w: int | None = None
+    thumb_video_h: int | None = None
+    original_attachment_count: int | None = None
+    is_external: bool | None = None
+    external_type: str | None = None
+    external_id: str | None = None
+    external_url: str | None = None
+    username: str | None = None
+    size: int | None = None
+    url_private: str | None = None
+    url_private_download: str | None = None
+    app_id: str | None = None
+    app_name: str | None = None
+    thumb_64: str | None = None
+    thumb_64_gif: str | None = None
+    thumb_64_w: str | None = None
+    thumb_64_h: str | None = None
+    thumb_80: str | None = None
+    thumb_80_gif: str | None = None
+    thumb_80_w: str | None = None
+    thumb_80_h: str | None = None
+    thumb_160: str | None = None
+    thumb_160_gif: str | None = None
+    thumb_160_w: str | None = None
+    thumb_160_h: str | None = None
+    thumb_360: str | None = None
+    thumb_360_gif: str | None = None
+    thumb_360_w: str | None = None
+    thumb_360_h: str | None = None
+    thumb_480: str | None = None
+    thumb_480_gif: str | None = None
+    thumb_480_w: str | None = None
+    thumb_480_h: str | None = None
+    thumb_720: str | None = None
+    thumb_720_gif: str | None = None
+    thumb_720_w: str | None = None
+    thumb_720_h: str | None = None
+    thumb_800: str | None = None
+    thumb_800_gif: str | None = None
+    thumb_800_w: str | None = None
+    thumb_800_h: str | None = None
+    thumb_960: str | None = None
+    thumb_960_gif: str | None = None
+    thumb_960_w: str | None = None
+    thumb_960_h: str | None = None
+    thumb_1024: str | None = None
+    thumb_1024_gif: str | None = None
+    thumb_1024_w: str | None = None
+    thumb_1024_h: str | None = None
+    thumb_video: str | None = None
+    thumb_gif: str | None = None
+    thumb_pdf: str | None = None
+    thumb_pdf_w: str | None = None
+    thumb_pdf_h: str | None = None
+    thumb_tiny: str | None = None
+    converted_pdf: str | None = None
+    image_exif_rotation: int | None = None
+    original_w: str | None = None
+    original_h: str | None = None
+    deanimate: str | None = None
+    deanimate_gif: str | None = None
+    pjpeg: str | None = None
+    permalink: str | None = None
+    permalink_public: str | None = None
+    edit_link: str | None = None
+    has_rich_preview: bool | None = None
+    media_display_type: str | None = None
+    preview_is_truncated: bool | None = None
+    preview: str | None = None
+    preview_highlight: str | None = None
+    plain_text: str | None = None
+    preview_plain_text: str | None = None
+    has_more: bool | None = None
+    sent_to_self: bool | None = None
+    lines: int | None = None
+    lines_more: int | None = None
+    is_public: bool | None = None
+    public_url_shared: bool | None = None
+    display_as_bot: bool | None = None
+    channels: List[str] | None = None
+    groups: List[str] | None = None
+    ims: List[str] | None = None
+    shares: Shares1 | None = None
+    has_more_shares: bool | None = None
+    to: List[ToItem] | None = None
+    from_: List[FromItem] | None = Field(None, alias='from')
+    cc: List[CcItem] | None = None
+    channel_actions_ts: str | None = None
+    channel_actions_count: int | None = None
+    headers: Headers | None = None
+    simplified_html: str | None = None
+    media_progress: MediaProgress | None = None
+    saved: Saved | None = None
+    bot_id: str | None = None
+    initial_comment: InitialComment | None = None
+    num_stars: int | None = None
+    is_starred: bool | None = None
+    pinned_to: List[str] | None = None
+    reactions: List[Reaction] | None = None
+    comments_count: int | None = None
+
+
+class Metadata(BaseModel):
+    thumb_64: bool | None = None
+    thumb_80: bool | None = None
+    thumb_160: bool | None = None
+    original_w: int | None = None
+    original_h: int | None = None
+    thumb_360_w: int | None = None
+    thumb_360_h: int | None = None
+    format: str | None = None
+    extension: str | None = None
+    rotation: int | None = None
+    thumb_tiny: str | None = None
+
+
+class Attachment(BaseModel):
+    msg_subtype: str | None = None
+    fallback: str | None = None
+    callback_id: str | None = None
+    color: str | None = None
+    pretext: str | None = None
+    service_url: str | None = None
+    service_name: str | None = None
+    service_icon: str | None = None
+    author_id: str | None = None
+    author_name: str | None = None
+    author_link: str | None = None
+    author_icon: str | None = None
+    from_url: str | None = None
+    original_url: str | None = None
+    author_subname: str | None = None
+    channel_id: str | None = None
+    channel_name: str | None = None
+    channel_team: str | None = None
+    id: int | None = None
+    app_id: str | None = None
+    bot_id: str | None = None
+    indent: bool | None = None
+    is_msg_unfurl: bool | None = None
+    is_reply_unfurl: bool | None = None
+    is_thread_root_unfurl: bool | None = None
+    is_app_unfurl: bool | None = None
+    app_unfurl_url: str | None = None
+    title: str | None = None
+    title_link: str | None = None
+    text: str | None = None
+    fields: List[FieldModel] | None = None
+    image_url: str | None = None
+    image_width: int | None = None
+    image_height: int | None = None
+    image_bytes: int | None = None
+    thumb_url: str | None = None
+    thumb_width: int | None = None
+    thumb_height: int | None = None
+    video_url: str | None = None
+    video_html: str | None = None
+    video_html_width: int | None = None
+    video_html_height: int | None = None
+    footer: str | None = None
+    footer_icon: str | None = None
+    ts: str | None = None
+    mrkdwn_in: List[str] | None = None
+    actions: List[Action] | None = None
+    blocks: List[Block] | None = None
+    preview: Preview | None = None
+    files: List[File1] | None = None
+    filename: str | None = None
+    size: int | None = None
+    mimetype: str | None = None
+    url: str | None = None
+    metadata: Metadata | None = None
+
+
+class Confirm8(BaseModel):
+    type: str | None = None
+    text: str | None = None
+    emoji: bool | None = None
+
+
+class Confirm7(BaseModel):
+    title: Title | None = None
+    text: Text | None = None
+    confirm: Confirm8 | None = None
+    deny: Deny | None = None
+    style: str | None = None
+
+
+class Option8(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class InitialOption6(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class InitialOption7(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class Option9(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class OptionGroup4(BaseModel):
+    label: Label | None = None
+    options: List[Option9] | None = None
+
+
+class Element6(BaseModel):
+    type: str | None = None
+    range: str | None = None
+    text: str | None = None
+    style: Style | None = None
+    channel_id: str | None = None
+    value: str | None = None
+    timestamp: int | None = None
+    url: str | None = None
+    team_id: str | None = None
+    user_id: str | None = None
+    usergroup_id: str | None = None
+    name: str | None = None
+    skin_tone: int | None = None
+    unicode: str | None = None
+
+
+class Element5(BaseModel):
+    type: str | None = None
+    elements: List[Element6] | None = None
+    style: str | None = None
+    indent: int | None = None
+    offset: int | None = None
+    border: int | None = None
+
+
+class Element4(BaseModel):
+    type: str | None = None
+    text: Text | None = None
+    action_id: str | None = None
+    url: str | None = None
+    value: str | None = None
+    style: str | None = None
+    confirm: Confirm7 | None = None
+    accessibility_label: str | None = None
+    options: List[Option8] | None = None
+    initial_options: List[InitialOption6] | None = None
+    focus_on_load: bool | None = None
+    initial_option: InitialOption7 | None = None
+    placeholder: Placeholder | None = None
+    initial_channel: str | None = None
+    response_url_enabled: bool | None = None
+    initial_channels: List[str] | None = None
+    max_selected_items: int | None = None
+    initial_conversation: str | None = None
+    default_to_current_conversation: bool | None = None
+    filter: Filter | None = None
+    initial_conversations: List[str] | None = None
+    initial_date: str | None = None
+    initial_time: str | None = None
+    timezone: str | None = None
+    initial_date_time: int | None = None
+    min_query_length: int | None = None
+    image_url: str | None = None
+    alt_text: str | None = None
+    fallback: str | None = None
+    image_width: int | None = None
+    image_height: int | None = None
+    image_bytes: int | None = None
+    option_groups: List[OptionGroup4] | None = None
+    initial_user: str | None = None
+    initial_users: List[str] | None = None
+    elements: List[Element5] | None = None
+    indent: int | None = None
+    offset: int | None = None
+    border: int | None = None
+
+
+class V11(BaseModel):
+    id: str | None = None
+    app_id: str | None = None
+    app_icon_urls: AppIconUrls | None = None
+    date_start: int | None = None
+    active_participants: List[ActiveParticipant] | None = None
+    all_participants: List[AllParticipant] | None = None
+    display_id: str | None = None
+    join_url: str | None = None
+    desktop_app_join_url: str | None = None
+    name: str | None = None
+    created_by: str | None = None
+    date_end: int | None = None
+    channels: List[str] | None = None
+    is_dm_call: bool | None = None
+    was_rejected: bool | None = None
+    was_missed: bool | None = None
+    was_accepted: bool | None = None
+    has_ended: bool | None = None
+
+
+class Call1(BaseModel):
+    v1: V11 | None = None
+    media_backend_type: str | None = None
+
+
+class Public2(BaseModel):
+    c03_e94_mku: List[C03E94MkuItem] | None = Field(None, alias='C03E94MKU')
+    c03_e94_mku_: List[C03E94MkuItem] | None = Field(None, alias='C03E94MKU_')
+
+
+class Private2(BaseModel):
+    c03_e94_mku: List[C03E94MkuItem] | None = Field(None, alias='C03E94MKU')
+    c03_e94_mku_: List[C03E94MkuItem] | None = Field(None, alias='C03E94MKU_')
+
+
+class Shares2(BaseModel):
+    public: Public2 | None = None
+    private: Private2 | None = None
+
+
+class File2(BaseModel):
+    shares: Shares2 | None = None
+    has_more_shares: bool | None = None
+    to: List[ToItem] | None = None
+    from_: List[FromItem] | None = Field(None, alias='from')
+    cc: List[CcItem] | None = None
+    channel_actions_ts: str | None = None
+    channel_actions_count: int | None = None
+    headers: Headers | None = None
+    simplified_html: str | None = None
+    media_progress: MediaProgress | None = None
+    saved: Saved | None = None
+    bot_id: str | None = None
+    initial_comment: InitialComment | None = None
+    num_stars: int | None = None
+    is_starred: bool | None = None
+    pinned_to: List[str] | None = None
+    reactions: List[Reaction] | None = None
+    comments_count: int | None = None
+    thumb_pdf_w: str | None = None
+    id: str | None = None
+    created: int | None = None
+    timestamp: int | None = None
+    name: str | None = None
+    title: str | None = None
+    subject: str | None = None
+    mimetype: str | None = None
+    filetype: str | None = None
+    pretty_type: str | None = None
+    user: str | None = None
+    user_team: str | None = None
+    source_team: str | None = None
+    mode: str | None = None
+    editable: bool | None = None
+    non_owner_editable: bool | None = None
+    editor: str | None = None
+    last_editor: str | None = None
+    updated: int | None = None
+    file_access: str | None = None
+    alt_txt: str | None = None
+    subtype: str | None = None
+    transcription: Transcription | None = None
+    mp4: str | None = None
+    mp4_low: str | None = None
+    vtt: str | None = None
+    hls: str | None = None
+    hls_embed: str | None = None
+    duration_ms: int | None = None
+    thumb_video_w: int | None = None
+    thumb_video_h: int | None = None
+    original_attachment_count: int | None = None
+    is_external: bool | None = None
+    external_id: str | None = None
+    external_url: str | None = None
+    username: str | None = None
+    size: int | None = None
+    url_private: str | None = None
+    url_private_download: str | None = None
+    app_id: str | None = None
+    app_name: str | None = None
+    thumb_64: str | None = None
+    thumb_64_gif: str | None = None
+    thumb_64_w: str | None = None
+    thumb_64_h: str | None = None
+    thumb_80: str | None = None
+    thumb_80_gif: str | None = None
+    thumb_80_w: str | None = None
+    thumb_80_h: str | None = None
+    thumb_160: str | None = None
+    thumb_160_gif: str | None = None
+    thumb_160_w: str | None = None
+    thumb_160_h: str | None = None
+    thumb_360: str | None = None
+    thumb_360_gif: str | None = None
+    thumb_360_w: str | None = None
+    thumb_360_h: str | None = None
+    thumb_480: str | None = None
+    thumb_480_gif: str | None = None
+    thumb_480_w: str | None = None
+    thumb_480_h: str | None = None
+    thumb_720: str | None = None
+    thumb_720_gif: str | None = None
+    thumb_720_w: str | None = None
+    thumb_720_h: str | None = None
+    thumb_800: str | None = None
+    thumb_800_gif: str | None = None
+    thumb_800_w: str | None = None
+    thumb_800_h: str | None = None
+    thumb_960: str | None = None
+    thumb_960_gif: str | None = None
+    thumb_960_w: str | None = None
+    thumb_960_h: str | None = None
+    thumb_1024: str | None = None
+    thumb_1024_gif: str | None = None
+    thumb_1024_w: str | None = None
+    thumb_1024_h: str | None = None
+    thumb_video: str | None = None
+    thumb_gif: str | None = None
+    thumb_pdf: str | None = None
+    thumb_pdf_h: str | None = None
+    thumb_tiny: str | None = None
+    converted_pdf: str | None = None
+    image_exif_rotation: int | None = None
+    original_w: str | None = None
+    original_h: str | None = None
+    deanimate: str | None = None
+    deanimate_gif: str | None = None
+    pjpeg: str | None = None
+    permalink: str | None = None
+    permalink_public: str | None = None
+    edit_link: str | None = None
+    has_rich_preview: bool | None = None
+    media_display_type: str | None = None
+    preview_is_truncated: bool | None = None
+    preview: str | None = None
+    preview_highlight: str | None = None
+    plain_text: str | None = None
+    preview_plain_text: str | None = None
+    has_more: bool | None = None
+    sent_to_self: bool | None = None
+    lines: int | None = None
+    lines_more: int | None = None
+    is_public: bool | None = None
+    public_url_shared: bool | None = None
+    display_as_bot: bool | None = None
+    channels: List[str] | None = None
+    groups: List[str] | None = None
+    ims: List[str] | None = None
+
+
+class Confirm10(BaseModel):
+    type: str | None = None
+    text: str | None = None
+    emoji: bool | None = None
+
+
+class Confirm9(BaseModel):
+    title: Title | None = None
+    text: Text | None = None
+    confirm: Confirm10 | None = None
+    deny: Deny | None = None
+    style: str | None = None
+
+
+class Option10(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class InitialOption8(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class InitialOption9(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class Option11(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class OptionGroup5(BaseModel):
+    label: Label | None = None
+    options: List[Option11] | None = None
+
+
+class Accessory1(BaseModel):
+    type: str | None = None
+    text: Text | None = None
+    action_id: str | None = None
+    url: str | None = None
+    value: str | None = None
+    style: str | None = None
+    confirm: Confirm9 | None = None
+    accessibility_label: str | None = None
+    options: List[Option10] | None = None
+    initial_options: List[InitialOption8] | None = None
+    focus_on_load: bool | None = None
+    initial_option: InitialOption9 | None = None
+    placeholder: Placeholder | None = None
+    initial_channel: str | None = None
+    response_url_enabled: bool | None = None
+    initial_channels: List[str] | None = None
+    max_selected_items: int | None = None
+    initial_conversation: str | None = None
+    default_to_current_conversation: bool | None = None
+    filter: Filter | None = None
+    initial_conversations: List[str] | None = None
+    initial_date: str | None = None
+    initial_time: str | None = None
+    timezone: str | None = None
+    initial_date_time: int | None = None
+    min_query_length: int | None = None
+    image_url: str | None = None
+    alt_text: str | None = None
+    fallback: str | None = None
+    image_width: int | None = None
+    image_height: int | None = None
+    image_bytes: int | None = None
+    option_groups: List[OptionGroup5] | None = None
+    initial_user: str | None = None
+    initial_users: List[str] | None = None
+
+
+class Confirm12(BaseModel):
+    type: str | None = None
+    text: str | None = None
+    emoji: bool | None = None
+
+
+class Confirm11(BaseModel):
+    title: Title | None = None
+    text: Text | None = None
+    confirm: Confirm12 | None = None
+    deny: Deny | None = None
+    style: str | None = None
+
+
+class Option12(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class InitialOption10(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class InitialOption11(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class Option13(BaseModel):
+    text: Text | None = None
+    value: str | None = None
+    description: Description | None = None
+    url: str | None = None
+
+
+class OptionGroup6(BaseModel):
+    label: Label | None = None
+    options: List[Option13] | None = None
+
+
+class Element7(BaseModel):
+    type: str | None = None
+    text: Text | None = None
+    action_id: str | None = None
+    url: str | None = None
+    value: str | None = None
+    style: str | None = None
+    confirm: Confirm11 | None = None
+    accessibility_label: str | None = None
+    options: List[Option12] | None = None
+    initial_options: List[InitialOption10] | None = None
+    focus_on_load: bool | None = None
+    initial_option: InitialOption11 | None = None
+    placeholder: Placeholder | None = None
+    initial_channel: str | None = None
+    response_url_enabled: bool | None = None
+    initial_channels: List[str] | None = None
+    max_selected_items: int | None = None
+    initial_conversation: str | None = None
+    default_to_current_conversation: bool | None = None
+    filter: Filter | None = None
+    initial_conversations: List[str] | None = None
+    initial_date: str | None = None
+    initial_time: str | None = None
+    timezone: str | None = None
+    initial_date_time: int | None = None
+    min_query_length: int | None = None
+    image_url: str | None = None
+    alt_text: str | None = None
+    fallback: str | None = None
+    image_width: int | None = None
+    image_height: int | None = None
+    image_bytes: int | None = None
+    option_groups: List[OptionGroup6] | None = None
+    initial_user: str | None = None
+    initial_users: List[str] | None = None
+
+
+class Block1(BaseModel):
+    type: str | None = None
+    elements: List[Element4] | None = None
+    block_id: str | None = None
+    call_id: str | None = None
+    api_decoration_available: bool | None = None
+    call: Call1 | None = None
+    external_id: str | None = None
+    source: str | None = None
+    file_id: str | None = None
+    file: File2 | None = None
+    text: Text | None = None
+    fallback: str | None = None
+    image_url: str | None = None
+    image_width: int | None = None
+    image_height: int | None = None
+    image_bytes: int | None = None
+    alt_text: str | None = None
+    title: Title | None = None
+    title_url: str | None = None
+    description: Description | None = None
+    video_url: str | None = None
+    thumbnail_url: str | None = None
+    author_name: str | None = None
+    provider_name: str | None = None
+    provider_icon_url: str | None = None
+    function_trigger_id: str | None = None
+    app_id: str | None = None
+    is_workflow_app: bool | None = None
+    app_collaborators: List[str] | None = None
+    button_label: str | None = None
+    bot_user_id: str | None = None
+    url: str | None = None
+    fields: List[Field1] | None = None
+    accessory: Accessory1 | None = None
+    label: Label | None = None
+    element: Element7 | None = None
+    dispatch_action: bool | None = None
+    hint: Hint | None = None
+    optional: bool | None = None
+
+
+class Reaction3(BaseModel):
+    name: str | None = None
+    users: List[str] | None = None
+    count: int | None = None
+
+
+class Icons(BaseModel):
+    image_36: str | None = None
+    image_48: str | None = None
+    image_72: str | None = None
+
+
+class BotProfile(BaseModel):
+    id: str | None = None
+    deleted: bool | None = None
+    name: str | None = None
+    updated: int | None = None
+    app_id: str | None = None
+    icons: Icons | None = None
+    team_id: str | None = None
+
+
+class Edited(BaseModel):
+    user: str | None = None
+    ts: str | None = None
+
+
+class Public3(BaseModel):
+    c00000000: List[C00000000Item] | None = Field(None, alias='C00000000')
+    c00000001: List[C00000001Item] | None = Field(None, alias='C00000001')
+
+
+class Private3(BaseModel):
+    c00000000: List[C00000000Item] | None = Field(None, alias='C00000000')
+    c00000001: List[C00000001Item] | None = Field(None, alias='C00000001')
+
+
+class Shares3(BaseModel):
+    public: Public3 | None = None
+    private: Private3 | None = None
+
+
+class Reaction4(BaseModel):
+    name: str | None = None
+    count: int | None = None
+    users: List[str] | None = None
+    url: str | None = None
+
+
+class File3(BaseModel):
+    id: str | None = None
+    created: int | None = None
+    timestamp: int | None = None
+    name: str | None = None
+    title: str | None = None
+    subject: str | None = None
+    mimetype: str | None = None
+    filetype: str | None = None
+    pretty_type: str | None = None
+    user: str | None = None
+    user_team: str | None = None
+    source_team: str | None = None
+    mode: str | None = None
+    editable: bool | None = None
+    non_owner_editable: bool | None = None
+    editor: str | None = None
+    last_editor: str | None = None
+    updated: int | None = None
+    file_access: str | None = None
+    alt_txt: str | None = None
+    subtype: str | None = None
+    transcription: Transcription | None = None
+    mp4: str | None = None
+    mp4_low: str | None = None
+    vtt: str | None = None
+    hls: str | None = None
+    hls_embed: str | None = None
+    duration_ms: int | None = None
+    thumb_video_w: int | None = None
+    thumb_video_h: int | None = None
+    original_attachment_count: int | None = None
+    is_external: bool | None = None
+    external_type: str | None = None
+    external_id: str | None = None
+    external_url: str | None = None
+    username: str | None = None
+    size: int | None = None
+    url_private: str | None = None
+    url_private_download: str | None = None
+    app_id: str | None = None
+    app_name: str | None = None
+    thumb_64: str | None = None
+    thumb_64_gif: str | None = None
+    thumb_64_w: str | None = None
+    thumb_64_h: str | None = None
+    thumb_80: str | None = None
+    thumb_80_gif: str | None = None
+    thumb_80_w: str | None = None
+    thumb_80_h: str | None = None
+    thumb_160: str | None = None
+    thumb_160_gif: str | None = None
+    thumb_160_w: str | None = None
+    thumb_160_h: str | None = None
+    thumb_360: str | None = None
+    thumb_360_gif: str | None = None
+    thumb_360_w: str | None = None
+    thumb_360_h: str | None = None
+    thumb_480: str | None = None
+    thumb_480_gif: str | None = None
+    thumb_480_w: str | None = None
+    thumb_480_h: str | None = None
+    thumb_720: str | None = None
+    thumb_720_gif: str | None = None
+    thumb_720_w: str | None = None
+    thumb_720_h: str | None = None
+    thumb_800: str | None = None
+    thumb_800_gif: str | None = None
+    thumb_800_w: str | None = None
+    thumb_800_h: str | None = None
+    thumb_960: str | None = None
+    thumb_960_gif: str | None = None
+    thumb_960_w: str | None = None
+    thumb_960_h: str | None = None
+    thumb_1024: str | None = None
+    thumb_1024_gif: str | None = None
+    thumb_1024_w: str | None = None
+    thumb_1024_h: str | None = None
+    thumb_video: str | None = None
+    thumb_gif: str | None = None
+    thumb_pdf: str | None = None
+    thumb_pdf_w: str | None = None
+    thumb_pdf_h: str | None = None
+    thumb_tiny: str | None = None
+    converted_pdf: str | None = None
+    image_exif_rotation: int | None = None
+    original_w: str | None = None
+    original_h: str | None = None
+    deanimate: str | None = None
+    deanimate_gif: str | None = None
+    pjpeg: str | None = None
+    permalink: str | None = None
+    permalink_public: str | None = None
+    edit_link: str | None = None
+    has_rich_preview: bool | None = None
+    media_display_type: str | None = None
+    preview_is_truncated: bool | None = None
+    preview: str | None = None
+    preview_highlight: str | None = None
+    plain_text: str | None = None
+    preview_plain_text: str | None = None
+    has_more: bool | None = None
+    sent_to_self: bool | None = None
+    lines: int | None = None
+    lines_more: int | None = None
+    is_public: bool | None = None
+    public_url_shared: bool | None = None
+    display_as_bot: bool | None = None
+    channels: List[str] | None = None
+    groups: List[str] | None = None
+    ims: List[str] | None = None
+    shares: Shares3 | None = None
+    has_more_shares: bool | None = None
+    to: List[ToItem] | None = None
+    from_: List[FromItem] | None = Field(None, alias='from')
+    cc: List[CcItem] | None = None
+    channel_actions_ts: str | None = None
+    channel_actions_count: int | None = None
+    headers: Headers | None = None
+    simplified_html: str | None = None
+    media_progress: MediaProgress | None = None
+    saved: Saved | None = None
+    bot_id: str | None = None
+    initial_comment: InitialComment | None = None
+    num_stars: int | None = None
+    is_starred: bool | None = None
+    pinned_to: List[str] | None = None
+    reactions: List[Reaction4] | None = None
+    comments_count: int | None = None
+
+
+class Message(BaseModel):
+    bot_id: str | None = None
+    type: str | None = None
+    text: str | None = None
+    user: str | None = None
+    ts: str | None = None
+    team: str | None = None
+    attachments: List[Attachment] | None = None
+    is_starred: bool | None = None
+    permalink: str | None = None
+    subtype: str | None = None
+    username: str | None = None
+    blocks: List[Block1] | None = None
+    client_msg_id: str | None = None
+    thread_ts: str | None = None
+    reply_count: int | None = None
+    reply_users_count: int | None = None
+    latest_reply: str | None = None
+    reply_users: List[str] | None = None
+    subscribed: bool | None = None
+    last_read: str | None = None
+    reactions: List[Reaction3] | None = None
+    bot_profile: BotProfile | None = None
+    edited: Edited | None = None
+    files: List[File3] | None = None
+    upload: bool | None = None
+    display_as_bot: bool | None = None
+    is_locked: bool | None = None
+    inviter: str | None = None
+
+
+class Public4(BaseModel):
+    c03_e94_mku: List[C03E94MkuItem] | None = Field(None, alias='C03E94MKU')
+    c03_e94_mku_: List[C03E94MkuItem] | None = Field(None, alias='C03E94MKU_')
+
+
+class Private4(BaseModel):
+    c03_e94_mku: List[C03E94MkuItem] | None = Field(None, alias='C03E94MKU')
+    c03_e94_mku_: List[C03E94MkuItem] | None = Field(None, alias='C03E94MKU_')
+
+
+class Shares4(BaseModel):
+    public: Public4 | None = None
+    private: Private4 | None = None
+
+
+class File4(BaseModel):
+    id: str | None = None
+    created: int | None = None
+    timestamp: int | None = None
+    name: str | None = None
+    title: str | None = None
+    subject: str | None = None
+    mimetype: str | None = None
+    filetype: str | None = None
+    pretty_type: str | None = None
+    user: str | None = None
+    user_team: str | None = None
+    source_team: str | None = None
+    mode: str | None = None
+    editable: bool | None = None
+    non_owner_editable: bool | None = None
+    editor: str | None = None
+    last_editor: str | None = None
+    updated: int | None = None
+    file_access: str | None = None
+    alt_txt: str | None = None
+    subtype: str | None = None
+    transcription: Transcription | None = None
+    mp4: str | None = None
+    mp4_low: str | None = None
+    vtt: str | None = None
+    hls: str | None = None
+    hls_embed: str | None = None
+    duration_ms: int | None = None
+    thumb_video_w: int | None = None
+    thumb_video_h: int | None = None
+    original_attachment_count: int | None = None
+    is_external: bool | None = None
+    external_type: str | None = None
+    external_id: str | None = None
+    external_url: str | None = None
+    username: str | None = None
+    size: int | None = None
+    url_private: str | None = None
+    url_private_download: str | None = None
+    app_id: str | None = None
+    app_name: str | None = None
+    thumb_64: str | None = None
+    thumb_64_gif: str | None = None
+    thumb_64_w: str | None = None
+    thumb_64_h: str | None = None
+    thumb_80: str | None = None
+    thumb_80_gif: str | None = None
+    thumb_80_w: str | None = None
+    thumb_80_h: str | None = None
+    thumb_160: str | None = None
+    thumb_160_gif: str | None = None
+    thumb_160_w: str | None = None
+    thumb_160_h: str | None = None
+    thumb_360: str | None = None
+    thumb_360_gif: str | None = None
+    thumb_360_w: str | None = None
+    thumb_360_h: str | None = None
+    thumb_480: str | None = None
+    thumb_480_gif: str | None = None
+    thumb_480_w: str | None = None
+    thumb_480_h: str | None = None
+    thumb_720: str | None = None
+    thumb_720_gif: str | None = None
+    thumb_720_w: str | None = None
+    thumb_720_h: str | None = None
+    thumb_800: str | None = None
+    thumb_800_gif: str | None = None
+    thumb_800_w: str | None = None
+    thumb_800_h: str | None = None
+    thumb_960: str | None = None
+    thumb_960_gif: str | None = None
+    thumb_960_w: str | None = None
+    thumb_960_h: str | None = None
+    thumb_1024: str | None = None
+    thumb_1024_gif: str | None = None
+    thumb_1024_w: str | None = None
+    thumb_1024_h: str | None = None
+    thumb_video: str | None = None
+    thumb_gif: str | None = None
+    thumb_pdf: str | None = None
+    thumb_pdf_w: str | None = None
+    thumb_pdf_h: str | None = None
+    thumb_tiny: str | None = None
+    converted_pdf: str | None = None
+    image_exif_rotation: int | None = None
+    original_w: str | None = None
+    original_h: str | None = None
+    deanimate: str | None = None
+    deanimate_gif: str | None = None
+    pjpeg: str | None = None
+    permalink: str | None = None
+    permalink_public: str | None = None
+    edit_link: str | None = None
+    has_rich_preview: bool | None = None
+    media_display_type: str | None = None
+    preview_is_truncated: bool | None = None
+    preview: str | None = None
+    preview_highlight: str | None = None
+    plain_text: str | None = None
+    preview_plain_text: str | None = None
+    has_more: bool | None = None
+    sent_to_self: bool | None = None
+    lines: int | None = None
+    lines_more: int | None = None
+    is_public: bool | None = None
+    public_url_shared: bool | None = None
+    display_as_bot: bool | None = None
+    channels: List[str] | None = None
+    groups: List[str] | None = None
+    ims: List[str] | None = None
+    shares: Shares4 | None = None
+    has_more_shares: bool | None = None
+    to: List[ToItem] | None = None
+    from_: List[FromItem] | None = Field(None, alias='from')
+    cc: List[CcItem] | None = None
+    channel_actions_ts: str | None = None
+    channel_actions_count: int | None = None
+    headers: Headers | None = None
+    simplified_html: str | None = None
+    media_progress: MediaProgress | None = None
+    saved: Saved | None = None
+    bot_id: str | None = None
+    initial_comment: InitialComment | None = None
+    num_stars: int | None = None
+    is_starred: bool | None = None
+    pinned_to: List[str] | None = None
+    reactions: List[Reaction4] | None = None
+    comments_count: int | None = None
+
+
+class Comment(BaseModel):
+    id: str | None = None
+    created: int | None = None
+    timestamp: int | None = None
+    user: str | None = None
+    is_intro: bool | None = None
+    comment: str | None = None
+    num_stars: int | None = None
+    is_starred: bool | None = None
+
+
+class Item(BaseModel):
+    type: str | None = None
+    channel: str | None = None
+    date_create: int | None = None
+    message: Message | None = None
+    file: File4 | None = None
+    comment: Comment | None = None
+
+
+class Paging(BaseModel):
+    per_page: int | None = None
+    spill: int | None = None
+    page: int | None = None
+    total: int | None = None
+    pages: int | None = None
+
+
+class StarsListResponse(BaseModel):
+    ok: bool | None = None
+    items: List[Item] | None = None
+    paging: Paging | None = None
+    error: str | None = None
+    needed: str | None = None
+    provided: str | None = None

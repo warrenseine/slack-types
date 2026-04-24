@@ -25,3 +25,9 @@ cp -a java-slack-sdk/json-logs/samples/app-backend/views/. ./json/app-backend/vi
 
 json_file=json/app-backend/interactive-components/BlockActionPayload.json
 jq '. + (.actions[0].selected_options = [.actions[0].selected_option])' $json_file > $json_file.tmp && mv $json_file.tmp $json_file
+
+# Subsample samples larger than 100KB so datamodel-codegen finishes in
+# bounded time. First N array entries are enough to infer the schema.
+while IFS= read -r sample; do
+    jq 'walk(if type == "array" and length > 2 then .[0:2] else . end)' "$sample" > "$sample.tmp" && mv "$sample.tmp" "$sample"
+done < <(find json -name "*.json" -size +100k)

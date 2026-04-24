@@ -58,7 +58,7 @@ export interface AssistantAppThread {
 
 export interface AssistantAppThreadBlock {
     type?:                         BlockType;
-    elements?:                     Accessory[];
+    elements?:                     PurpleElement[];
     block_id?:                     string;
     call_id?:                      string;
     api_decoration_available?:     boolean;
@@ -67,7 +67,7 @@ export interface AssistantAppThreadBlock {
     source?:                       string;
     file_id?:                      string;
     file?:                         FileElement;
-    text?:                         DescriptionElement;
+    text?:                         Description;
     fallback?:                     string;
     image_url?:                    string;
     image_width?:                  number;
@@ -76,9 +76,9 @@ export interface AssistantAppThreadBlock {
     is_animated?:                  boolean;
     slack_file?:                   SlackFile;
     alt_text?:                     string;
-    title?:                        DescriptionElement;
+    title?:                        Description;
     title_url?:                    string;
-    description?:                  DescriptionElement;
+    description?:                  Description;
     video_url?:                    string;
     thumbnail_url?:                string;
     author_name?:                  string;
@@ -98,19 +98,19 @@ export interface AssistantAppThreadBlock {
     trigger_type?:                 string;
     trigger_subtype?:              string;
     share_url?:                    string;
-    fields?:                       DescriptionElement[];
+    fields?:                       Description[];
     accessory?:                    Accessory;
     expand?:                       boolean;
-    label?:                        DescriptionElement;
+    label?:                        Description;
     element?:                      Accessory;
     dispatch_action?:              boolean;
-    hint?:                         DescriptionElement;
+    hint?:                         Description;
     optional?:                     boolean;
 }
 
 export interface Accessory {
     type?:                            AccessoryType;
-    text?:                            DescriptionElement;
+    text?:                            Description;
     action_id?:                       string;
     url?:                             string;
     value?:                           string;
@@ -122,7 +122,7 @@ export interface Accessory {
     initial_options?:                 InitialOptionElement[];
     focus_on_load?:                   boolean;
     initial_option?:                  InitialOptionElement;
-    placeholder?:                     DescriptionElement;
+    placeholder?:                     Description;
     initial_channel?:                 string;
     response_url_enabled?:            boolean;
     initial_channels?:                string[];
@@ -146,21 +146,17 @@ export interface Accessory {
     option_groups?:                   AccessoryOptionGroup[];
     initial_user?:                    string;
     initial_users?:                   string[];
-    elements?:                        AccessoryElement[];
-    indent?:                          number;
-    offset?:                          number;
-    border?:                          number;
 }
 
 export interface AccessoryConfirm {
-    title?:   DescriptionElement;
-    text?:    DescriptionElement;
-    confirm?: DescriptionElement;
-    deny?:    DescriptionElement;
+    title?:   Description;
+    text?:    Description;
+    confirm?: Description;
+    deny?:    Description;
     style?:   string;
 }
 
-export interface DescriptionElement {
+export interface Description {
     type?:     DescriptionType;
     text?:     string;
     emoji?:    boolean;
@@ -172,84 +168,6 @@ export enum DescriptionType {
     PlainText = "plain_text",
 }
 
-export interface AccessoryElement {
-    type?:     AccessoryType;
-    elements?: PurpleElement[];
-    style?:    string;
-    indent?:   number;
-    offset?:   number;
-    border?:   number;
-}
-
-export interface PurpleElement {
-    type?:         PurpleType;
-    range?:        string;
-    style?:        Style;
-    text?:         string;
-    channel_id?:   string;
-    value?:        string;
-    timestamp?:    number;
-    format?:       string;
-    url?:          string;
-    fallback?:     string;
-    unsafe?:       boolean;
-    team_id?:      string;
-    user_id?:      string;
-    usergroup_id?: string;
-    name?:         string;
-    skin_tone?:    number;
-    unicode?:      string;
-}
-
-export interface Style {
-    bold?:             boolean;
-    italic?:           boolean;
-    strike?:           boolean;
-    highlight?:        boolean;
-    client_highlight?: boolean;
-    unlink?:           boolean;
-    code?:             boolean;
-}
-
-export enum PurpleType {
-    Broadcast = "broadcast",
-    Channel = "channel",
-    Color = "color",
-    Date = "date",
-    Emoji = "emoji",
-    Link = "link",
-    Team = "team",
-    Text = "text",
-    User = "user",
-    Usergroup = "usergroup",
-}
-
-export enum AccessoryType {
-    Button = "button",
-    ChannelsSelect = "channels_select",
-    Checkboxes = "checkboxes",
-    ConversationsSelect = "conversations_select",
-    Datepicker = "datepicker",
-    Datetimepicker = "datetimepicker",
-    ExternalSelect = "external_select",
-    Image = "image",
-    MultiChannelsSelect = "multi_channels_select",
-    MultiConversationsSelect = "multi_conversations_select",
-    MultiExternalSelect = "multi_external_select",
-    MultiStaticSelect = "multi_static_select",
-    MultiUsersSelect = "multi_users_select",
-    Overflow = "overflow",
-    RadioButtons = "radio_buttons",
-    RichTextList = "rich_text_list",
-    RichTextPreformatted = "rich_text_preformatted",
-    RichTextQuote = "rich_text_quote",
-    RichTextSection = "rich_text_section",
-    StaticSelect = "static_select",
-    Timepicker = "timepicker",
-    UsersSelect = "users_select",
-    WorkflowButton = "workflow_button",
-}
-
 export interface AccessoryFilter {
     include?:                          any[];
     exclude_external_shared_channels?: boolean;
@@ -257,20 +175,26 @@ export interface AccessoryFilter {
 }
 
 export interface InitialOptionElement {
-    text?:        DescriptionElement;
+    text?:        Description;
     value?:       string;
-    description?: DescriptionElement;
+    description?: Description;
     url?:         string;
 }
 
 export interface AccessoryOptionGroup {
-    label?:   DescriptionElement;
+    label?:   Description;
     options?: InitialOptionElement[];
 }
 
 export interface SlackFile {
     id?:  string;
     url?: string;
+}
+
+export enum AccessoryType {
+    Button = "button",
+    Image = "image",
+    WorkflowButton = "workflow_button",
 }
 
 export interface Workflow {
@@ -332,6 +256,18 @@ export interface AppIconUrls {
     image_512?:      string;
     image_1024?:     string;
     image_original?: string;
+}
+
+export interface PurpleElement {
+    type?:                AccessoryType;
+    text?:                Description;
+    action_id?:           string;
+    url?:                 string;
+    value?:               string;
+    style?:               string;
+    confirm?:             AccessoryConfirm;
+    accessibility_label?: string;
+    workflow?:            Workflow;
 }
 
 export interface FileElement {
@@ -498,54 +434,33 @@ export interface FileElement {
 }
 
 export interface DescriptionBlockElement {
-    type?:                         BlockType;
-    elements?:                     Accessory[];
-    block_id?:                     string;
-    fallback?:                     string;
-    image_url?:                    string;
-    image_width?:                  number;
-    image_height?:                 number;
-    image_bytes?:                  number;
-    is_animated?:                  boolean;
-    slack_file?:                   SlackFile;
-    alt_text?:                     string;
-    title?:                        DescriptionElement | string;
-    text?:                         DescriptionElement;
-    fields?:                       DescriptionElement[];
-    accessory?:                    Accessory;
-    expand?:                       boolean;
-    title_url?:                    string;
-    description?:                  DescriptionElement | string;
-    video_url?:                    string;
-    thumbnail_url?:                string;
-    author_name?:                  string;
-    provider_name?:                string;
-    provider_icon_url?:            string;
-    function_trigger_id?:          string;
-    app_id?:                       string;
-    is_workflow_app?:              boolean;
-    sales_home_workflow_app_type?: number;
-    app_collaborators?:            string[];
-    button_label?:                 string;
-    bot_user_id?:                  string;
-    url?:                          string;
-    owning_team_id?:               string;
-    workflow_id?:                  string;
-    developer_trace_id?:           string;
-    trigger_type?:                 string;
-    trigger_subtype?:              string;
-    share_url?:                    string;
+    type?:     BlockType;
+    elements?: DescriptionBlockElementClass[];
+    block_id?: string;
+}
+
+export interface DescriptionBlockElementClass {
+    type?:                AccessoryType;
+    text?:                Description;
+    action_id?:           string;
+    url?:                 string;
+    value?:               string;
+    style?:               string;
+    confirm?:             AccessoryConfirm;
+    accessibility_label?: string;
+    workflow?:            Workflow;
+    image_url?:           string;
+    alt_text?:            string;
+    fallback?:            string;
+    image_width?:         number;
+    image_height?:        number;
+    image_bytes?:         number;
+    slack_file?:          SlackFile;
 }
 
 export enum BlockType {
     Actions = "actions",
     Context = "context",
-    Divider = "divider",
-    Image = "image",
-    RichText = "rich_text",
-    Section = "section",
-    ShareShortcut = "share_shortcut",
-    Video = "video",
 }
 
 export interface Cc {
@@ -1340,8 +1255,8 @@ export interface AttachmentMetadata {
 export interface AttachmentPreview {
     type?:       string;
     can_remove?: boolean;
-    title?:      DescriptionElement;
-    subtitle?:   DescriptionElement;
+    title?:      Description;
+    subtitle?:   Description;
     icon_url?:   string;
 }
 

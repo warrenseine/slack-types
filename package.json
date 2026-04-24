@@ -2,10 +2,9 @@
   "name": "slack-types",
   "version": "0.10.0",
   "description": "Slack API Types in TypeScript",
-  "dependencies": {},
   "devDependencies": {
     "npm-run-all": "^4.1.5",
-    "quicktype": "^15.0.260",
+    "quicktype": "^23.2.6",
     "ts-loader": "^9.2.6",
     "typescript": "^4.5.5"
   },

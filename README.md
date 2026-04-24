@@ -18,7 +18,7 @@ Currently, the package support the following APIs.
 
 ## How to use
 
-For Python:
+For Python (Pydantic v2):
 ```python
 from typing import Callable
 
@@ -30,9 +30,9 @@ from slack_types.events_api.app_mention_payload import Event as AppMentionEvent
 app = AsyncApp()
 
 @app.event("app_mention")
-async def handle_mentions(event: dict[str, str], client: AsyncWebClient, say: Callable):  # async function
-    slack_mention = AppMentionEvent.from_dict(event)
-    api_response = await client.reactions_add(
+async def handle_mentions(event: dict, client: AsyncWebClient, say: Callable):
+    slack_mention = AppMentionEvent.model_validate(event)
+    await client.reactions_add(
         channel=slack_mention.channel,
         timestamp=slack_mention.ts,
         name="eyes",
@@ -41,6 +41,16 @@ async def handle_mentions(event: dict[str, str], client: AsyncWebClient, say: Ca
 
 if __name__ == "__main__":
     app.start(3000)
+```
+
+Web API responses expose the same `BaseModel` interface:
+```python
+from slack_types.web_api.conversations_history_response import ConversationsHistoryResponse
+
+response = await client.conversations_history(channel="C123")
+history = ConversationsHistoryResponse.model_validate(response.data)
+for message in history.messages or []:
+    print(message.ts, message.text)
 ```
 
 For TypeScript:
@@ -85,16 +95,24 @@ app.post('/events', function (req: Request, res: Response) {
 
 ## How are the types generated
 
-These types are generated from jSlack library's type definitions in Java + actual JSON responses fetched by running jSlack's unit tests. If you're interested in the details, take a look at [jSlack](https://github.com/seratch/jslack).
+Input samples come from [java-slack-sdk](https://github.com/slackapi/java-slack-sdk)
+(recorded JSON responses). Python models are generated with
+[genson](https://github.com/wolverdude/GenSON) (JSON → JSON Schema) piped into
+[datamodel-code-generator](https://github.com/koxudaxi/datamodel-code-generator)
+(Schema → Pydantic v2). TypeScript `.d.ts` files are generated with
+[quicktype](https://github.com/glideapps/quicktype).
 
-The coverage may not be 100% yet. A portion of the properties may be incorrect. If you find missing properties or something wrong, let us know here: https://github.com/seratch/seratch-slack-types/issues
+Coverage may not be 100% and some properties may be incorrect. File issues at
+https://github.com/warrenseine/slack-types/issues.
 
 To re-generate:
 
 ```bash
-$ npm install
-$ npm run build
+npm install
+npm run build  # clones java-slack-sdk/ on first run
 ```
+
+Requires `uv` on the `PATH` for the Python pipeline.
 
 ## License
 
