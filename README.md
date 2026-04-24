@@ -1,49 +1,53 @@
-# Slack API types
+# slack-types
 
-See:
-- https://pypi.org/project/slack-types
+Pydantic v2 type definitions for the Slack APIs:
 
-This npm package is a collection of Python and TypeScript type definition of Slack APIs.
+- Web API (`slack_types.web_api`)
+- Events API (`slack_types.events_api`)
+- Real Time Messaging API (`slack_types.rtm_api`)
+- App backend payloads (`slack_types.app_backend.{dialogs,interactive_components,slash_commands,views}`)
+- Audit Logs API (`slack_types.audit_api.v1`)
+- SCIM API (`slack_types.scim_api.{v1,v2}`)
 
-Currently, the package support the following APIs.
+PyPI: https://pypi.org/project/slack-types
 
-* API Methods (web-api)
-* Events API (events-api)
-* Real Time Messaging API (rtm-api)
-* Incoming payloads from Slack Platform (app-backend)
-  * Dialogs (dialog_submission, cancellation, suggestion)
-  * Interactive Messages (interactive_message, block_action)
-  * Message Actions (message_action)
-  * Slash Commands
+## Install
 
-## How to use
+```bash
+uv add slack-types
+# or
+pip install slack-types
+```
 
-For Python (Pydantic v2):
+## Use
+
 ```python
 from typing import Callable
 
-# Requirement: install aiohttp
 from slack_bolt.async_app import AsyncApp
 from slack_sdk.web.async_client import AsyncWebClient
 from slack_types.events_api.app_mention_payload import Event as AppMentionEvent
 
 app = AsyncApp()
 
+
 @app.event("app_mention")
 async def handle_mentions(event: dict, client: AsyncWebClient, say: Callable):
-    slack_mention = AppMentionEvent.model_validate(event)
+    mention = AppMentionEvent.model_validate(event)
     await client.reactions_add(
-        channel=slack_mention.channel,
-        timestamp=slack_mention.ts,
+        channel=mention.channel,
+        timestamp=mention.ts,
         name="eyes",
     )
     await say("What's up?")
+
 
 if __name__ == "__main__":
     app.start(3000)
 ```
 
-Web API responses expose the same `BaseModel` interface:
+Web API responses use the same Pydantic interface:
+
 ```python
 from slack_types.web_api.conversations_history_response import ConversationsHistoryResponse
 
@@ -53,54 +57,17 @@ for message in history.messages or []:
     print(message.ts, message.text)
 ```
 
-For TypeScript:
-```typescript
-import * as express from 'express';
-import { Express, Request, Response } from 'express';
+All fields are `Optional` with defaults of `None` because Slack does not
+guarantee any field on any response. Validate at the boundary; don't rely on
+required-ness.
 
-import * as Slack from '@slack/web-api';
-import * as WebApi from 'seratch-slack-types/web-api';
-import * as EventsApi from 'seratch-slack-types/events-api';
-
-export const slackApi = new Slack.WebClient(process.env.SLACK_API_TOKEN);
-
-export const app: Express = express();
-
-app.post('/events', function (req: Request, res: Response) {
-  const body = JSON.parse(req.body); // still "any" here
-
-  if (body.type === 'url_verification') {
-    // url verification
-    res.status(200).send(body.event.challenge);
-
-  } else if (body.type === 'event_callback' && body.event.type === 'message') { // still "any" here
-    const payload = body as EventsApi.MessagePayload;
-    // `payload.event.text` here is typesafe
-    slackApi.api.test({ text: payload.event.text })
-      .then((response: WebApi.ApiTestResponse) => { // `response` is typesafe
-        if (response.ok) {
-         // do something here
-        } else {
-         // do something here
-        }
-      }).catch(reason => {
-        // do something here
-      });
-  } else {
-    // do something here
-  }
-  res.status(200).json({ message: 'thanks!' });
-});
-```
-
-## How are the types generated
+## How types are generated
 
 Input samples come from [java-slack-sdk](https://github.com/slackapi/java-slack-sdk)
-(recorded JSON responses). Python models are generated with
-[genson](https://github.com/wolverdude/GenSON) (JSON → JSON Schema) piped into
+(recorded JSON responses). Each sample is converted to a JSON Schema with
+[genson](https://github.com/wolverdude/GenSON), then handed to
 [datamodel-code-generator](https://github.com/koxudaxi/datamodel-code-generator)
-(Schema → Pydantic v2). TypeScript `.d.ts` files are generated with
-[quicktype](https://github.com/glideapps/quicktype).
+to emit a Pydantic v2 module.
 
 Coverage may not be 100% and some properties may be incorrect. File issues at
 https://github.com/warrenseine/slack-types/issues.
@@ -108,12 +75,18 @@ https://github.com/warrenseine/slack-types/issues.
 To re-generate:
 
 ```bash
-npm install
-npm run build  # clones java-slack-sdk/ on first run
+uv sync --group dev
+uv run python scripts/build.py  # clones java-slack-sdk/ on first run
+uv run pytest                   # smoke + round-trip tests
 ```
 
-Requires `uv` on the `PATH` for the Python pipeline.
+To publish:
+
+```bash
+uv build
+uv publish
+```
 
 ## License
 
-The MIT License
+MIT
