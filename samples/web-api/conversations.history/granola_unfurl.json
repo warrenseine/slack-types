@@ -1,0 +1,25 @@
+{
+  "ok": true,
+  "messages": [
+    {
+      "type": "message",
+      "ts": "1778168939.007619",
+      "user": "U0990SYCWDQ",
+      "text": "*Sent using* <@U0APP2JJBP0|Claude>",
+      "blocks": [
+        {
+          "type": "rich_text",
+          "block_id": "rt1",
+          "elements": [
+            {"type": "text", "text": "*Sent using* <@U0APP2JJBP0>"}
+          ]
+        },
+        {
+          "type": "section",
+          "block_id": "s1",
+          "title": "Thinking completed"
+        }
+      ]
+    }
+  ]
+}
