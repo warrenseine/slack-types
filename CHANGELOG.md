@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.2.0
+
+- `conversations.history` / `conversations.replies`: accept `int` on
+  image-file dimension fields under `messages[].files[]` —
+  `thumb_{360,480,720,800,960,1024}_{w,h}` and `original_{w,h}`. Real Slack
+  responses ship these as integers; the upstream `java-slack-sdk` samples
+  only carried the string form, so Pydantic validation rejected every
+  message with an image upload.
+
+  Pydantic field types for the relevant File class in each response change
+  from `str | None` to `int | str | None`.
+
+  Implemented by feeding two repo-owned supplementary fixtures
+  (`samples/web-api/conversations.history/file_dimensions.json`,
+  `samples/web-api/conversations.replies/file_dimensions.json`) into the
+  genson schema inference inside `scripts/build.py`. The fixtures were
+  captured from a real Slack workspace and contain image uploads tall
+  enough to trigger every thumbnail breakpoint Slack emits.
+
 ## 1.1.0
 
 - `conversations.history` / `conversations.replies`: accept raw strings on

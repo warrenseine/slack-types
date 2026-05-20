@@ -82,6 +82,11 @@ class Workflow(BaseModel):
     trigger: Trigger | None = None
 
 
+class Element1(BaseModel):
+    type: str | None = None
+    text: str | None = None
+
+
 class Element(BaseModel):
     type: str | None = None
     text: str | Text | None = None
@@ -92,6 +97,7 @@ class Element(BaseModel):
     confirm: Confirm | None = None
     accessibility_label: str | None = None
     workflow: Workflow | None = None
+    elements: List[Element1] | None = None
 
 
 class AppIconUrls(BaseModel):
@@ -256,7 +262,7 @@ class SlackFile(BaseModel):
     url: str | None = None
 
 
-class Element1(BaseModel):
+class Element2(BaseModel):
     type: str | None = None
     text: Text | None = None
     action_id: str | None = None
@@ -277,7 +283,7 @@ class Element1(BaseModel):
 
 class TitleBlock(BaseModel):
     type: str | None = None
-    elements: List[Element1] | None = None
+    elements: List[Element2] | None = None
     block_id: str | None = None
 
 
@@ -406,7 +412,7 @@ class Workflow2(BaseModel):
     trigger: Trigger2 | None = None
 
 
-class Element2(BaseModel):
+class Element3(BaseModel):
     type: str | None = None
     text: Text | None = None
     action_id: str | None = None
@@ -427,7 +433,7 @@ class Element2(BaseModel):
 
 class DescriptionBlock(BaseModel):
     type: str | None = None
-    elements: List[Element2] | None = None
+    elements: List[Element3] | None = None
     block_id: str | None = None
 
 
@@ -497,7 +503,7 @@ class Workflow3(BaseModel):
     trigger: Trigger3 | None = None
 
 
-class Element3(BaseModel):
+class Element4(BaseModel):
     type: str | None = None
     text: Text | None = None
     action_id: str | None = None
@@ -518,7 +524,7 @@ class Element3(BaseModel):
 
 class Block1(BaseModel):
     type: str | None = None
-    elements: List[Element3] | None = None
+    elements: List[Element4] | None = None
     block_id: str | None = None
 
 
@@ -868,7 +874,7 @@ class OptionGroup1(BaseModel):
     options: List[Option3] | None = None
 
 
-class Element4(BaseModel):
+class Element5(BaseModel):
     type: str | None = None
     text: Text | None = None
     action_id: str | None = None
@@ -960,7 +966,7 @@ class Block(BaseModel):
     accessory: Accessory | None = None
     expand: bool | None = None
     label: Label | None = None
-    element: Element4 | None = None
+    element: Element5 | None = None
     dispatch_action: bool | None = None
     hint: Hint | None = None
     optional: bool | None = None
@@ -1033,7 +1039,7 @@ class Workflow6(BaseModel):
     trigger: Trigger6 | None = None
 
 
-class Element5(BaseModel):
+class Element6(BaseModel):
     type: str | None = None
     text: Text | None = None
     action_id: str | None = None
@@ -1054,7 +1060,7 @@ class Element5(BaseModel):
 
 class Block2(BaseModel):
     type: str | None = None
-    elements: List[Element5] | None = None
+    elements: List[Element6] | None = None
     block_id: str | None = None
 
 
@@ -1081,7 +1087,7 @@ class Workflow7(BaseModel):
     trigger: Trigger7 | None = None
 
 
-class Element6(BaseModel):
+class Element7(BaseModel):
     type: str | None = None
     text: Text | None = None
     action_id: str | None = None
@@ -1102,7 +1108,7 @@ class Element6(BaseModel):
 
 class Block3(BaseModel):
     type: str | None = None
-    elements: List[Element6] | None = None
+    elements: List[Element7] | None = None
     block_id: str | None = None
 
 
@@ -2633,7 +2639,7 @@ class Workflow8(BaseModel):
     trigger: Trigger8 | None = None
 
 
-class Element7(BaseModel):
+class Element8(BaseModel):
     type: str | None = None
     text: Text | None = None
     action_id: str | None = None
@@ -2654,7 +2660,7 @@ class Element7(BaseModel):
 
 class TitleBlock1(BaseModel):
     type: str | None = None
-    elements: List[Element7] | None = None
+    elements: List[Element8] | None = None
     block_id: str | None = None
 
 
@@ -2730,7 +2736,7 @@ class Workflow9(BaseModel):
     trigger: Trigger9 | None = None
 
 
-class Element8(BaseModel):
+class Element9(BaseModel):
     type: str | None = None
     text: Text | None = None
     action_id: str | None = None
@@ -2751,7 +2757,7 @@ class Element8(BaseModel):
 
 class DescriptionBlock1(BaseModel):
     type: str | None = None
-    elements: List[Element8] | None = None
+    elements: List[Element9] | None = None
     block_id: str | None = None
 
 
@@ -2791,7 +2797,7 @@ class Workflow10(BaseModel):
     trigger: Trigger10 | None = None
 
 
-class Element9(BaseModel):
+class Element10(BaseModel):
     type: str | None = None
     text: Text | None = None
     action_id: str | None = None
@@ -2812,7 +2818,7 @@ class Element9(BaseModel):
 
 class Block4(BaseModel):
     type: str | None = None
-    elements: List[Element9] | None = None
+    elements: List[Element10] | None = None
     block_id: str | None = None
 
 
@@ -3108,7 +3114,7 @@ class Workflow11(BaseModel):
     trigger: Trigger11 | None = None
 
 
-class Element10(BaseModel):
+class Element11(BaseModel):
     type: str | None = None
     text: Text | None = None
     action_id: str | None = None
@@ -3129,7 +3135,7 @@ class Element10(BaseModel):
 
 class TitleBlock2(BaseModel):
     type: str | None = None
-    elements: List[Element10] | None = None
+    elements: List[Element11] | None = None
     block_id: str | None = None
 
 
@@ -3205,7 +3211,7 @@ class Workflow12(BaseModel):
     trigger: Trigger12 | None = None
 
 
-class Element11(BaseModel):
+class Element12(BaseModel):
     type: str | None = None
     text: Text | None = None
     action_id: str | None = None
@@ -3226,7 +3232,7 @@ class Element11(BaseModel):
 
 class DescriptionBlock2(BaseModel):
     type: str | None = None
-    elements: List[Element11] | None = None
+    elements: List[Element12] | None = None
     block_id: str | None = None
 
 
@@ -3302,28 +3308,28 @@ class File5(BaseModel):
     thumb_160_h: str | None = None
     thumb_360: str | None = None
     thumb_360_gif: str | None = None
-    thumb_360_w: str | None = None
-    thumb_360_h: str | None = None
+    thumb_360_w: int | str | None = None
+    thumb_360_h: int | str | None = None
     thumb_480: str | None = None
     thumb_480_gif: str | None = None
-    thumb_480_w: str | None = None
-    thumb_480_h: str | None = None
+    thumb_480_w: int | str | None = None
+    thumb_480_h: int | str | None = None
     thumb_720: str | None = None
     thumb_720_gif: str | None = None
-    thumb_720_w: str | None = None
-    thumb_720_h: str | None = None
+    thumb_720_w: int | str | None = None
+    thumb_720_h: int | str | None = None
     thumb_800: str | None = None
     thumb_800_gif: str | None = None
-    thumb_800_w: str | None = None
-    thumb_800_h: str | None = None
+    thumb_800_w: int | str | None = None
+    thumb_800_h: int | str | None = None
     thumb_960: str | None = None
     thumb_960_gif: str | None = None
-    thumb_960_w: str | None = None
-    thumb_960_h: str | None = None
+    thumb_960_w: int | str | None = None
+    thumb_960_h: int | str | None = None
     thumb_1024: str | None = None
     thumb_1024_gif: str | None = None
-    thumb_1024_w: str | None = None
-    thumb_1024_h: str | None = None
+    thumb_1024_w: int | str | None = None
+    thumb_1024_h: int | str | None = None
     thumb_video: str | None = None
     thumb_gif: str | None = None
     thumb_pdf: str | None = None
@@ -3332,8 +3338,8 @@ class File5(BaseModel):
     thumb_tiny: str | None = None
     converted_pdf: str | None = None
     image_exif_rotation: int | None = None
-    original_w: str | None = None
-    original_h: str | None = None
+    original_w: int | str | None = None
+    original_h: int | str | None = None
     deanimate: str | None = None
     deanimate_gif: str | None = None
     pjpeg: str | None = None
@@ -3402,6 +3408,8 @@ class File5(BaseModel):
     pinned_to: List[str] | None = None
     reactions: List[Reaction1] | None = None
     comments_count: int | None = None
+    is_modified_by_ai: bool | None = None
+    skipped_shares: bool | None = None
 
 
 class Confirm28(BaseModel):
@@ -3427,7 +3435,7 @@ class Workflow13(BaseModel):
     trigger: Trigger13 | None = None
 
 
-class Element12(BaseModel):
+class Element13(BaseModel):
     type: str | None = None
     text: Text | None = None
     action_id: str | None = None
@@ -3509,7 +3517,7 @@ class Workflow14(BaseModel):
     trigger: Trigger14 | None = None
 
 
-class Element13(BaseModel):
+class Element14(BaseModel):
     type: str | None = None
     text: Text | None = None
     action_id: str | None = None
@@ -3530,7 +3538,7 @@ class Element13(BaseModel):
 
 class TitleBlock4(BaseModel):
     type: str | None = None
-    elements: List[Element13] | None = None
+    elements: List[Element14] | None = None
     block_id: str | None = None
 
 
@@ -3606,7 +3614,7 @@ class Workflow15(BaseModel):
     trigger: Trigger15 | None = None
 
 
-class Element14(BaseModel):
+class Element15(BaseModel):
     type: str | None = None
     text: Text | None = None
     action_id: str | None = None
@@ -3627,7 +3635,7 @@ class Element14(BaseModel):
 
 class DescriptionBlock3(BaseModel):
     type: str | None = None
-    elements: List[Element14] | None = None
+    elements: List[Element15] | None = None
     block_id: str | None = None
 
 
@@ -3667,7 +3675,7 @@ class Workflow16(BaseModel):
     trigger: Trigger16 | None = None
 
 
-class Element15(BaseModel):
+class Element16(BaseModel):
     type: str | None = None
     text: Text | None = None
     action_id: str | None = None
@@ -3688,7 +3696,7 @@ class Element15(BaseModel):
 
 class Block5(BaseModel):
     type: str | None = None
-    elements: List[Element15] | None = None
+    elements: List[Element16] | None = None
     block_id: str | None = None
 
 
@@ -4020,7 +4028,7 @@ class OptionGroup4(BaseModel):
     options: List[Option9] | None = None
 
 
-class Element16(BaseModel):
+class Element17(BaseModel):
     type: str | None = None
     text: Text | None = None
     action_id: str | None = None
@@ -4062,7 +4070,7 @@ class Element16(BaseModel):
 
 class TitleBlock3(BaseModel):
     type: str | None = None
-    elements: List[Element12] | None = None
+    elements: List[Element13] | None = None
     block_id: str | None = None
     call_id: str | None = None
     api_decoration_available: bool | None = None
@@ -4106,7 +4114,7 @@ class TitleBlock3(BaseModel):
     accessory: Accessory1 | None = None
     expand: bool | None = None
     label: Label | None = None
-    element: Element16 | None = None
+    element: Element17 | None = None
     dispatch_action: bool | None = None
     hint: Hint | None = None
     optional: bool | None = None
@@ -4146,6 +4154,7 @@ class Message(BaseModel):
     attachments: List[Attachment] | None = None
     files: List[File5] | None = None
     assistant_app_thread: AssistantAppThread3 | None = None
+    client_msg_id: str | None = None
 
 
 class ResponseMetadata(BaseModel):
