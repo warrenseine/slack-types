@@ -499,8 +499,8 @@ class File(BaseModel):
     thumb_video: str | None = None
     thumb_gif: str | None = None
     thumb_pdf: str | None = None
-    thumb_pdf_w: str | None = None
-    thumb_pdf_h: str | None = None
+    thumb_pdf_w: int | str | None = None
+    thumb_pdf_h: int | str | None = None
     thumb_tiny: str | None = None
     converted_pdf: str | None = None
     image_exif_rotation: int | None = None
@@ -3420,7 +3420,7 @@ class Attachment(BaseModel):
     video_html_height: float | None = None
     footer: str | None = None
     footer_icon: str | None = None
-    ts: str | None = None
+    ts: int | str | None = None
     mrkdwn_in: List[str] | None = None
     actions: List[Action] | None = None
     blocks: List[Block2] | None = None

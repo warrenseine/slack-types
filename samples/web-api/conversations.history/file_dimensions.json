@@ -232,6 +232,50 @@
           "count": 1
         }
       ]
+    },
+    {
+      "type": "message",
+      "user": "U0990SYCWDQ",
+      "text": "pdf upload + link unfurl",
+      "ts": "1779281930.111111",
+      "client_msg_id": "pdf-attach-fixture-0001",
+      "files": [
+        {
+          "id": "F0PDF00001",
+          "created": 1779281906,
+          "timestamp": 1779281906,
+          "name": "doc.pdf",
+          "title": "doc.pdf",
+          "mimetype": "application/pdf",
+          "filetype": "pdf",
+          "pretty_type": "PDF",
+          "user": "U0990SYCWDQ",
+          "size": 220143,
+          "mode": "hosted",
+          "is_external": false,
+          "is_public": true,
+          "url_private": "https://files.slack.com/files-pri/T08JL0PSDGX-F0PDF00001/doc.pdf",
+          "url_private_download": "https://files.slack.com/files-pri/T08JL0PSDGX-F0PDF00001/download/doc.pdf",
+          "thumb_pdf": "https://files.slack.com/files-tmb/T08JL0PSDGX-F0PDF00001-abc/doc_thumb_pdf.png",
+          "thumb_pdf_w": 909,
+          "thumb_pdf_h": 1286,
+          "permalink": "https://pearl-monde.slack.com/files/U0990SYCWDQ/F0PDF00001/doc.pdf",
+          "file_access": "visible"
+        }
+      ],
+      "attachments": [
+        {
+          "id": 1,
+          "fallback": "Example unfurl",
+          "title": "Example",
+          "title_link": "https://example.com/x",
+          "text": "Unfurled link preview",
+          "from_url": "https://example.com/x",
+          "service_name": "example.com",
+          "color": "D0D0D0",
+          "ts": 1776800040
+        }
+      ]
     }
   ],
   "has_more": true,

@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.2.2
+
+- `conversations.history` / `conversations.replies`: accept `int` on two more
+  fields that real Slack responses ship as integers —
+  `messages[].files[].thumb_pdf_w` / `thumb_pdf_h` (PDF thumbnail dimensions)
+  and `messages[].attachments[].ts` (link-unfurl epoch). The `1.2.0` fix only
+  covered image thumbnails (`thumb_{360..1024}_{w,h}`, `original_{w,h}`); PDF
+  uploads and link unfurls still broke channel backfill with
+  `Input should be a valid string [type=string_type, input_type=int]`.
+
+  Pydantic field types change from `str | None` to `int | str | None` for
+  `thumb_pdf_w` / `thumb_pdf_h` on the message `File` and from `str | None`
+  to `int | str | None` for `Attachment.ts`.
+
+  Implemented by extending the existing `file_dimensions.json` fixtures (one
+  per endpoint) fed into genson in `scripts/build.py`, using field values
+  captured from real production payloads.
+
 ## 1.2.1
 
 - `events-api` `MessagePayload`: accept a raw `str` under
