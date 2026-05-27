@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.2.1
+
+- `events-api` `MessagePayload`: accept a raw `str` under
+  `event.blocks[].elements[].text`. Slack `context` blocks ship their
+  text-object elements as `{"type": "mrkdwn", "text": "<string>", ...}` —
+  the `text` is already a plain string, not a nested text object. The
+  upstream `java-slack-sdk` samples only carried the object form, so the
+  generated Pydantic `Element.text` was typed `Text | None` and rejected
+  every real Socket Mode message containing a context block (e.g. `/giphy`
+  posts).
+
+  Pydantic field type for `Element.text` in `message_payload` changes from
+  `Text | None` to `str | Text | None`.
+
+  Implemented by feeding a repo-owned supplementary fixture
+  (`samples/events-api/MessagePayload/giphy_context.json`) into the genson
+  schema inference inside `scripts/build.py`. The fixture mirrors a real
+  `/giphy` message envelope captured from a production workspace.
+
 ## 1.2.0
 
 - `conversations.history` / `conversations.replies`: accept `int` on

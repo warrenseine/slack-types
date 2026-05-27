@@ -92,7 +92,7 @@ class SlackFile(BaseModel):
 
 class Element(BaseModel):
     type: str | None = None
-    text: Text | None = None
+    text: str | Text | None = None
     action_id: str | None = None
     url: str | None = None
     value: str | None = None
@@ -118,6 +118,7 @@ class Element(BaseModel):
     image_bytes: int | None = None
     slack_file: SlackFile | None = None
     initial_user: str | None = None
+    verbatim: bool | None = None
 
 
 class Field(BaseModel):
