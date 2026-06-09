@@ -39,6 +39,22 @@ def test_block_kit_string_payloads_validate(sample: str, model: type[BaseModel])
     assert msg.blocks[1].title == "Thinking completed"
 
 
+ATTACHMENT_CASES: list[tuple[str, type[BaseModel]]] = [
+    ("web-api/conversations.history/linear_unfurl.json", ConversationsHistoryResponse),
+    ("web-api/conversations.replies/linear_unfurl.json", ConversationsRepliesResponse),
+]
+
+
+@pytest.mark.parametrize(("sample", "model"), ATTACHMENT_CASES)
+def test_attachment_block_string_payloads_validate(sample: str, model: type[BaseModel]) -> None:
+    data = json.loads((SAMPLES / sample).read_text())
+    parsed = model.model_validate(data)
+    elements = parsed.messages[0].attachments[0].blocks[0].elements
+    assert elements[0].text == "*State*  Next"
+    assert elements[1].text == "*Assignee*  Laurent Anadon"
+    assert elements[2].text == "*Project*  Run 2026"
+
+
 @pytest.mark.parametrize("model", [ConversationsHistoryResponse, ConversationsRepliesResponse])
 def test_block_kit_object_payloads_still_validate(model: type[BaseModel]) -> None:
     payload = {

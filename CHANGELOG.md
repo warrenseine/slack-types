@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.2.3
+
+- `conversations.history` / `conversations.replies`: accept a raw `str` under
+  `messages[].attachments[].blocks[].elements[].text`. Real Slack responses
+  ship app-unfurl `context` blocks (e.g. Linear) whose `mrkdwn` elements carry
+  `text` as a plain string (`"*State*  Next"`), but the generated model typed
+  the attachment-block element `text` as a `Text` object only — so channel
+  backfill failed with `Input should be a valid dictionary or instance of Text
+  [type=model_type, input_type=str]` and dropped the whole page.
+
+  The `1.1.0` fix widened the message-level element (`messages[].blocks[]`);
+  attachment blocks were still tight. Pydantic field type changes from
+  `Text | None` to `str | Text | None` for the attachment-block element
+  (`Element6` on replies, `Element8` on history). Implemented by adding a
+  `linear_unfurl.json` supplementary sample per endpoint, fed into genson in
+  `scripts/build.py`, with field values captured from a real production
+  payload.
+
 ## 1.2.2
 
 - `conversations.history` / `conversations.replies`: accept `int` on two more

@@ -1,0 +1,37 @@
+{
+  "ok": true,
+  "messages": [
+    {
+      "type": "message",
+      "ts": "1780574721.878989",
+      "thread_ts": "1780574369.510569",
+      "user": "U0990SYCWDQ",
+      "text": "Linear issue unfurl",
+      "attachments": [
+        {
+          "id": 1,
+          "color": "5e6ad2",
+          "fallback": "Linear issue",
+          "blocks": [
+            {
+              "type": "context",
+              "block_id": "ctx-fields",
+              "elements": [
+                {"type": "mrkdwn", "text": "*State*  Next"},
+                {"type": "mrkdwn", "text": "*Assignee*  Laurent Anadon"},
+                {"type": "mrkdwn", "text": "*Project*  Run 2026"}
+              ]
+            },
+            {
+              "type": "context",
+              "block_id": "ctx-date",
+              "elements": [
+                {"type": "mrkdwn", "text": "<https://linear.app/hey-pearl/issue/ENG-1234|April 1, 2026>"}
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

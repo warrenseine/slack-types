@@ -1041,7 +1041,7 @@ class Workflow6(BaseModel):
 
 class Element6(BaseModel):
     type: str | None = None
-    text: Text | None = None
+    text: str | Text | None = None
     action_id: str | None = None
     url: str | None = None
     value: str | None = None

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "slack-types"
-version = "1.2.2"
+version = "1.2.3"
 description = "Slack API Types in Python"
 readme = "README.md"
 requires-python = ">=3.12"
