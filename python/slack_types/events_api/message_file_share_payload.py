@@ -37,8 +37,8 @@ class Deny(BaseModel):
 
 
 class Confirm(BaseModel):
-    title: Title | None = None
-    text: Text | None = None
+    title: str | Title | None = None
+    text: str | Text | None = None
     confirm: Confirm1 | None = None
     deny: Deny | None = None
     style: str | None = None
@@ -63,7 +63,7 @@ class Description(BaseModel):
 
 
 class InitialOption(BaseModel):
-    text: Text | None = None
+    text: str | Text | None = None
     value: str | None = None
     description: Description | None = None
     url: str | None = None
@@ -76,7 +76,7 @@ class SlackFile(BaseModel):
 
 class Element(BaseModel):
     type: str | None = None
-    text: Text | None = None
+    text: str | Text | None = None
     action_id: str | None = None
     url: str | None = None
     value: str | None = None
@@ -134,8 +134,8 @@ class Block(BaseModel):
     is_animated: bool | None = None
     slack_file: SlackFile | None = None
     alt_text: str | None = None
-    title: Title | None = None
-    text: Text | None = None
+    title: str | Title | None = None
+    text: str | Text | None = None
     fields: List[Field] | None = None
     accessory: Accessory | None = None
 
@@ -177,7 +177,7 @@ class Subtitle(BaseModel):
 class Preview(BaseModel):
     type: str | None = None
     can_remove: bool | None = None
-    title: Title | None = None
+    title: str | Title | None = None
     subtitle: Subtitle | None = None
     icon_url: str | None = None
 
@@ -451,50 +451,50 @@ class File(BaseModel):
     app_name: str | None = None
     thumb_64: str | None = None
     thumb_64_gif: str | None = None
-    thumb_64_w: str | None = None
-    thumb_64_h: str | None = None
+    thumb_64_w: int | str | None = None
+    thumb_64_h: int | str | None = None
     thumb_80: str | None = None
     thumb_80_gif: str | None = None
-    thumb_80_w: str | None = None
-    thumb_80_h: str | None = None
+    thumb_80_w: int | str | None = None
+    thumb_80_h: int | str | None = None
     thumb_160: str | None = None
     thumb_160_gif: str | None = None
-    thumb_160_w: str | None = None
-    thumb_160_h: str | None = None
+    thumb_160_w: int | str | None = None
+    thumb_160_h: int | str | None = None
     thumb_360: str | None = None
     thumb_360_gif: str | None = None
-    thumb_360_w: str | None = None
-    thumb_360_h: str | None = None
+    thumb_360_w: int | str | None = None
+    thumb_360_h: int | str | None = None
     thumb_480: str | None = None
     thumb_480_gif: str | None = None
-    thumb_480_w: str | None = None
-    thumb_480_h: str | None = None
+    thumb_480_w: int | str | None = None
+    thumb_480_h: int | str | None = None
     thumb_720: str | None = None
     thumb_720_gif: str | None = None
-    thumb_720_w: str | None = None
-    thumb_720_h: str | None = None
+    thumb_720_w: int | str | None = None
+    thumb_720_h: int | str | None = None
     thumb_800: str | None = None
     thumb_800_gif: str | None = None
-    thumb_800_w: str | None = None
-    thumb_800_h: str | None = None
+    thumb_800_w: int | str | None = None
+    thumb_800_h: int | str | None = None
     thumb_960: str | None = None
     thumb_960_gif: str | None = None
-    thumb_960_w: str | None = None
-    thumb_960_h: str | None = None
+    thumb_960_w: int | str | None = None
+    thumb_960_h: int | str | None = None
     thumb_1024: str | None = None
     thumb_1024_gif: str | None = None
-    thumb_1024_w: str | None = None
-    thumb_1024_h: str | None = None
+    thumb_1024_w: int | str | None = None
+    thumb_1024_h: int | str | None = None
     thumb_video: str | None = None
     thumb_gif: str | None = None
     thumb_pdf: str | None = None
-    thumb_pdf_w: str | None = None
-    thumb_pdf_h: str | None = None
+    thumb_pdf_w: int | str | None = None
+    thumb_pdf_h: int | str | None = None
     thumb_tiny: str | None = None
     converted_pdf: str | None = None
     image_exif_rotation: int | None = None
-    original_w: str | None = None
-    original_h: str | None = None
+    original_w: int | str | None = None
+    original_h: int | str | None = None
     deanimate: str | None = None
     deanimate_gif: str | None = None
     pjpeg: str | None = None

@@ -117,8 +117,8 @@ class Deny(BaseModel):
 
 
 class Confirm(BaseModel):
-    title: Title | None = None
-    text: Text1 | None = None
+    title: str | Title | None = None
+    text: str | Text1 | None = None
     confirm: Confirm1 | None = None
     deny: Deny | None = None
     style: str | None = None
@@ -142,7 +142,7 @@ class Description(BaseModel):
 
 
 class InitialOption(BaseModel):
-    text: Text1 | None = None
+    text: str | Text1 | None = None
     value: str | None = None
     description: Description | None = None
     url: str | None = None
@@ -150,7 +150,7 @@ class InitialOption(BaseModel):
 
 class Element(BaseModel):
     type: str | None = None
-    text: Text1 | None = None
+    text: str | Text1 | None = None
     action_id: str | None = None
     url: str | None = None
     value: str | None = None
@@ -194,7 +194,7 @@ class Accessory(BaseModel):
 class Block(BaseModel):
     type: str | None = None
     block_id: str | None = None
-    text: Text | None = None
+    text: str | Text | None = None
     elements: List[Element] | None = None
     fallback: str | None = None
     image_url: str | None = None
@@ -202,7 +202,7 @@ class Block(BaseModel):
     image_height: int | None = None
     image_bytes: int | None = None
     alt_text: str | None = None
-    title: Title | None = None
+    title: str | Title | None = None
     fields: List[Field] | None = None
     accessory: Accessory | None = None
 

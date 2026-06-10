@@ -149,8 +149,8 @@ class Deny(BaseModel):
 
 
 class Confirm1(BaseModel):
-    title: Title | None = None
-    text: Text | None = None
+    title: str | Title | None = None
+    text: str | Text | None = None
     confirm: Confirm2 | None = None
     deny: Deny | None = None
     style: str | None = None
@@ -177,7 +177,7 @@ class SlackFile(BaseModel):
 
 class Element(BaseModel):
     type: str | None = None
-    text: Text | None = None
+    text: str | Text | None = None
     action_id: str | None = None
     url: str | None = None
     value: str | None = None
@@ -207,8 +207,8 @@ class Confirm4(BaseModel):
 
 
 class Confirm3(BaseModel):
-    title: Title | None = None
-    text: Text | None = None
+    title: str | Title | None = None
+    text: str | Text | None = None
     confirm: Confirm4 | None = None
     deny: Deny | None = None
     style: str | None = None
@@ -225,7 +225,7 @@ class Workflow1(BaseModel):
 
 class Element1(BaseModel):
     type: str | None = None
-    text: Text | None = None
+    text: str | Text | None = None
     action_id: str | None = None
     url: str | None = None
     value: str | None = None
@@ -393,50 +393,50 @@ class File(BaseModel):
     app_name: str | None = None
     thumb_64: str | None = None
     thumb_64_gif: str | None = None
-    thumb_64_w: str | None = None
-    thumb_64_h: str | None = None
+    thumb_64_w: int | str | None = None
+    thumb_64_h: int | str | None = None
     thumb_80: str | None = None
     thumb_80_gif: str | None = None
-    thumb_80_w: str | None = None
-    thumb_80_h: str | None = None
+    thumb_80_w: int | str | None = None
+    thumb_80_h: int | str | None = None
     thumb_160: str | None = None
     thumb_160_gif: str | None = None
-    thumb_160_w: str | None = None
-    thumb_160_h: str | None = None
+    thumb_160_w: int | str | None = None
+    thumb_160_h: int | str | None = None
     thumb_360: str | None = None
     thumb_360_gif: str | None = None
-    thumb_360_w: str | None = None
-    thumb_360_h: str | None = None
+    thumb_360_w: int | str | None = None
+    thumb_360_h: int | str | None = None
     thumb_480: str | None = None
     thumb_480_gif: str | None = None
-    thumb_480_w: str | None = None
-    thumb_480_h: str | None = None
+    thumb_480_w: int | str | None = None
+    thumb_480_h: int | str | None = None
     thumb_720: str | None = None
     thumb_720_gif: str | None = None
-    thumb_720_w: str | None = None
-    thumb_720_h: str | None = None
+    thumb_720_w: int | str | None = None
+    thumb_720_h: int | str | None = None
     thumb_800: str | None = None
     thumb_800_gif: str | None = None
-    thumb_800_w: str | None = None
-    thumb_800_h: str | None = None
+    thumb_800_w: int | str | None = None
+    thumb_800_h: int | str | None = None
     thumb_960: str | None = None
     thumb_960_gif: str | None = None
-    thumb_960_w: str | None = None
-    thumb_960_h: str | None = None
+    thumb_960_w: int | str | None = None
+    thumb_960_h: int | str | None = None
     thumb_1024: str | None = None
     thumb_1024_gif: str | None = None
-    thumb_1024_w: str | None = None
-    thumb_1024_h: str | None = None
+    thumb_1024_w: int | str | None = None
+    thumb_1024_h: int | str | None = None
     thumb_video: str | None = None
     thumb_gif: str | None = None
     thumb_pdf: str | None = None
-    thumb_pdf_w: str | None = None
-    thumb_pdf_h: str | None = None
+    thumb_pdf_w: int | str | None = None
+    thumb_pdf_h: int | str | None = None
     thumb_tiny: str | None = None
     converted_pdf: str | None = None
     image_exif_rotation: int | None = None
-    original_w: str | None = None
-    original_h: str | None = None
+    original_w: int | str | None = None
+    original_h: int | str | None = None
     deanimate: str | None = None
     deanimate_gif: str | None = None
     pjpeg: str | None = None
@@ -788,7 +788,7 @@ class Subtitle(BaseModel):
 class Preview1(BaseModel):
     type: str | None = None
     can_remove: bool | None = None
-    title: Title | None = None
+    title: str | Title | None = None
     subtitle: Subtitle | None = None
     icon_url: str | None = None
 
@@ -882,50 +882,50 @@ class File1(BaseModel):
     app_name: str | None = None
     thumb_64: str | None = None
     thumb_64_gif: str | None = None
-    thumb_64_w: str | None = None
-    thumb_64_h: str | None = None
+    thumb_64_w: int | str | None = None
+    thumb_64_h: int | str | None = None
     thumb_80: str | None = None
     thumb_80_gif: str | None = None
-    thumb_80_w: str | None = None
-    thumb_80_h: str | None = None
+    thumb_80_w: int | str | None = None
+    thumb_80_h: int | str | None = None
     thumb_160: str | None = None
     thumb_160_gif: str | None = None
-    thumb_160_w: str | None = None
-    thumb_160_h: str | None = None
+    thumb_160_w: int | str | None = None
+    thumb_160_h: int | str | None = None
     thumb_360: str | None = None
     thumb_360_gif: str | None = None
-    thumb_360_w: str | None = None
-    thumb_360_h: str | None = None
+    thumb_360_w: int | str | None = None
+    thumb_360_h: int | str | None = None
     thumb_480: str | None = None
     thumb_480_gif: str | None = None
-    thumb_480_w: str | None = None
-    thumb_480_h: str | None = None
+    thumb_480_w: int | str | None = None
+    thumb_480_h: int | str | None = None
     thumb_720: str | None = None
     thumb_720_gif: str | None = None
-    thumb_720_w: str | None = None
-    thumb_720_h: str | None = None
+    thumb_720_w: int | str | None = None
+    thumb_720_h: int | str | None = None
     thumb_800: str | None = None
     thumb_800_gif: str | None = None
-    thumb_800_w: str | None = None
-    thumb_800_h: str | None = None
+    thumb_800_w: int | str | None = None
+    thumb_800_h: int | str | None = None
     thumb_960: str | None = None
     thumb_960_gif: str | None = None
-    thumb_960_w: str | None = None
-    thumb_960_h: str | None = None
+    thumb_960_w: int | str | None = None
+    thumb_960_h: int | str | None = None
     thumb_1024: str | None = None
     thumb_1024_gif: str | None = None
-    thumb_1024_w: str | None = None
-    thumb_1024_h: str | None = None
+    thumb_1024_w: int | str | None = None
+    thumb_1024_h: int | str | None = None
     thumb_video: str | None = None
     thumb_gif: str | None = None
     thumb_pdf: str | None = None
-    thumb_pdf_w: str | None = None
-    thumb_pdf_h: str | None = None
+    thumb_pdf_w: int | str | None = None
+    thumb_pdf_h: int | str | None = None
     thumb_tiny: str | None = None
     converted_pdf: str | None = None
     image_exif_rotation: int | None = None
-    original_w: str | None = None
-    original_h: str | None = None
+    original_w: int | str | None = None
+    original_h: int | str | None = None
     deanimate: str | None = None
     deanimate_gif: str | None = None
     pjpeg: str | None = None
@@ -1327,50 +1327,50 @@ class File2(BaseModel):
     app_name: str | None = None
     thumb_64: str | None = None
     thumb_64_gif: str | None = None
-    thumb_64_w: str | None = None
-    thumb_64_h: str | None = None
+    thumb_64_w: int | str | None = None
+    thumb_64_h: int | str | None = None
     thumb_80: str | None = None
     thumb_80_gif: str | None = None
-    thumb_80_w: str | None = None
-    thumb_80_h: str | None = None
+    thumb_80_w: int | str | None = None
+    thumb_80_h: int | str | None = None
     thumb_160: str | None = None
     thumb_160_gif: str | None = None
-    thumb_160_w: str | None = None
-    thumb_160_h: str | None = None
+    thumb_160_w: int | str | None = None
+    thumb_160_h: int | str | None = None
     thumb_360: str | None = None
     thumb_360_gif: str | None = None
-    thumb_360_w: str | None = None
-    thumb_360_h: str | None = None
+    thumb_360_w: int | str | None = None
+    thumb_360_h: int | str | None = None
     thumb_480: str | None = None
     thumb_480_gif: str | None = None
-    thumb_480_w: str | None = None
-    thumb_480_h: str | None = None
+    thumb_480_w: int | str | None = None
+    thumb_480_h: int | str | None = None
     thumb_720: str | None = None
     thumb_720_gif: str | None = None
-    thumb_720_w: str | None = None
-    thumb_720_h: str | None = None
+    thumb_720_w: int | str | None = None
+    thumb_720_h: int | str | None = None
     thumb_800: str | None = None
     thumb_800_gif: str | None = None
-    thumb_800_w: str | None = None
-    thumb_800_h: str | None = None
+    thumb_800_w: int | str | None = None
+    thumb_800_h: int | str | None = None
     thumb_960: str | None = None
     thumb_960_gif: str | None = None
-    thumb_960_w: str | None = None
-    thumb_960_h: str | None = None
+    thumb_960_w: int | str | None = None
+    thumb_960_h: int | str | None = None
     thumb_1024: str | None = None
     thumb_1024_gif: str | None = None
-    thumb_1024_w: str | None = None
-    thumb_1024_h: str | None = None
+    thumb_1024_w: int | str | None = None
+    thumb_1024_h: int | str | None = None
     thumb_video: str | None = None
     thumb_gif: str | None = None
     thumb_pdf: str | None = None
-    thumb_pdf_w: str | None = None
-    thumb_pdf_h: str | None = None
+    thumb_pdf_w: int | str | None = None
+    thumb_pdf_h: int | str | None = None
     thumb_tiny: str | None = None
     converted_pdf: str | None = None
     image_exif_rotation: int | None = None
-    original_w: str | None = None
-    original_h: str | None = None
+    original_w: int | str | None = None
+    original_h: int | str | None = None
     deanimate: str | None = None
     deanimate_gif: str | None = None
     pjpeg: str | None = None
@@ -1868,8 +1868,8 @@ class Confirm6(BaseModel):
 
 
 class Confirm5(BaseModel):
-    title: Title | None = None
-    text: Text | None = None
+    title: str | Title | None = None
+    text: str | Text | None = None
     confirm: Confirm6 | None = None
     deny: Deny | None = None
     style: str | None = None
@@ -1886,7 +1886,7 @@ class Workflow2(BaseModel):
 
 class Element2(BaseModel):
     type: str | None = None
-    text: Text | None = None
+    text: str | Text | None = None
     action_id: str | None = None
     url: str | None = None
     value: str | None = None
@@ -1971,8 +1971,8 @@ class Confirm8(BaseModel):
 
 
 class Confirm7(BaseModel):
-    title: Title | None = None
-    text: Text | None = None
+    title: str | Title | None = None
+    text: str | Text | None = None
     confirm: Confirm8 | None = None
     deny: Deny | None = None
     style: str | None = None
@@ -1989,7 +1989,7 @@ class Workflow3(BaseModel):
 
 class Element3(BaseModel):
     type: str | None = None
-    text: Text | None = None
+    text: str | Text | None = None
     action_id: str | None = None
     url: str | None = None
     value: str | None = None
@@ -2039,8 +2039,8 @@ class Confirm10(BaseModel):
 
 
 class Confirm9(BaseModel):
-    title: Title | None = None
-    text: Text | None = None
+    title: str | Title | None = None
+    text: str | Text | None = None
     confirm: Confirm10 | None = None
     deny: Deny | None = None
     style: str | None = None
@@ -2057,7 +2057,7 @@ class Workflow4(BaseModel):
 
 class Element4(BaseModel):
     type: str | None = None
-    text: Text | None = None
+    text: str | Text | None = None
     action_id: str | None = None
     url: str | None = None
     value: str | None = None
@@ -2127,50 +2127,50 @@ class File3(BaseModel):
     app_name: str | None = None
     thumb_64: str | None = None
     thumb_64_gif: str | None = None
-    thumb_64_w: str | None = None
-    thumb_64_h: str | None = None
+    thumb_64_w: int | str | None = None
+    thumb_64_h: int | str | None = None
     thumb_80: str | None = None
     thumb_80_gif: str | None = None
-    thumb_80_w: str | None = None
-    thumb_80_h: str | None = None
+    thumb_80_w: int | str | None = None
+    thumb_80_h: int | str | None = None
     thumb_160: str | None = None
     thumb_160_gif: str | None = None
-    thumb_160_w: str | None = None
-    thumb_160_h: str | None = None
+    thumb_160_w: int | str | None = None
+    thumb_160_h: int | str | None = None
     thumb_360: str | None = None
     thumb_360_gif: str | None = None
-    thumb_360_w: str | None = None
-    thumb_360_h: str | None = None
+    thumb_360_w: int | str | None = None
+    thumb_360_h: int | str | None = None
     thumb_480: str | None = None
     thumb_480_gif: str | None = None
-    thumb_480_w: str | None = None
-    thumb_480_h: str | None = None
+    thumb_480_w: int | str | None = None
+    thumb_480_h: int | str | None = None
     thumb_720: str | None = None
     thumb_720_gif: str | None = None
-    thumb_720_w: str | None = None
-    thumb_720_h: str | None = None
+    thumb_720_w: int | str | None = None
+    thumb_720_h: int | str | None = None
     thumb_800: str | None = None
     thumb_800_gif: str | None = None
-    thumb_800_w: str | None = None
-    thumb_800_h: str | None = None
+    thumb_800_w: int | str | None = None
+    thumb_800_h: int | str | None = None
     thumb_960: str | None = None
     thumb_960_gif: str | None = None
-    thumb_960_w: str | None = None
-    thumb_960_h: str | None = None
+    thumb_960_w: int | str | None = None
+    thumb_960_h: int | str | None = None
     thumb_1024: str | None = None
     thumb_1024_gif: str | None = None
-    thumb_1024_w: str | None = None
-    thumb_1024_h: str | None = None
+    thumb_1024_w: int | str | None = None
+    thumb_1024_h: int | str | None = None
     thumb_video: str | None = None
     thumb_gif: str | None = None
     thumb_pdf: str | None = None
-    thumb_pdf_w: str | None = None
-    thumb_pdf_h: str | None = None
+    thumb_pdf_w: int | str | None = None
+    thumb_pdf_h: int | str | None = None
     thumb_tiny: str | None = None
     converted_pdf: str | None = None
     image_exif_rotation: int | None = None
-    original_w: str | None = None
-    original_h: str | None = None
+    original_w: int | str | None = None
+    original_h: int | str | None = None
     deanimate: str | None = None
     deanimate_gif: str | None = None
     pjpeg: str | None = None
@@ -2335,8 +2335,8 @@ class Confirm12(BaseModel):
 
 
 class Confirm11(BaseModel):
-    title: Title | None = None
-    text: Text | None = None
+    title: str | Title | None = None
+    text: str | Text | None = None
     confirm: Confirm12 | None = None
     deny: Deny | None = None
     style: str | None = None
@@ -2353,7 +2353,7 @@ class Workflow5(BaseModel):
 
 class Element5(BaseModel):
     type: str | None = None
-    text: Text | None = None
+    text: str | Text | None = None
     action_id: str | None = None
     url: str | None = None
     value: str | None = None
@@ -2445,8 +2445,8 @@ class Confirm14(BaseModel):
 
 
 class Confirm13(BaseModel):
-    title: Title | None = None
-    text: Text | None = None
+    title: str | Title | None = None
+    text: str | Text | None = None
     confirm: Confirm14 | None = None
     deny: Deny | None = None
     style: str | None = None
@@ -2463,7 +2463,7 @@ class Workflow6(BaseModel):
 
 class Element6(BaseModel):
     type: str | None = None
-    text: Text | None = None
+    text: str | Text | None = None
     action_id: str | None = None
     url: str | None = None
     value: str | None = None
@@ -2542,8 +2542,8 @@ class Confirm16(BaseModel):
 
 
 class Confirm15(BaseModel):
-    title: Title | None = None
-    text: Text | None = None
+    title: str | Title | None = None
+    text: str | Text | None = None
     confirm: Confirm16 | None = None
     deny: Deny | None = None
     style: str | None = None
@@ -2560,7 +2560,7 @@ class Workflow7(BaseModel):
 
 class Element7(BaseModel):
     type: str | None = None
-    text: Text | None = None
+    text: str | Text | None = None
     action_id: str | None = None
     url: str | None = None
     value: str | None = None
@@ -2603,8 +2603,8 @@ class Confirm18(BaseModel):
 
 
 class Confirm17(BaseModel):
-    title: Title | None = None
-    text: Text | None = None
+    title: str | Title | None = None
+    text: str | Text | None = None
     confirm: Confirm18 | None = None
     deny: Deny | None = None
     style: str | None = None
@@ -2621,7 +2621,7 @@ class Workflow8(BaseModel):
 
 class Element8(BaseModel):
     type: str | None = None
-    text: Text | None = None
+    text: str | Text | None = None
     action_id: str | None = None
     url: str | None = None
     value: str | None = None
@@ -2691,50 +2691,50 @@ class File4(BaseModel):
     app_name: str | None = None
     thumb_64: str | None = None
     thumb_64_gif: str | None = None
-    thumb_64_w: str | None = None
-    thumb_64_h: str | None = None
+    thumb_64_w: int | str | None = None
+    thumb_64_h: int | str | None = None
     thumb_80: str | None = None
     thumb_80_gif: str | None = None
-    thumb_80_w: str | None = None
-    thumb_80_h: str | None = None
+    thumb_80_w: int | str | None = None
+    thumb_80_h: int | str | None = None
     thumb_160: str | None = None
     thumb_160_gif: str | None = None
-    thumb_160_w: str | None = None
-    thumb_160_h: str | None = None
+    thumb_160_w: int | str | None = None
+    thumb_160_h: int | str | None = None
     thumb_360: str | None = None
     thumb_360_gif: str | None = None
-    thumb_360_w: str | None = None
-    thumb_360_h: str | None = None
+    thumb_360_w: int | str | None = None
+    thumb_360_h: int | str | None = None
     thumb_480: str | None = None
     thumb_480_gif: str | None = None
-    thumb_480_w: str | None = None
-    thumb_480_h: str | None = None
+    thumb_480_w: int | str | None = None
+    thumb_480_h: int | str | None = None
     thumb_720: str | None = None
     thumb_720_gif: str | None = None
-    thumb_720_w: str | None = None
-    thumb_720_h: str | None = None
+    thumb_720_w: int | str | None = None
+    thumb_720_h: int | str | None = None
     thumb_800: str | None = None
     thumb_800_gif: str | None = None
-    thumb_800_w: str | None = None
-    thumb_800_h: str | None = None
+    thumb_800_w: int | str | None = None
+    thumb_800_h: int | str | None = None
     thumb_960: str | None = None
     thumb_960_gif: str | None = None
-    thumb_960_w: str | None = None
-    thumb_960_h: str | None = None
+    thumb_960_w: int | str | None = None
+    thumb_960_h: int | str | None = None
     thumb_1024: str | None = None
     thumb_1024_gif: str | None = None
-    thumb_1024_w: str | None = None
-    thumb_1024_h: str | None = None
+    thumb_1024_w: int | str | None = None
+    thumb_1024_h: int | str | None = None
     thumb_video: str | None = None
     thumb_gif: str | None = None
     thumb_pdf: str | None = None
-    thumb_pdf_w: str | None = None
-    thumb_pdf_h: str | None = None
+    thumb_pdf_w: int | str | None = None
+    thumb_pdf_h: int | str | None = None
     thumb_tiny: str | None = None
     converted_pdf: str | None = None
     image_exif_rotation: int | None = None
-    original_w: str | None = None
-    original_h: str | None = None
+    original_w: int | str | None = None
+    original_h: int | str | None = None
     deanimate: str | None = None
     deanimate_gif: str | None = None
     pjpeg: str | None = None
@@ -2827,8 +2827,8 @@ class Confirm20(BaseModel):
 
 
 class Confirm19(BaseModel):
-    title: Title | None = None
-    text: Text | None = None
+    title: str | Title | None = None
+    text: str | Text | None = None
     confirm: Confirm20 | None = None
     deny: Deny | None = None
     style: str | None = None
@@ -2844,21 +2844,21 @@ class Workflow9(BaseModel):
 
 
 class Option2(BaseModel):
-    text: Text | None = None
+    text: str | Text | None = None
     value: str | None = None
     description: Description | None = None
     url: str | None = None
 
 
 class InitialOption(BaseModel):
-    text: Text | None = None
+    text: str | Text | None = None
     value: str | None = None
     description: Description | None = None
     url: str | None = None
 
 
 class InitialOption1(BaseModel):
-    text: Text | None = None
+    text: str | Text | None = None
     value: str | None = None
     description: Description | None = None
     url: str | None = None
@@ -2883,7 +2883,7 @@ class Label(BaseModel):
 
 
 class Option3(BaseModel):
-    text: Text | None = None
+    text: str | Text | None = None
     value: str | None = None
     description: Description | None = None
     url: str | None = None
@@ -2896,7 +2896,7 @@ class OptionGroup1(BaseModel):
 
 class Accessory(BaseModel):
     type: str | None = None
-    text: Text | None = None
+    text: str | Text | None = None
     action_id: str | None = None
     url: str | None = None
     value: str | None = None
@@ -2941,8 +2941,8 @@ class Confirm22(BaseModel):
 
 
 class Confirm21(BaseModel):
-    title: Title | None = None
-    text: Text | None = None
+    title: str | Title | None = None
+    text: str | Text | None = None
     confirm: Confirm22 | None = None
     deny: Deny | None = None
     style: str | None = None
@@ -2958,28 +2958,28 @@ class Workflow10(BaseModel):
 
 
 class Option4(BaseModel):
-    text: Text | None = None
+    text: str | Text | None = None
     value: str | None = None
     description: Description | None = None
     url: str | None = None
 
 
 class InitialOption2(BaseModel):
-    text: Text | None = None
+    text: str | Text | None = None
     value: str | None = None
     description: Description | None = None
     url: str | None = None
 
 
 class InitialOption3(BaseModel):
-    text: Text | None = None
+    text: str | Text | None = None
     value: str | None = None
     description: Description | None = None
     url: str | None = None
 
 
 class Option5(BaseModel):
-    text: Text | None = None
+    text: str | Text | None = None
     value: str | None = None
     description: Description | None = None
     url: str | None = None
@@ -2992,7 +2992,7 @@ class OptionGroup2(BaseModel):
 
 class Element9(BaseModel):
     type: str | None = None
-    text: Text | None = None
+    text: str | Text | None = None
     action_id: str | None = None
     url: str | None = None
     value: str | None = None
@@ -3047,7 +3047,7 @@ class TitleBlock1(BaseModel):
     source: str | None = None
     file_id: str | None = None
     file: File4 | None = None
-    text: Text | None = None
+    text: str | Text | None = None
     fallback: str | None = None
     image_url: str | None = None
     image_width: int | None = None
@@ -3056,7 +3056,7 @@ class TitleBlock1(BaseModel):
     is_animated: bool | None = None
     slack_file: SlackFile | None = None
     alt_text: str | None = None
-    title: Title | None = None
+    title: str | Title | None = None
     title_url: str | None = None
     description: Description | None = None
     video_url: str | None = None

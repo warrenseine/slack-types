@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.2.5
+
+- Exhaustive type hardening across **all** generated modules, replacing the
+  per-shape fixture patches (`1.1.0`–`1.2.4`) that only widened one observed
+  payload at a time. A post-generation pass in `scripts/build.py` now widens
+  two field families everywhere they appear:
+
+  - **File dimensions** — every `thumb_*_{w,h}` (incl. `thumb_pdf_*`,
+    `thumb_video_*`) and `original_{w,h}` declared as `str | None` becomes
+    `int | str | None`. The Slack file object reference documents these as
+    integers; the upstream java-slack-sdk samples carried them as strings.
+  - **Block Kit `text` / `title`** — object-only declarations (`Text | None`,
+    `Title | None`) become `str | <Object> | None`. rich_text sections and
+    third-party app unfurls inline a raw string where the object is expected.
+
+  ~2750 dimension fields and ~1300 text/title fields widened. A regression
+  test (`tests/test_type_hardening.py`) asserts no narrow declaration survives
+  a regeneration, so the hardening can't silently regress.
+
 ## 1.2.4
 
 - `conversations.history` / `conversations.replies`: accept `int` on image

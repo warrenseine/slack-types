@@ -53,8 +53,8 @@ class Deny(BaseModel):
 
 
 class Confirm(BaseModel):
-    title: Title | None = None
-    text: Text | None = None
+    title: str | Title | None = None
+    text: str | Text | None = None
     confirm: Confirm1 | None = None
     deny: Deny | None = None
     style: str | None = None
@@ -79,7 +79,7 @@ class Description(BaseModel):
 
 
 class InitialOption(BaseModel):
-    text: Text | None = None
+    text: str | Text | None = None
     value: str | None = None
     description: Description | None = None
     url: str | None = None
@@ -151,8 +151,8 @@ class Block(BaseModel):
     is_animated: bool | None = None
     slack_file: SlackFile | None = None
     alt_text: str | None = None
-    title: Title | None = None
-    text: Text | None = None
+    title: str | Title | None = None
+    text: str | Text | None = None
     fields: List[Field] | None = None
     accessory: Accessory | None = None
 
@@ -194,7 +194,7 @@ class Subtitle(BaseModel):
 class Preview(BaseModel):
     type: str | None = None
     can_remove: bool | None = None
-    title: Title | None = None
+    title: str | Title | None = None
     subtitle: Subtitle | None = None
     icon_url: str | None = None
 

@@ -34,7 +34,7 @@ class View(BaseModel):
     id: str | None = None
     team_id: str | None = None
     type: str | None = None
-    title: Title | None = None
+    title: str | Title | None = None
     submit: Submit | None = None
     close: Close | None = None
     private_metadata: str | None = None

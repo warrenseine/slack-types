@@ -115,6 +115,41 @@ def _extra_samples_for(json_path: Path) -> list[Path]:
     return sorted(extra_dir.glob("*.json"))
 
 
+_DIMENSION_FIELD = re.compile(
+    r"^(?P<indent> +)(?P<name>(?:thumb_(?:\d+|pdf|video)|original)_[wh]): "
+    r"str \| None = None$",
+    re.MULTILINE,
+)
+_TEXTLIKE_OBJECT_FIELD = re.compile(
+    r"^(?P<indent> +)(?P<name>text|title): (?P<cls>[A-Z][A-Za-z0-9]*) \| None = None$",
+    re.MULTILINE,
+)
+
+
+def _harden_generated(path: Path) -> None:
+    """Widen field families that real Slack payloads ship wider than the
+    upstream java-slack-sdk samples imply.
+
+    - File dimension fields (``thumb_*_{w,h}``, ``original_{w,h}``) are
+      integers per the Slack file object reference, but the samples carry
+      them as strings so the generated type is ``str | None``. Widen to
+      ``int | str``.
+    - Block Kit ``text`` / ``title`` are documented as objects, but rich_text
+      sections and third-party app unfurls inline a raw string in their
+      place. Widen object-only declarations to accept ``str`` too.
+
+    Runs after datamodel-codegen so it survives every regeneration — the
+    exhaustive backstop the per-sample fixtures could only patch one shape
+    at a time.
+    """
+    src = path.read_text()
+    src = _DIMENSION_FIELD.sub(r"\g<indent>\g<name>: int | str | None = None", src)
+    src = _TEXTLIKE_OBJECT_FIELD.sub(
+        r"\g<indent>\g<name>: str | \g<cls> | None = None", src
+    )
+    path.write_text(src)
+
+
 def generate_module(json_path: Path, root_class: str, out_path: Path) -> None:
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -153,6 +188,7 @@ def generate_module(json_path: Path, root_class: str, out_path: Path) -> None:
             ],
             check=True,
         )
+        _harden_generated(out_path)
     finally:
         schema_path.unlink(missing_ok=True)
 
