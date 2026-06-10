@@ -273,7 +273,40 @@
           "from_url": "https://example.com/x",
           "service_name": "example.com",
           "color": "D0D0D0",
-          "ts": 1776800040
+          "ts": 1776800040,
+          "files": [
+            {
+              "id": "F0ATTIMG001",
+              "created": 1779281906,
+              "timestamp": 1779281906,
+              "name": "image.png",
+              "title": "image.png",
+              "mimetype": "image/png",
+              "filetype": "png",
+              "pretty_type": "PNG",
+              "user": "U0990SYCWDQ",
+              "size": 741775,
+              "mode": "hosted",
+              "is_public": true,
+              "url_private": "https://files.slack.com/files-pri/T08JL0PSDGX-F0ATTIMG001/image.png",
+              "thumb_360": "https://files.slack.com/files-tmb/T08JL0PSDGX-F0ATTIMG001-x/image_360.png",
+              "thumb_360_w": 360,
+              "thumb_360_h": 131,
+              "thumb_480_w": 480,
+              "thumb_480_h": 175,
+              "thumb_720_w": 720,
+              "thumb_720_h": 262,
+              "thumb_800_w": 800,
+              "thumb_800_h": 292,
+              "thumb_960_w": 960,
+              "thumb_960_h": 350,
+              "thumb_1024_w": 1024,
+              "thumb_1024_h": 373,
+              "original_w": 2634,
+              "original_h": 960,
+              "file_access": "visible"
+            }
+          ]
         }
       ]
     }

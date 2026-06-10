@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.2.4
+
+- `conversations.history` / `conversations.replies`: accept `int` on image
+  thumbnail / original dimension fields of **attachment** files —
+  `messages[].attachments[].files[].thumb_{360,480,720,800,960,1024}_{w,h}` and
+  `original_{w,h}`. Real Slack responses ship these as integers; the model typed
+  them as `str`, so channel backfill failed with `Input should be a valid string
+  [type=string_type, input_type=int]` (28 errors on a single image attachment)
+  and dropped the whole page.
+
+  The `1.2.0`/`1.2.2` fixes widened the same fields on message-level files
+  (`messages[].files[]`); files nested under an attachment are a separate
+  generated class (`File5` on history, `File4` on replies) that stayed tight.
+  Field types change from `str | None` to `int | str | None`. Implemented by
+  adding an int-dimension image file under the `attachments[]` entry of the
+  existing `file_dimensions.json` fixtures, with values captured from a real
+  production payload.
+
 ## 1.2.3
 
 - `conversations.history` / `conversations.replies`: accept a raw `str` under

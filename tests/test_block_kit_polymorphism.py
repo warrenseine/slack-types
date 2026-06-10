@@ -55,6 +55,22 @@ def test_attachment_block_string_payloads_validate(sample: str, model: type[Base
     assert elements[2].text == "*Project*  Run 2026"
 
 
+FILE_DIMENSION_CASES: list[tuple[str, type[BaseModel]]] = [
+    ("web-api/conversations.history/file_dimensions.json", ConversationsHistoryResponse),
+    ("web-api/conversations.replies/file_dimensions.json", ConversationsRepliesResponse),
+]
+
+
+@pytest.mark.parametrize(("sample", "model"), FILE_DIMENSION_CASES)
+def test_attachment_file_int_dimensions_validate(sample: str, model: type[BaseModel]) -> None:
+    data = json.loads((SAMPLES / sample).read_text())
+    parsed = model.model_validate(data)
+    attachment_file = parsed.messages[-1].attachments[0].files[0]
+    assert attachment_file.thumb_360_w == 360
+    assert attachment_file.thumb_1024_h == 373
+    assert attachment_file.original_w == 2634
+
+
 @pytest.mark.parametrize("model", [ConversationsHistoryResponse, ConversationsRepliesResponse])
 def test_block_kit_object_payloads_still_validate(model: type[BaseModel]) -> None:
     payload = {
