@@ -1127,10 +1127,10 @@ class Message1(BaseModel):
 class Field1(BaseModel):
     key: str | None = None
     column_id: str | None = None
-    value: str | None = None
+    value: bool | int | str | None = None
     text: str | None = None
     rich_text: List[Any] | None = None
-    message: Message1 | None = None
+    message: List[Message1] | Message1 | None = None
     number: List[Any] | None = None
     select: List[Any] | None = None
     date: List[Any] | None = None
@@ -1572,10 +1572,10 @@ class Message2(BaseModel):
 class Field2(BaseModel):
     key: str | None = None
     column_id: str | None = None
-    value: str | None = None
+    value: bool | int | str | None = None
     text: str | None = None
     rich_text: List[Any] | None = None
-    message: Message2 | None = None
+    message: List[Message2] | Message2 | None = None
     number: List[Any] | None = None
     select: List[Any] | None = None
     date: List[Any] | None = None
@@ -3979,10 +3979,10 @@ class Message4(BaseModel):
 class Field5(BaseModel):
     key: str | None = None
     column_id: str | None = None
-    value: str | None = None
+    value: bool | int | str | None = None
     text: str | None = None
     rich_text: List[Any] | None = None
-    message: Message4 | None = None
+    message: List[Message4] | Message4 | None = None
     number: List[Any] | None = None
     select: List[Any] | None = None
     date: List[Any] | None = None
@@ -4409,10 +4409,10 @@ class Message5(BaseModel):
 class Field6(BaseModel):
     key: str | None = None
     column_id: str | None = None
-    value: str | None = None
+    value: bool | int | str | None = None
     text: str | None = None
     rich_text: List[Any] | None = None
-    message: Message5 | None = None
+    message: List[Message5] | Message5 | None = None
     number: List[Any] | None = None
     select: List[Any] | None = None
     date: List[Any] | None = None
@@ -7403,10 +7403,10 @@ class Message7(BaseModel):
 class Field10(BaseModel):
     key: str | None = None
     column_id: str | None = None
-    value: str | None = None
+    value: bool | int | str | None = None
     text: str | None = None
     rich_text: List[Any] | None = None
-    message: Message7 | None = None
+    message: List[Message7] | Message7 | None = None
     number: List[Any] | None = None
     select: List[Any] | None = None
     date: List[Any] | None = None
@@ -7833,10 +7833,10 @@ class Message8(BaseModel):
 class Field11(BaseModel):
     key: str | None = None
     column_id: str | None = None
-    value: str | None = None
+    value: bool | int | str | None = None
     text: str | None = None
     rich_text: List[Any] | None = None
-    message: Message8 | None = None
+    message: List[Message8] | Message8 | None = None
     number: List[Any] | None = None
     select: List[Any] | None = None
     date: List[Any] | None = None

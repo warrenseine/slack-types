@@ -23,7 +23,7 @@ class RichTextItem(BaseModel):
 class Field(BaseModel):
     key: str | None = None
     column_id: str | None = None
-    value: bool | str | None = None
+    value: bool | int | str | None = None
     rich_text: List[RichTextItem] | None = None
     checkbox: bool | None = None
     text: str | None = None

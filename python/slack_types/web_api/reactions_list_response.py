@@ -2334,10 +2334,10 @@ class Message2(BaseModel):
 class Field2(BaseModel):
     key: str | None = None
     column_id: str | None = None
-    value: str | None = None
+    value: bool | int | str | None = None
     text: str | None = None
     rich_text: List[Any] | None = None
-    message: Message2 | None = None
+    message: List[Message2] | Message2 | None = None
     number: List[Any] | None = None
     select: List[Any] | None = None
     date: List[Any] | None = None
@@ -2764,10 +2764,10 @@ class Message3(BaseModel):
 class Field3(BaseModel):
     key: str | None = None
     column_id: str | None = None
-    value: str | None = None
+    value: bool | int | str | None = None
     text: str | None = None
     rich_text: List[Any] | None = None
-    message: Message3 | None = None
+    message: List[Message3] | Message3 | None = None
     number: List[Any] | None = None
     select: List[Any] | None = None
     date: List[Any] | None = None

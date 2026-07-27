@@ -1,5 +1,44 @@
 # Changelog
 
+## 1.2.6
+
+- **Slack List record cells** — accept `bool` / `int` on
+  `messages[].attachments[].list_records[].fields[].value`, and a *list* on the
+  same entry's `.message`. Slack unfurls a List as `list_records[]`, and a cell
+  carries its typed contents in `value`: checkbox columns ship `false` / `true`
+  and date columns ship epoch seconds, but the generated model typed `value` as
+  `str` only. Message columns hold a list of linked messages, not the single
+  object the samples captured. Channel backfill failed with
+
+  ```
+  messages[].attachments[].list_records[].fields[].value
+    Input should be a valid string [type=string_type, input_value=False, input_type=bool]
+    Input should be a valid string [type=string_type, input_value=1754485178, input_type=int]
+  messages[].attachments[].list_records[].fields[].message
+    Input should be a valid dictionary or instance of Message3 [type=model_type, input_type=list]
+  ```
+
+  — 15–16 errors on a single message, dropping the whole page and wedging the
+  channel on every retry.
+
+  The `1.2.5` hardening pass only covered the file-dimension and Block Kit
+  `text`/`title` families, so List cells stayed tight; the `1.1.0`–`1.2.4`
+  fixture patches never touched them either. Handled by a third rule in the
+  `scripts/build.py` hardening pass, scoped to classes declaring `column_id`
+  (the unambiguous marker of a List cell) since `value` and `message` are too
+  generic to rewrite file-wide. `value: str | None` and `value: bool | str | None`
+  both become `bool | int | str | None`; `message: <Cls> | None` becomes
+  `List[<Cls>] | <Cls> | None`.
+
+  30 `value` and 28 `message` declarations widened across 10 modules —
+  `conversations.history` / `conversations.replies` (`Field2`, `Field3`),
+  `chat.postMessage`, `reactions.list`, `rtm.start`, `search.all`,
+  `search.messages`, `search.files`, and `slackLists.items.{create,list}`.
+  `tests/test_type_hardening.py` gains guards asserting no narrow cell
+  declaration survives a regeneration; `tests/test_list_records.py` pins the
+  payload shapes and checks values stay un-coerced (`False` stays a `bool`,
+  epochs stay `int`).
+
 ## 1.2.5
 
 - Exhaustive type hardening across **all** generated modules, replacing the

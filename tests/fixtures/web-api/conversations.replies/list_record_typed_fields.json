@@ -1,0 +1,106 @@
+{
+  "ok": true,
+  "messages": [
+    {
+      "type": "message",
+      "ts": "1754556469.118829",
+      "thread_ts": "1754485178.902139",
+      "user": "U0990SYCWDQ",
+      "text": "Slack List record unfurl",
+      "attachments": [
+        {
+          "id": 1,
+          "color": "4a154b",
+          "fallback": "Slack list",
+          "list_records": [
+            {
+              "id": "Rec00000001",
+              "list_id": "F00000001",
+              "date_created": 1754485178,
+              "position": "V0",
+              "fields": [
+                {
+                  "key": "name",
+                  "column_id": "Col00000001",
+                  "value": "Acme onboarding",
+                  "text": "Acme onboarding"
+                },
+                {
+                  "key": "link",
+                  "column_id": "Col00000002",
+                  "message": [
+                    {
+                      "type": "message",
+                      "value": "https://example.com/a/b/c",
+                      "ts": "1747252047.403059"
+                    }
+                  ]
+                },
+                {
+                  "key": "owner",
+                  "column_id": "Col00000003",
+                  "user": ["U0990SYCWDQ"]
+                },
+                {
+                  "key": "done",
+                  "column_id": "Col00000004",
+                  "value": false,
+                  "checkbox": false
+                },
+                {
+                  "key": "created_at",
+                  "column_id": "Col00000005",
+                  "value": 1754485178
+                },
+                {
+                  "key": "updated_at",
+                  "column_id": "Col00000006",
+                  "value": 1754556469
+                }
+              ]
+            },
+            {
+              "id": "Rec00000002",
+              "list_id": "F00000001",
+              "date_created": 1754487284,
+              "position": "V1",
+              "fields": [
+                {
+                  "key": "name",
+                  "column_id": "Col00000001",
+                  "value": "Globex renewal",
+                  "text": "Globex renewal"
+                },
+                {
+                  "key": "link",
+                  "column_id": "Col00000002",
+                  "message": {
+                    "type": "message",
+                    "ts": "1747331176.884219",
+                    "text": "Renewal thread"
+                  }
+                },
+                {
+                  "key": "done",
+                  "column_id": "Col00000004",
+                  "value": true,
+                  "checkbox": true
+                },
+                {
+                  "key": "created_at",
+                  "column_id": "Col00000005",
+                  "value": 1754487284
+                },
+                {
+                  "key": "updated_at",
+                  "column_id": "Col00000006",
+                  "value": 1754559314
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

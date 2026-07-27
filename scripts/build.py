@@ -124,6 +124,31 @@ _TEXTLIKE_OBJECT_FIELD = re.compile(
     r"^(?P<indent> +)(?P<name>text|title): (?P<cls>[A-Z][A-Za-z0-9]*) \| None = None$",
     re.MULTILINE,
 )
+_CLASS_BLOCK = re.compile(r"^class \w+\(BaseModel\):\n(?:(?: +.*)?\n)*", re.MULTILINE)
+# A Slack List cell is the only field class carrying ``column_id``; ``value``
+# and ``message`` are far too generic to rewrite file-wide.
+_LIST_RECORD_CELL_MARKER = "    column_id: str | None = None\n"
+_CELL_VALUE_FIELD = re.compile(
+    r"^(?P<indent> +)value: (?:bool \| )?str \| None = None$", re.MULTILINE
+)
+_CELL_MESSAGE_FIELD = re.compile(
+    r"^(?P<indent> +)message: (?P<cls>[A-Z][A-Za-z0-9]*) \| None = None$", re.MULTILINE
+)
+
+
+def _harden_list_record_cells(src: str) -> str:
+    def widen(match: re.Match[str]) -> str:
+        block = match.group(0)
+        if _LIST_RECORD_CELL_MARKER not in block:
+            return block
+        block = _CELL_VALUE_FIELD.sub(
+            r"\g<indent>value: bool | int | str | None = None", block
+        )
+        return _CELL_MESSAGE_FIELD.sub(
+            r"\g<indent>message: List[\g<cls>] | \g<cls> | None = None", block
+        )
+
+    return _CLASS_BLOCK.sub(widen, src)
 
 
 def _harden_generated(path: Path) -> None:
@@ -137,6 +162,11 @@ def _harden_generated(path: Path) -> None:
     - Block Kit ``text`` / ``title`` are documented as objects, but rich_text
       sections and third-party app unfurls inline a raw string in their
       place. Widen object-only declarations to accept ``str`` too.
+    - Slack List record cells (``attachments[].list_records[].fields[]``)
+      carry the cell's typed contents in ``value``: checkbox columns ship a
+      ``bool`` and date columns an epoch ``int``, while the samples only ever
+      captured strings. ``message`` columns hold a list of linked messages,
+      not the single object the samples imply.
 
     Runs after datamodel-codegen so it survives every regeneration — the
     exhaustive backstop the per-sample fixtures could only patch one shape
@@ -147,6 +177,7 @@ def _harden_generated(path: Path) -> None:
     src = _TEXTLIKE_OBJECT_FIELD.sub(
         r"\g<indent>\g<name>: str | \g<cls> | None = None", src
     )
+    src = _harden_list_record_cells(src)
     path.write_text(src)
 
 
